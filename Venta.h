@@ -1,39 +1,38 @@
-#ifndef VENTA_H
-#define VENTA_H
-#include <iostream>
-using namespace std;
-#include "Fecha.h"
-#include "ArchivoArticulos.h"
+#pragma once
 
+#include "Cliente.h"
+#include "Fecha.h"
 
 class Venta
 {
 private:
-    int codigoVenta, codigoCliente, codigoArticulo;
-    int cantidad;
-    float importe;
     Fecha fechaVenta;
-    bool activo;
+    char dni[12];
+    char apellido[30];
+    char nombre[30];
+    int codigoArticulo;
+    char descripcionArticulo[30];
+    int cantidadVendida;
+    int numeroFactura;
+    float importe;
+    float saldo;
+    bool paga;
+    Cliente regCliente;
 public:
-    //SETTERS
-    void setCodigoVenta(const int cV){codigoVenta = cV;}
-    void setCodigoCliente(const int cC){codigoCliente = cC;}
-    void setCodigoArticulo(const int cA){codigoArticulo = cA;}
-    void setCantidad(const int c){cantidad = c;}
-    void setImporte(const float _importe){importe=_importe;}
-    void setFechaVenta(Fecha f){fechaVenta = f;}
-    void setActivo(bool a){activo = a;}
-    //GETTERS
-    int getCodigoVenta(){return codigoVenta;}
-    int getCodigoCliente(){return codigoCliente;}
-    int getCodigoArticulo(){return codigoArticulo;}
-    int getCantidad(){return cantidad;}
-    float getImporte(){return importe;}
-    Fecha getFechaVenta(){return fechaVenta;}
-    bool getActivo(){return activo;}
-    //FUNCIONES
-    void Cargar();
+    bool Cargar();
     void Mostrar();
+    Fecha getFechaVenta();
+    const char* getDni();
+    const char *getApellido();
+    const char *getNombre();
+    int getNumeroFactura();
+    int getCodigoArticulo();
+    const char *getDescripcionArticulo();
+    int getCatidadVendida();
+    float getImporte();
+    void setSaldo(float s);
+    float getSaldo();
+    bool getPaga();
+    void setPaga(bool p);
+    void setDescripcionArticulo(const char *dA);
 };
-
-#endif // VENTA_H

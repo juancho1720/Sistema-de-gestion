@@ -2,28 +2,28 @@
 <CodeBlocks_project_file>
 	<FileVersion major="1" minor="6" />
 	<Project>
-		<Option title="TP Final Labo II" />
+		<Option title="Sistema de Gestion" />
 		<Option pch_mode="2" />
 		<Option compiler="gcc" />
 		<Build>
 			<Target title="Debug">
-				<Option output="bin/Debug/TP Final Labo II" prefix_auto="1" extension_auto="1" />
+				<Option output="bin/Debug/Sistema de Gestion" prefix_auto="1" extension_auto="1" />
 				<Option object_output="obj/Debug/" />
 				<Option type="1" />
 				<Option compiler="gcc" />
 				<Compiler>
 					<Add option="-g" />
-					<Add directory="../TP Final Labo II" />
+					<Add directory="./" />
 				</Compiler>
 			</Target>
 			<Target title="Release">
-				<Option output="bin/Release/TP Final Labo II" prefix_auto="1" extension_auto="1" />
+				<Option output="bin/Release/Sistema de Gestion" prefix_auto="1" extension_auto="1" />
 				<Option object_output="obj/Release/" />
 				<Option type="1" />
 				<Option compiler="gcc" />
 				<Compiler>
 					<Add option="-O2" />
-					<Add directory="../TP Final Labo II" />
+					<Add directory="./" />
 				</Compiler>
 				<Linker>
 					<Add option="-s" />
@@ -34,34 +34,28 @@
 			<Add option="-Wall" />
 			<Add option="-fexceptions" />
 		</Compiler>
-		<Unit filename="ArchivoArticulos.cpp" />
-		<Unit filename="ArchivoArticulos.h" />
-		<Unit filename="ArchivoClientes.cpp" />
-		<Unit filename="ArchivoClientes.h" />
-		<Unit filename="ArchivoCompras.cpp" />
-		<Unit filename="ArchivoCompras.h" />
-		<Unit filename="ArchivoProveedores.cpp" />
-		<Unit filename="ArchivoProveedores.h" />
-		<Unit filename="ArchivoVentas.cpp" />
-		<Unit filename="ArchivoVentas.h" />
+		<Unit filename="ArchivoArticulo.cpp" />
+		<Unit filename="ArchivoArticulo.h" />
+		<Unit filename="ArchivoBackUp.cpp" />
+		<Unit filename="ArchivoBackUp.h" />
+		<Unit filename="ArchivoCliente.cpp" />
+		<Unit filename="ArchivoCliente.h" />
+		<Unit filename="ArchivoPago.cpp" />
+		<Unit filename="ArchivoPago.h" />
+		<Unit filename="ArchivoVenta.cpp" />
+		<Unit filename="ArchivoVenta.h" />
 		<Unit filename="Articulo.cpp" />
 		<Unit filename="Articulo.h" />
 		<Unit filename="Cliente.cpp" />
 		<Unit filename="Cliente.h" />
-		<Unit filename="Compra.cpp" />
-		<Unit filename="Compra.h" />
 		<Unit filename="Fecha.cpp" />
 		<Unit filename="Fecha.h" />
-		<Unit filename="Funciones.cpp" />
-		<Unit filename="Funciones.h">
-			<Option target="&lt;{~None~}&gt;" />
-		</Unit>
-		<Unit filename="Menu.cpp" />
-		<Unit filename="Menu.h" />
-		<Unit filename="Persona.cpp" />
-		<Unit filename="Persona.h" />
-		<Unit filename="Proveedor.cpp" />
-		<Unit filename="Proveedor.h" />
+		<Unit filename="FuncionesGenerales.cpp" />
+		<Unit filename="FuncionesGenerales.h" />
+		<Unit filename="MenuManager.cpp" />
+		<Unit filename="MenuManager.h" />
+		<Unit filename="Pago.cpp" />
+		<Unit filename="Pago.h" />
 		<Unit filename="Venta.cpp" />
 		<Unit filename="Venta.h" />
 		<Unit filename="main.cpp" />

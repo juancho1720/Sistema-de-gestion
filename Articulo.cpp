@@ -1,26 +1,93 @@
+#include <iostream>
+#include <string.h>
+#include <iomanip>
+
+using namespace std;
+
 #include "Articulo.h"
+#include "FuncionesGenerales.h"
 
-
-
-void Articulo::Cargar()
+Articulo::Articulo()
 {
-    cout << "Codigo: ";
-    cin >> codigo;
-    cout << "Descripcion: ";
-    cargarCadena(descripcion,30);
-    cout << "Precio: ";
-    cin >> precio;
-    estado = true;
+    stock = 0;
 }
 
-
-void Articulo::Mostrar()
+bool Articulo::Cargar()
 {
-    if(estado == true)
+    cout << "Descripcion: ";
+    cargarCadena(descripcion,29);
+    cout << "Codigo de Articulo: ";
+    cin >> codigoArticulo;
+    if(comprobarArticulosExistentes(codigoArticulo) == false)
     {
-        cout << "Codigo: " << codigo << endl;
-        cout << "Descripcion: " << descripcion << endl;
-        cout << "Precio: " << precio << endl;
+        cout << "Cantidad: ";
+        cin >> cantidadArticulo;
+        setStock(cantidadArticulo);
+        cout << "Precio Unitario: ";
+        cin >> precioUnitario;
+        estado = true;
+        return false;
+    }
+    else
+    {
+        return true;
     }
 }
 
+void Articulo::Mostrar()
+{
+    if (estado == true)
+    {
+        cout << left;
+        cout << setw(20) << descripcion;
+        cout << setw(15) << codigoArticulo;
+        cout << setw(15) << stock;
+        cout << setw(20) << precioUnitario;
+        cout << endl;
+    }
+}
+
+const char* Articulo::getDescripcion()
+{
+    return descripcion;
+}
+
+int Articulo::getCodigoArticulo()
+{
+    return codigoArticulo;
+}
+
+int Articulo::getCantidadArticulo()
+{
+    return cantidadArticulo;
+}
+
+float Articulo::getPrecioUnitario()
+{
+    return precioUnitario;
+}
+
+void Articulo::setPrecioUnitario(float pU)
+{
+    precioUnitario = pU;
+}
+
+int Articulo::getStock()
+{
+    return stock;
+}
+
+void Articulo::setStock(int s)
+{
+    stock = s;
+}
+
+bool Articulo::getEstado()
+{
+    return estado;
+}
+
+void Articulo::setEstado(bool e)
+{
+    estado = e;
+}

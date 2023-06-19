@@ -1,13 +1,14 @@
 #include <iostream>
-#include "Funciones.h"
+
 using namespace std;
-#include "Menu.h"
+
+#include "MenuManager.h"
 
 int main()
 {
-    Menu obj;
+    MenuManager menu;
 
-    obj.Mostrar();
+    menu.MenuGeneral();
 
     return 0;
 }
