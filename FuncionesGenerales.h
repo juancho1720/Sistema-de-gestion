@@ -40,4 +40,6 @@ void ventasMensualesProductos();
 
 void cobrosMensualesTipo();
 
-void exportarCsv();
+void exportarClientes();
+
+void exportarCtasCtes();

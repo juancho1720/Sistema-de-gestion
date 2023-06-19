@@ -486,16 +486,8 @@ void cobrosMensualesTipo()
     system("pause");
 }
 
-void exportarCsv()
+void exportarClientes()
 {
-    ArchivoVenta auxArchivoVenta("ventas.dat");
-    Venta regVenta;
-    int cantVentas = auxArchivoVenta.contarRegistros();
-
-    ArchivoPago auxArchivoPago("pagos.dat");
-    Pago regPago;
-    int cantPagos = auxArchivoPago.contarRegistros();
-
     ArchivoCliente auxArchivoCliente("clientes.dat");
     Cliente regCliente;
     int cantClientes = auxArchivoCliente.contarRegistros();
@@ -520,6 +512,66 @@ void exportarCsv()
         archivoClientes.close();
         cout << "Archivo creado con exito!!!" << endl;
         cout << cantClientes << " clientes exportados a excel" << endl;
+        system("pause");
+    }
+}
+
+void exportarCtasCtes()
+{
+    ArchivoVenta auxArchivoVenta("ventas.dat");
+    Venta regVenta;
+    int cantVentas = auxArchivoVenta.contarRegistros();
+
+    ArchivoPago auxArchivoPago("pagos.dat");
+    Pago regPago;
+    int cantPagos = auxArchivoPago.contarRegistros();
+
+    ofstream archivoctasctes("ctas-ctes.csv", ios::out);
+    if (!archivoctasctes)
+    {
+        cout << "No se pudo crear el archivo." << endl;
+    }
+    else
+    {
+        for (int i=0; i< cantVentas; i++)
+        {
+            regVenta = auxArchivoVenta.leerRegistro(i);
+
+            if (i==0)
+            {
+                archivoctasctes << "Fecha" << ";" << "Nombre" << ";" << "Apellido" <<  ";" << "Tipo Comprobante" <<  ";" << "Numero" <<  ";" << "Importe" <<
+                ";" << "Estado" << endl;
+            }
+            archivoctasctes << regVenta.getFechaVenta().getAnio() << "/" << regVenta.getFechaVenta().getMes() << "/" << regVenta.getFechaVenta().getDia() << ";" << regVenta.getNombre() << ";" << regVenta.getApellido() << ";" << "F" << ";" << regVenta.getNumeroFactura() << ";" <<
+            regVenta.getImporte() << ";";
+            if (regVenta.getPaga())
+            {
+                archivoctasctes << "PAGA" << endl;
+            }
+            else
+            {
+                archivoctasctes << "PENDIENTE" << endl;
+            }
+        }
+
+        for (int i=0; i< cantPagos; i++)
+        {
+            regPago = auxArchivoPago.leerRegistro(i);
+
+            archivoctasctes << regPago.getFechaPago().getAnio() << "/" << regPago.getFechaPago().getMes() << "/" << regPago.getFechaPago().getDia() << ";" << buscarNombre(regPago.getDni()) << ";" << buscarApellido
+            (regPago.getDni()) << ";" << "RBO" << ";" << regPago.getNumeroRecibo() << ";" <<
+            regPago.getImporte() << ";";
+            if (regPago.getActivo())
+            {
+                archivoctasctes << "IMPUTADO" << endl;
+            }
+            else
+            {
+                archivoctasctes << "PENDIENTE" << endl;
+            }
+        }
+        archivoctasctes.close();
+        cout << "Archivo creado con exito!!!" << endl;
         system("pause");
     }
 }

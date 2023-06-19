@@ -458,7 +458,8 @@ void MenuManager::ModuloReportes()
         cout << "3- Listar movimientos totales." << endl;
         cout << "4- Cantidad de ventas mensuales por producto." << endl;
         cout << "5- Cantidad de cobranzas por formas de pago." << endl;
-        cout << "6- Exportar listado de clientes a Excel." << endl << endl;
+        cout << "6- Exportar listado de clientes a Excel." << endl;
+        cout << "7- Exportar cuentas corrientes a Excel." << endl << endl;
         cout << "0- Volver al menu principal." << endl;
         cin >> opcionMenu;
         switch(opcionMenu)
@@ -625,7 +626,11 @@ void MenuManager::ModuloReportes()
             break;
         case 6:
             system("cls");
-            exportarCsv();
+            exportarClientes();
+            break;
+        case 7:
+            system("cls");
+            exportarCtasCtes();
             break;
         }
         system("cls");
