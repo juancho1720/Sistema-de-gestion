@@ -457,8 +457,8 @@ void MenuManager::ModuloReportes()
         cout << "2- Listar todos los saldos deudores." << endl;
         cout << "3- Listar movimientos totales." << endl;
         cout << "4- Cantidad de ventas mensuales por producto." << endl;
-        cout << "5- Cantidad de ventas mensuales por formas de pago." << endl;
-        cout << "6- ." << endl << endl;
+        cout << "5- Cantidad de cobranzas por formas de pago." << endl;
+        cout << "6- Exportar listado de clientes a Excel." << endl << endl;
         cout << "0- Volver al menu principal." << endl;
         cin >> opcionMenu;
         switch(opcionMenu)
@@ -622,6 +622,10 @@ void MenuManager::ModuloReportes()
         case 5:
             system("cls");
             cobrosMensualesTipo();
+            break;
+        case 6:
+            system("cls");
+            exportarCsv();
             break;
         }
         system("cls");

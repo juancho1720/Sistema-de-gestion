@@ -1,7 +1,6 @@
-#pragma once
-
 #include <iostream>
 #include <string.h>
+#include <fstream>
 
 using namespace std;
 
@@ -485,4 +484,42 @@ void cobrosMensualesTipo()
         cant = 0;
     }
     system("pause");
+}
+
+void exportarCsv()
+{
+    ArchivoVenta auxArchivoVenta("ventas.dat");
+    Venta regVenta;
+    int cantVentas = auxArchivoVenta.contarRegistros();
+
+    ArchivoPago auxArchivoPago("pagos.dat");
+    Pago regPago;
+    int cantPagos = auxArchivoPago.contarRegistros();
+
+    ArchivoCliente auxArchivoCliente("clientes.dat");
+    Cliente regCliente;
+    int cantClientes = auxArchivoCliente.contarRegistros();
+
+    ofstream archivoClientes("clientes.csv", ios::out);
+    if (!archivoClientes)
+    {
+        cout << "No se pudo crear el archivo." << endl;
+    }
+    else
+    {
+        for (int i=0; i< cantClientes; i++)
+        {
+            regCliente = auxArchivoCliente.leerRegistro(i);
+
+            if (i==0)
+            {
+                archivoClientes << "Nombre" << ";" << "Apellido" <<  ";" << "DNI" <<endl;
+            }
+            archivoClientes << regCliente.getNombre() << ";" << regCliente.getApellido() << ";" << regCliente.getDni() << endl;
+        }
+        archivoClientes.close();
+        cout << "Archivo creado con exito!!!" << endl;
+        cout << cantClientes << " clientes exportados a excel" << endl;
+        system("pause");
+    }
 }

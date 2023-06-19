@@ -39,3 +39,5 @@ bool comprobarDeuda(const char *dni, float importe);
 void ventasMensualesProductos();
 
 void cobrosMensualesTipo();
+
+void exportarCsv();
