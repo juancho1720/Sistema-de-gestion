@@ -52,12 +52,6 @@ void ArchivoCliente::escribirRegistro(Cliente reg)
         cout << "Cliente agregado exitosamente!!!" << endl;
         system("pause");
     }
-    else
-    {
-        system("cls");
-        cout << "Cliente existente." << endl;
-        system("pause");
-    }
 }
 
 int ArchivoCliente::buscarDni(const char *d)
