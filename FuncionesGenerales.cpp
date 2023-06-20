@@ -22,7 +22,6 @@ void cargarCadena(char *pal, int tam)
     fflush(stdin);
 }
 
-
 const char *buscarNombre(const char *d)
 {
     ArchivoCliente auxArchivoCliente("clientes.dat");
@@ -107,7 +106,6 @@ bool comprobarClientesExistentes(const char *dni)
     return false;
 }
 
-
 bool comprobarArticulosExistentes(int codigoArticulo)
 {
     ArchivoArticulo auxArchivoArticulo("articulos.dat");
@@ -125,7 +123,6 @@ bool comprobarArticulosExistentes(int codigoArticulo)
     }
     return false;
 }
-
 
 float sumarDeuda(const char *dni, float importe)
 {
@@ -164,7 +161,6 @@ float restarDeuda(const char *dni, float importe)
     }
     return -1;
 }
-
 
 void imputarSaldos()
 {
@@ -213,4 +209,3 @@ void imputarSaldos()
 
     }
 }
-

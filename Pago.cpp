@@ -161,15 +161,12 @@ void Pago::setActivo(bool a)
     activo = a;
 }
 
-
-
 int Pago::generarNumeroRecibo()
 {
     ArchivoPago auxArchivoPago("pagos.dat");
     int cantPagos = auxArchivoPago.contarRegistros();
     return cantPagos+1;
 }
-
 
 bool Pago::cancelarFactura(const char *dni, int numFactura, float importe)
 {
@@ -213,7 +210,6 @@ bool Pago::cancelarFactura(const char *dni, int numFactura, float importe)
     system("pause");
     return false;
 }
-
 
 int Pago::imputarRecibos(const char *dni, float importe)
 {

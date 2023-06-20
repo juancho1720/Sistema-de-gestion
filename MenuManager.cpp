@@ -59,6 +59,7 @@ void MenuManager::MenuGeneral()
     }
     while(opcionMenu!=0);
 }
+
 void MenuManager::ModuloClientes()
 {
     int opcionMenu;
@@ -152,7 +153,7 @@ void MenuManager::ModuloClientes()
             system("cls");
             pos = auxArchivoCliente.buscarDni(dni);
             regCliente = auxArchivoCliente.leerRegistro(pos);
-            if(pos == -1 || regCliente.getActivo() == false)
+            if(pos == -1 || !regCliente.getActivo())
             {
                 cout<<"No existe un cliente con ese numero de DNI"<<endl;
                 system("pause");
@@ -177,13 +178,12 @@ void MenuManager::ModuloClientes()
                 system("pause");
             }
             break;
-        case 5:
-            break;
         }
         system("cls");
     }
     while(opcionMenu!=0);
 }
+
 void MenuManager::ModuloVentas()
 {
 
@@ -434,6 +434,7 @@ void MenuManager::ModuloVentas()
     }
     while(opcionMenu!=0);
 }
+
 void MenuManager::ModuloReportes()
 {
     int opcionMenu;
@@ -862,6 +863,7 @@ void MenuManager::ModuloArticulos()
     }
     while(opcionMenu!=0);
 }
+
 void MenuManager::ModuloPagos()
 {
     int opcionPagos;
@@ -1049,6 +1051,7 @@ void MenuManager::ModuloPagos()
     }
     while (opcionPagos != 0);
 }
+
 void MenuManager::ModuloBackUp()
 {
     int op;
@@ -1146,7 +1149,6 @@ void MenuManager::MenuRestaurarArchivo()
     }
     while(op!=0);
 }
-
 
 int MenuManager::sumarStock(int codigoArticulo, int cantidadArticulo)
 {
@@ -1413,7 +1415,6 @@ void MenuManager::hacerBackupPagos()
     delete []vec;
 }
 
-
 void MenuManager::hacerBackupVentas()
 {
     ArchivoVenta auxArchivoVenta("ventas.dat");
@@ -1438,7 +1439,6 @@ void MenuManager::hacerBackupVentas()
     delete []vec;
 }
 
-
 void MenuManager::restaurarCopiaArticulos()
 {
     ArchivoArticulo auxArchivoArticulo("articulos.dat");
@@ -1462,7 +1462,6 @@ void MenuManager::restaurarCopiaArticulos()
     delete []vec;
 }
 
-
 void MenuManager::restaurarCopiaClientes()
 {
     ArchivoCliente auxArchivoCliente("clientes.dat");
@@ -1485,7 +1484,6 @@ void MenuManager::restaurarCopiaClientes()
     }
     delete []vec;
 }
-
 
 void MenuManager::restaurarCopiaPagos()
 {
