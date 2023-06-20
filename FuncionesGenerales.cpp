@@ -96,13 +96,43 @@ bool comprobarClientesExistentes(const char *dni)
     Cliente regCliente;
     int cantClientes = auxArchivoCliente.contarRegistros();
 
+    char confirmacion;
+
     for(int i=0; i<cantClientes; i++)
     {
         regCliente = auxArchivoCliente.leerRegistro(i);
 
-        if(strcmp(regCliente.getDni(),dni) == 0 && regCliente.getActivo())
+        if(strcmp(regCliente.getDni(),dni) == 0)
         {
-            return true;
+            if(!regCliente.getActivo())
+            {
+                cout << "El cliente <" << regCliente.getApellido() << ", " << regCliente.getNombre() << "> ha sido borrado." << endl;
+                cout << "Desea activarlo nuevamente??? (S/N)" << endl;
+                cin >> confirmacion;
+                if (confirmacion == 's' || confirmacion == 'S')
+                {
+                    regCliente.setActivo(true);
+                    auxArchivoCliente.sobreEscribirRegistro(regCliente, i);
+                    system("cls");
+                    cout << "Cliente reactivado con exito." << endl;
+                    system("pause");
+                    return true;
+                }
+                else
+                {
+                    system("cls");
+                    cout << "El cliente no se reactivo." << endl;
+                    system("pause");
+                    return true;
+                }
+            }
+            else
+            {
+                system("cls");
+                cout << "El cliente ingresado ya existe." << endl;
+                system("pause");
+                return true;
+            }
         }
     }
     return false;
