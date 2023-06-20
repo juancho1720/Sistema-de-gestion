@@ -594,11 +594,11 @@ void MenuManager::ModuloReportes()
                             cout << setw(10) << regPago.getImporte();
                             if (regPago.getActivo())
                             {
-                                cout << setw(15) << "Sin aplicar";
+                                cout << setw(15) << "Aplicado";
                             }
                             if (!regPago.getActivo())
                             {
-                                cout << setw(15) << "Aplicado";
+                                cout << setw(15) << "Sin aplicar";
                             }
                             regPago.getFechaPago().Mostrar();
                             cout << right;
@@ -850,6 +850,7 @@ void MenuManager::ModuloPagos()
     int mes, anio;
     bool hayVentas;
     char confirmacion;
+    char dni[12];
     bool mostrarTitulo = true;
     float importeTotal = 0;
     do
@@ -857,10 +858,9 @@ void MenuManager::ModuloPagos()
         cout << "MODULO PAGOS" << endl;
         cout << "------------------------------" << endl;
         cout << "1- Cargar ." << endl;
-        cout << "2- Listar por cliente. (SIN HACER)" << endl;
+        cout << "2- Listar por cliente." << endl;
         cout << "3- Listar todos por mes." << endl;
-        cout << "4- Listar por cliente por mes. (SIN HACER)" << endl;
-        cout << "5- Anular pago." << endl << endl;
+        cout << "4- Anular pago." << endl << endl;
         cout << "0- Volver al menu principal." << endl;
         cin >> opcionPagos;
         switch(opcionPagos)
@@ -871,6 +871,55 @@ void MenuManager::ModuloPagos()
             break;
         case 2:
             system("cls");
+            hayVentas = false;
+            cout << "DNI: ";
+            cargarCadena(dni, 11);
+            system("cls");
+            cantPagos = auxArchivoPago.contarRegistros();
+            cantClientes = auxArchivoCliente.contarRegistros();
+
+            for(int i=0; i<cantClientes; i++)
+            {
+                regCliente = auxArchivoCliente.leerRegistro(i);
+
+                for(int j=0; j<cantPagos; j++)
+                {
+                    regPago = auxArchivoPago.leerRegistro(j);
+
+                    if( strcmp(regPago.getDni(), regCliente.getDni()) == 0)
+                    {
+                        hayVentas = true;
+                        if(mostrarTitulo)
+                        {
+                            cout << "Cliente: " << regCliente.getApellido() << ", " << regCliente.getNombre() << endl << endl;
+                            cout << left;
+                            cout << setw(20) << "Numero de Recibo";
+                            cout << setw(20) << "DNI";
+                            cout << setw(10) << "Importe";
+                            cout << setw(15) << "Factura";
+                            cout << setw(15) << "Forma de Pago";
+                            cout << setw(15) << "Fecha Recibo" << endl;
+                            cout << "-------------------------------------------------------------------------------------------------------------------------------------------------" << endl;
+                            mostrarTitulo = false;
+                        }
+                        importeTotal += regPago.getImporte();
+                        regPago.Mostrar();
+                        cout << "-------------------------------------------------------------------------------------------------------------------------------------------------" << endl;
+                    }
+                }
+                if (importeTotal != 0)
+                {
+                    cout << "Total Cobrado: $" << importeTotal;
+                    importeTotal = 0;
+                    cout << endl << endl;
+                }
+                mostrarTitulo = true;
+            }
+            if(!hayVentas)
+            {
+                cout << "No existen cobranzas para este periodo." << endl;
+            }
+            system("pause");
             break;
         case 3:
             system("cls");
@@ -891,7 +940,7 @@ void MenuManager::ModuloPagos()
                 {
                     regPago = auxArchivoPago.leerRegistro(j);
 
-                    if( strcmp(regPago.getDni(), regCliente.getDni()) == 0 && regPago.getFechaPago().getAnio() == anio && regPago.getFechaPago().getMes() == mes && regCliente.getActivo() && !regPago.getActivo())
+                    if(strcmp(regPago.getDni(), regCliente.getDni()) == 0 && regPago.getFechaPago().getAnio() == anio && regPago.getFechaPago().getMes() == mes)
                     {
                         hayVentas = true;
                         if(mostrarTitulo)
@@ -926,9 +975,6 @@ void MenuManager::ModuloPagos()
             system("pause");
             break;
         case 4:
-            system("cls");
-            break;
-        case 5:
             system("cls");
             cout << "Numero de Recibo: ";
             cin >> nR;

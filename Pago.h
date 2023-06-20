@@ -21,6 +21,8 @@ public:
     void Mostrar();
     Fecha getFechaPago();
     const char* getDni();
+    const char* getNombre();
+    const char* getApellido();
     int getNumeroRecibo();
     int getNumFactura();
     void setNumFactura(int nF);

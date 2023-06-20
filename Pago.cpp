@@ -13,6 +13,8 @@ bool Pago::Cargar()
     fechaPago.Cargar();
     cout << "DNI cliente: ";
     cargarCadena(dni,11);
+    strcpy(nombre, buscarNombre(dni));
+    strcpy(apellido, buscarApellido(dni));
     if (comprobarClientesExistentes(dni) == true)
     {
         cout << "Importe Cobrado: ";
@@ -99,6 +101,16 @@ void Pago::Mostrar()
 Fecha Pago::getFechaPago()
 {
     return fechaPago;
+}
+
+const char* Pago::getNombre()
+{
+    return nombre;
+}
+
+const char* Pago::getApellido()
+{
+    return apellido;
 }
 
 const char* Pago::getDni()

@@ -525,11 +525,13 @@ void exportarCtasCtes()
     ArchivoPago auxArchivoPago("pagos.dat");
     Pago regPago;
     int cantPagos = auxArchivoPago.contarRegistros();
+    char dni[12];
 
     ofstream archivoctasctes("ctas-ctes.csv", ios::out);
     if (!archivoctasctes)
     {
         cout << "No se pudo crear el archivo." << endl;
+        system("pause");
     }
     else
     {
@@ -557,10 +559,9 @@ void exportarCtasCtes()
         for (int i=0; i< cantPagos; i++)
         {
             regPago = auxArchivoPago.leerRegistro(i);
-
-            archivoctasctes << regPago.getFechaPago().getAnio() << "/" << regPago.getFechaPago().getMes() << "/" << regPago.getFechaPago().getDia() << ";" << buscarNombre(regPago.getDni()) << ";" << buscarApellido
-            (regPago.getDni()) << ";" << "RBO" << ";" << regPago.getNumeroRecibo() << ";" <<
-            regPago.getImporte() << ";";
+            strcpy(dni, regPago.getDni());
+            archivoctasctes << regPago.getFechaPago().getAnio() << "/" << regPago.getFechaPago().getMes() << "/" << regPago.getFechaPago().getDia() << ";" << regPago.getNombre() << ";" << regPago.getApellido()
+            << ";" << "RBO" << ";" << regPago.getNumeroRecibo() << ";" << regPago.getImporte() << ";";
             if (regPago.getActivo())
             {
                 archivoctasctes << "IMPUTADO" << endl;
