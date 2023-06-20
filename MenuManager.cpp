@@ -11,6 +11,7 @@ using namespace std;
 #include "ArchivoVenta.h"
 #include "ArchivoArticulo.h"
 #include "ArchivoPago.h"
+#include <fstream>
 
 void MenuManager::MenuGeneral()
 {
@@ -638,6 +639,30 @@ void MenuManager::ModuloReportes()
     while(opcionMenu!=0);
     system("cls");
 }
+
+float MenuManager::consultarDeudaCliente(const char *dni)
+{
+    float saldo = 0;
+
+    ArchivoVenta auxArchivoVenta("ventas.dat");
+    Venta regVenta;
+    int cantVentas = auxArchivoVenta.contarRegistros();
+
+    ArchivoCliente auxArchivoCliente("clientes.dat");
+
+    for (int i=0; i< cantVentas; i++)
+    {
+        regVenta = auxArchivoVenta.leerRegistro(i);
+
+        if ( strcmp(dni, regVenta.getDni()) == 0 && !regVenta.getPaga())
+        {
+            saldo += regVenta.getSaldo();
+        }
+    }
+
+    return saldo;
+}
+
 void MenuManager::ModuloArticulos()
 {
     int opcionMenu;
@@ -1038,12 +1063,472 @@ void MenuManager::ModuloBackUp()
         switch(op)
         {
         case 1:
-            //hacerBackUp();
+            system("cls");
+            MenuBackUp();
             break;
         case 2:
-            //restaurarBackUp();
+            system("cls");
+            MenuRestaurarArchivo();
             break;
         }
     }
     while(op != 0);
+}
+
+void MenuManager::MenuBackUp()
+{
+    int op;
+    do
+    {
+        cout << "HACER BACK UP DE ARCHIVO" << endl;
+        cout << "------------------------------" << endl;
+        cout << "1- Hacer copia de seguridad de Articulos." << endl;
+        cout << "2- Hacer copia de seguridad de Clientes." << endl;
+        cout << "3- Hacer copia de seguridad de Pagos." << endl;
+        cout << "4- Hacer copia de seguridad de Ventas." << endl << endl;
+        cout << "0- Volver al menu principal." << endl;
+        cin >> op;
+        switch(op)
+        {
+        case 1:
+            system("cls");
+            hacerBackupArticulos();
+            break;
+        case 2:
+            system("cls");
+            hacerBackupClientes();
+            break;
+        case 3:
+            system("cls");
+            hacerBackupPagos();
+            break;
+        case 4:
+            system("cls");
+            hacerBackupVentas();
+            break;
+        }
+    }
+    while(op!=0);
+}
+
+void MenuManager::MenuRestaurarArchivo()
+{
+    int op;
+    do
+    {
+        cout << "RESTAURAR COPIA DE SEGURIDAD" << endl;
+        cout << "------------------------------" << endl;
+        cout << "1- Restaurar copia de seguridad de Articulos." << endl;
+        cout << "2- Restaurar copia de seguridad de Clientes." << endl;
+        cout << "3- Restaurar copia de seguridad de Pagos." << endl;
+        cout << "4- Restaurar copia de seguridad de Ventas." << endl << endl;
+        cout << "0- Volver al menu principal." << endl;
+        cin >> op;
+        switch(op)
+        {
+        case 1:
+            system("cls");
+            restaurarCopiaArticulos();
+            break;
+        case 2:
+            system("cls");
+            restaurarCopiaClientes();
+            break;
+        case 3:
+            system("cls");
+            restaurarCopiaPagos();
+            break;
+        case 4:
+            system("cls");
+            restaurarCopiaVentas();
+            break;
+        }
+    }
+    while(op!=0);
+}
+
+
+int MenuManager::sumarStock(int codigoArticulo, int cantidadArticulo)
+{
+    ArchivoArticulo auxArchivoArticulo("articulos.dat");
+    Articulo regArticulo;
+    int cantArticulos = auxArchivoArticulo.contarRegistros();
+
+    int stock;
+
+    for (int i=0; i< cantArticulos; i++)
+    {
+        regArticulo = auxArchivoArticulo.leerRegistro(i);
+
+        if (regArticulo.getCodigoArticulo() == codigoArticulo)
+        {
+            stock = regArticulo.getStock() + cantidadArticulo;
+            regArticulo.setStock(stock);
+            auxArchivoArticulo.sobreEscribirRegistro(regArticulo, i);
+        }
+    }
+    return stock;
+}
+
+void MenuManager::ventasMensualesProductos()
+{
+    int cantArticulo, mes, anio;
+
+    ArchivoVenta auxArchivoVenta("ventas.dat");
+    Venta regVenta;
+    int cantVentas = auxArchivoVenta.contarRegistros();
+
+    ArchivoArticulo auxArchivoArticulo("articulos.dat");
+    Articulo regArticulo;
+    int cantArticulos = auxArchivoArticulo.contarRegistros();
+
+    cout << "Mes: ";
+    cin >> mes;
+    cout << "Anio: ";
+    cin >> anio;
+
+    for (int i=0; i<cantArticulos; i++)
+    {
+        cantArticulo = 0;
+
+        regArticulo = auxArchivoArticulo.leerRegistro(i);
+
+        for (int j=0; j<cantVentas; j++)
+        {
+            regVenta = auxArchivoVenta.leerRegistro(j);
+
+            if (regArticulo.getCodigoArticulo() == regVenta.getCodigoArticulo() && regVenta.getFechaVenta().getAnio() == anio &&regVenta.getFechaVenta().getMes() == mes)
+            {
+                cantArticulo += regVenta.getCatidadVendida();
+            }
+        }
+
+        cout << "Articulo: " << regArticulo.getDescripcion() << ". Unidades vendidas: " << cantArticulo << "." << endl;
+    }
+    system("pause");
+}
+
+void MenuManager::cobrosMensualesTipo()
+{
+    int cant = 0;
+    int mes, anio;
+
+    ArchivoPago auxArchivoPago("pagos.dat");
+    Pago regPago;
+    int cantPagos = auxArchivoPago.contarRegistros();
+
+    cout << "Mes: ";
+    cin >> mes;
+    cout << "Anio: ";
+    cin >> anio;
+
+    for (int i=0; i<3; i++)
+    {
+        for (int j=0; j<cantPagos; j++)
+        {
+            regPago = auxArchivoPago.leerRegistro(j);
+
+            if (regPago.getFormaPago() == i+1 && regPago.getFechaPago().getAnio() == anio &&regPago.getFechaPago().getMes() == mes)
+            {
+                cant ++;
+            }
+        }
+        switch(i)
+        {
+        case 0:
+            cout << "Efvo - "<< "Cantidad de Cobros: " << cant << "." << endl;
+            break;
+        case 1:
+            cout << "Tarjeta - "<< "Cantidad de Cobros: " << cant << "." << endl;
+            break;
+        case 2:
+            cout << "Banco - "<< "Cantidad de Cobros: " << cant << "." << endl;
+            break;
+        }
+        cant = 0;
+    }
+    system("pause");
+}
+
+void MenuManager::exportarClientes()
+{
+    ArchivoCliente auxArchivoCliente("clientes.dat");
+    Cliente regCliente;
+    int cantClientes = auxArchivoCliente.contarRegistros();
+
+    ofstream archivoClientes("clientes.csv", ios::out);
+    if (!archivoClientes)
+    {
+        cout << "No se pudo crear el archivo." << endl;
+    }
+    else
+    {
+        for (int i=0; i< cantClientes; i++)
+        {
+            regCliente = auxArchivoCliente.leerRegistro(i);
+
+            if (i==0)
+            {
+                archivoClientes << "Nombre" << ";" << "Apellido" <<  ";" << "DNI" <<endl;
+            }
+            archivoClientes << regCliente.getNombre() << ";" << regCliente.getApellido() << ";" << regCliente.getDni() << endl;
+        }
+        archivoClientes.close();
+        cout << "Archivo creado con exito!!!" << endl;
+        cout << cantClientes << " clientes exportados a excel" << endl;
+        system("pause");
+    }
+}
+
+void MenuManager::exportarCtasCtes()
+{
+    ArchivoVenta auxArchivoVenta("ventas.dat");
+    Venta regVenta;
+    int cantVentas = auxArchivoVenta.contarRegistros();
+
+    ArchivoPago auxArchivoPago("pagos.dat");
+    Pago regPago;
+    int cantPagos = auxArchivoPago.contarRegistros();
+    char dni[12];
+
+    ofstream archivoctasctes("ctas-ctes.csv", ios::out);
+    if (!archivoctasctes)
+    {
+        cout << "No se pudo crear el archivo." << endl;
+        system("pause");
+    }
+    else
+    {
+        for (int i=0; i< cantVentas; i++)
+        {
+            regVenta = auxArchivoVenta.leerRegistro(i);
+
+            if (i==0)
+            {
+                archivoctasctes << "Fecha" << ";" << "Nombre" << ";" << "Apellido" <<  ";" << "Tipo Comprobante" <<  ";" << "Numero" <<  ";" << "Importe" <<
+                ";" << "Estado" << endl;
+            }
+            archivoctasctes << regVenta.getFechaVenta().getAnio() << "/" << regVenta.getFechaVenta().getMes() << "/" << regVenta.getFechaVenta().getDia() << ";" << regVenta.getNombre() << ";" << regVenta.getApellido() << ";" << "F" << ";" << regVenta.getNumeroFactura() << ";" <<
+            regVenta.getImporte() << ";";
+            if (regVenta.getPaga())
+            {
+                archivoctasctes << "PAGA" << endl;
+            }
+            else
+            {
+                archivoctasctes << "PENDIENTE" << endl;
+            }
+        }
+
+        for (int i=0; i< cantPagos; i++)
+        {
+            regPago = auxArchivoPago.leerRegistro(i);
+            strcpy(dni, regPago.getDni());
+            archivoctasctes << regPago.getFechaPago().getAnio() << "/" << regPago.getFechaPago().getMes() << "/" << regPago.getFechaPago().getDia() << ";" << regPago.getNombre() << ";" << regPago.getApellido()
+            << ";" << "RBO" << ";" << regPago.getNumeroRecibo() << ";" << regPago.getImporte() << ";";
+            if (regPago.getActivo())
+            {
+                archivoctasctes << "IMPUTADO" << endl;
+            }
+            else
+            {
+                archivoctasctes << "PENDIENTE" << endl;
+            }
+        }
+        archivoctasctes.close();
+        cout << "Archivo creado con exito!!!" << endl;
+        system("pause");
+    }
+}
+
+void MenuManager::hacerBackupArticulos()
+{
+    ArchivoArticulo auxArchivoArticulo("articulos.dat");
+    ArchivoArticulo articuloBkp("articulos.bkp");
+    int cantArticulos = auxArchivoArticulo.contarRegistros();
+
+    Articulo *vec = new Articulo[cantArticulos];
+    if(vec==nullptr){
+        cout << "Falla en realizar backup" << endl;
+        return;
+    }
+
+    auxArchivoArticulo.leerRegistro(vec, cantArticulos);
+    articuloBkp.vaciar();
+    if(articuloBkp.guardar(vec, cantArticulos)){
+        cout << "Backup realizado correctamente" << endl;
+    }
+    else{
+        cout << "Falla al realizar el backup" << endl;
+    }
+
+    delete []vec;
+}
+
+void MenuManager::hacerBackupClientes()
+{
+    ArchivoCliente auxArchivoCliente("clientes.dat");
+    ArchivoCliente clientesBkp("clientes.bkp");
+    int cantClientes = auxArchivoCliente.contarRegistros();
+
+    Cliente *vec = new Cliente[cantClientes];
+    if(vec==nullptr){
+        cout << "Falla en realizar backup" << endl;
+        return;
+    }
+
+    auxArchivoCliente.leerRegistro(vec, cantClientes);
+    clientesBkp.vaciar();
+    if(clientesBkp.guardar(vec, cantClientes)){
+        cout << "Backup realizado correctamente" << endl;
+    }
+    else{
+        cout << "Falla al realizar el backup" << endl;
+    }
+
+    delete []vec;
+}
+
+void MenuManager::hacerBackupPagos()
+{
+    ArchivoPago auxArchivoPago("pagos.dat");
+    ArchivoPago pagosBkp("pagos.bkp");
+    int cantPagos = auxArchivoPago.contarRegistros();
+
+    Pago *vec = new Pago[cantPagos];
+    if(vec==nullptr){
+        cout << "Falla en realizar backup" << endl;
+        return;
+    }
+
+    auxArchivoPago.leerRegistro(vec, cantPagos);
+    pagosBkp.vaciar();
+    if(pagosBkp.guardar(vec, cantPagos)){
+        cout << "Backup realizado correctamente" << endl;
+    }
+    else{
+        cout << "Falla al realizar el backup" << endl;
+    }
+
+    delete []vec;
+}
+
+
+void MenuManager::hacerBackupVentas()
+{
+    ArchivoVenta auxArchivoVenta("ventas.dat");
+    ArchivoVenta ventasBkp("ventas.bkp");
+    int cantVentas = auxArchivoVenta.contarRegistros();
+
+    Venta *vec = new Venta[cantVentas];
+    if(vec==nullptr){
+        cout << "Falla en realizar backup" << endl;
+        return;
+    }
+
+    auxArchivoVenta.leerRegistro(vec, cantVentas);
+    ventasBkp.vaciar();
+    if(ventasBkp.guardar(vec, cantVentas)){
+        cout << "Backup realizado correctamente" << endl;
+    }
+    else{
+        cout << "Falla al realizar el backup" << endl;
+    }
+
+    delete []vec;
+}
+
+
+void MenuManager::restaurarCopiaArticulos()
+{
+    ArchivoArticulo auxArchivoArticulo("articulos.dat");
+    ArchivoArticulo articuloBkp("articulos.bkp");
+    int cantArticulos = auxArchivoArticulo.contarRegistros();
+
+    Articulo *vec = new Articulo[cantArticulos];
+    if(vec==nullptr){
+        cout << "Falla en restaurar backup" << endl;
+        return;
+    }
+
+    articuloBkp.leerRegistro(vec, cantArticulos);
+    auxArchivoArticulo.vaciar();
+    if(auxArchivoArticulo.guardar(vec,cantArticulos)){
+        cout << "Backup restaurado correctamente" << endl;
+    }
+    else{
+        cout << "Falla al restaurar el backup" << endl;
+    }
+    delete []vec;
+}
+
+
+void MenuManager::restaurarCopiaClientes()
+{
+    ArchivoCliente auxArchivoCliente("clientes.dat");
+    ArchivoCliente clienteBkp("clientes.bkp");
+    int cantClientes = auxArchivoCliente.contarRegistros();
+
+    Cliente *vec = new Cliente[cantClientes];
+    if(vec==nullptr){
+        cout << "Falla en restaurar backup" << endl;
+        return;
+    }
+
+    clienteBkp.leerRegistro(vec, cantClientes);
+    auxArchivoCliente.vaciar();
+    if(auxArchivoCliente.guardar(vec,cantClientes)){
+        cout << "Backup restaurado correctamente" << endl;
+    }
+    else{
+        cout << "Falla al restaurar el backup" << endl;
+    }
+    delete []vec;
+}
+
+
+void MenuManager::restaurarCopiaPagos()
+{
+    ArchivoPago auxArchivoPago("pagos.dat");
+    ArchivoPago pagosBkp("pagos.bkp");
+    int cantPagos = auxArchivoPago.contarRegistros();
+
+    Pago *vec = new Pago[cantPagos];
+    if(vec==nullptr){
+        cout << "Falla en restaurar backup" << endl;
+        return;
+    }
+
+    pagosBkp.leerRegistro(vec, cantPagos);
+    auxArchivoPago.vaciar();
+    if(auxArchivoPago.guardar(vec,cantPagos)){
+        cout << "Backup restaurado correctamente" << endl;
+    }
+    else{
+        cout << "Falla al restaurar el backup" << endl;
+    }
+    delete []vec;
+}
+
+void MenuManager::restaurarCopiaVentas()
+{
+    ArchivoVenta auxArchivoVenta("ventas.dat");
+    ArchivoVenta ventasBkp("ventas.bkp");
+    int cantVentas = auxArchivoVenta.contarRegistros();
+
+    Venta *vec = new Venta[cantVentas];
+    if(vec==nullptr){
+        cout << "Falla en restaurar backup" << endl;
+        return;
+    }
+
+    ventasBkp.leerRegistro(vec, cantVentas);
+    auxArchivoVenta.vaciar();
+    if(auxArchivoVenta.guardar(vec,cantVentas)){
+        cout << "Backup restaurado correctamente" << endl;
+    }
+    else{
+        cout << "Falla al restaurar el backup" << endl;
+    }
+    delete []vec;
 }

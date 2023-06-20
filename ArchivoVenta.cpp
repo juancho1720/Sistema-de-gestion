@@ -89,3 +89,41 @@ int ArchivoVenta::sobreEscribirRegistro(Venta reg, int pos)
     fclose(p);
     return valor;
 }
+
+void ArchivoVenta::leerRegistro(Venta *vec, int cantidadRegistrosALeer)
+{
+    FILE *p = fopen(nombre, "rb");
+	if (p == NULL)
+	{
+		return ;
+	}
+
+	fread(vec, sizeof(Venta), cantidadRegistrosALeer, p);
+	fclose(p);
+}
+
+
+
+bool ArchivoVenta::guardar(Venta *vec, int cantidadRegistrosAEscribir)
+{
+    FILE *p = fopen(nombre, "ab");
+	if (p == NULL)
+	{
+		return false;
+	}
+
+	int cantidadRegistrosEscritos = fwrite(vec, sizeof(Venta), cantidadRegistrosAEscribir, p);
+	fclose(p);
+	return cantidadRegistrosEscritos == cantidadRegistrosAEscribir;
+}
+
+
+void ArchivoVenta::vaciar()
+{
+    FILE *p = fopen(nombre, "wb");
+	if (p == NULL)
+	{
+		return ;
+	}
+	fclose(p);
+}

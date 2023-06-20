@@ -94,3 +94,42 @@ int ArchivoPago::sobreEscribirRegistro(Pago reg, int pos)
     fclose(p);
     return valor;
 }
+
+
+void ArchivoPago::leerRegistro(Pago *vec, int cantidadRegistrosALeer)
+{
+    FILE *p = fopen(nombre, "rb");
+	if (p == NULL)
+	{
+		return ;
+	}
+
+	fread(vec, sizeof(Pago), cantidadRegistrosALeer, p);
+	fclose(p);
+}
+
+
+
+bool ArchivoPago::guardar(Pago *vec, int cantidadRegistrosAEscribir)
+{
+    FILE *p = fopen(nombre, "ab");
+	if (p == NULL)
+	{
+		return false;
+	}
+
+	int cantidadRegistrosEscritos = fwrite(vec, sizeof(Pago), cantidadRegistrosAEscribir, p);
+	fclose(p);
+	return cantidadRegistrosEscritos == cantidadRegistrosAEscribir;
+}
+
+
+void ArchivoPago::vaciar()
+{
+    FILE *p = fopen(nombre, "wb");
+	if (p == NULL)
+	{
+		return ;
+	}
+	fclose(p);
+}

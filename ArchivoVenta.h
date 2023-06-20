@@ -2,6 +2,8 @@
 
 #include "Venta.h"
 
+
+
 class ArchivoVenta
 {
 private:
@@ -13,4 +15,7 @@ public:
     void escribirRegistro(Venta reg);
     int buscarFactura(int n);
     int sobreEscribirRegistro(Venta reg, int pos);
+    void leerRegistro(Venta *vec, int cantidadRegistrosALeer);
+    bool guardar(Venta *vec, int cantidadRegistrosAEscribir);
+    void vaciar();
 };

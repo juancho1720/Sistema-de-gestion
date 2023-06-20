@@ -6,6 +6,7 @@ using namespace std;
 
 #include "Articulo.h"
 #include "FuncionesGenerales.h"
+#include "ArchivoArticulo.h"
 
 Articulo::Articulo()
 {
@@ -91,3 +92,5 @@ void Articulo::setEstado(bool e)
 {
     estado = e;
 }
+
+

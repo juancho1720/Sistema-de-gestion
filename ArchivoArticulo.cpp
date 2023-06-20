@@ -149,3 +149,41 @@ void ArchivoArticulo::aumentarPreciosPorcentual()
     cout << "Precio modificado con exito!!!" << endl;
 }
 
+
+void ArchivoArticulo::leerRegistro(Articulo *vec, int cantidadRegistrosALeer)
+{
+    FILE *p = fopen(nombre, "rb");
+	if (p == NULL)
+	{
+		return ;
+	}
+
+	fread(vec, sizeof(Articulo), cantidadRegistrosALeer, p);
+	fclose(p);
+}
+
+
+
+bool ArchivoArticulo::guardar(Articulo *vec, int cantidadRegistrosAEscribir)
+{
+    FILE *p = fopen(nombre, "ab");
+	if (p == NULL)
+	{
+		return false;
+	}
+
+	int cantidadRegistrosEscritos = fwrite(vec, sizeof(Articulo), cantidadRegistrosAEscribir, p);
+	fclose(p);
+	return cantidadRegistrosEscritos == cantidadRegistrosAEscribir;
+}
+
+
+void ArchivoArticulo::vaciar()
+{
+    FILE *p = fopen(nombre, "wb");
+	if (p == NULL)
+	{
+		return ;
+	}
+	fclose(p);
+}

@@ -6,6 +6,9 @@ using namespace std;
 
 #include "Pago.h"
 #include "FuncionesGenerales.h"
+#include "ArchivoCliente.h"
+#include "ArchivoPago.h"
+#include "ArchivoVenta.h"
 
 bool Pago::Cargar()
 {
@@ -156,4 +159,105 @@ bool Pago::getActivo()
 void Pago::setActivo(bool a)
 {
     activo = a;
+}
+
+
+
+int Pago::generarNumeroRecibo()
+{
+    ArchivoPago auxArchivoPago("pagos.dat");
+    int cantPagos = auxArchivoPago.contarRegistros();
+    return cantPagos+1;
+}
+
+
+bool Pago::cancelarFactura(const char *dni, int numFactura, float importe)
+{
+    ArchivoVenta auxArchivoVenta("ventas.dat");
+    Venta regVenta;
+    int cantVentas = auxArchivoVenta.contarRegistros();
+
+    for (int i=0; i< cantVentas; i++)
+    {
+        regVenta = auxArchivoVenta.leerRegistro(i);
+
+        if ( strcmp(regVenta.getDni(), dni) == 0 )
+        {
+            if (regVenta.getNumeroFactura() == numFactura)
+            {
+                if (regVenta.getPaga())
+                {
+                    cout << "La factura ingresada esta paga." << endl;
+                    return false;
+                }
+                else
+                {
+                    if (regVenta.getImporte() == importe)
+                    {
+                        regVenta.setPaga(true);
+                        regVenta.setSaldo(0);
+                        restarDeuda(regVenta.getDni(), importe);
+                        auxArchivoVenta.sobreEscribirRegistro(regVenta, i);
+                        return true;
+                    }
+                    else
+                    {
+                        cout << "El importe ingresado no coincide con el importe de la factura." << endl;
+                        return false;
+                    }
+                }
+            }
+        }
+    }
+    cout << "No existe ese numero de factura para el cliente seleccionado." << endl;
+    system("pause");
+    return false;
+}
+
+
+int Pago::imputarRecibos(const char *dni, float importe)
+{
+    ArchivoVenta auxArchivoVenta("ventas.dat");
+    Venta regVenta;
+    int cantVentas = auxArchivoVenta.contarRegistros();
+
+    ArchivoPago auxArchivoPago("pagos.dat");
+
+    for (int i=0; i<cantVentas; i++)
+    {
+        regVenta = auxArchivoVenta.leerRegistro(i);
+
+        if (strcmp(regVenta.getDni(), dni) == 0)
+        {
+            if(!regVenta.getPaga() && regVenta.getSaldo() == importe)
+            {
+                regVenta.setPaga(true);
+                regVenta.setSaldo(0);
+                restarDeuda(regVenta.getDni(), importe);
+                auxArchivoVenta.sobreEscribirRegistro(regVenta, i);
+                return regVenta.getNumeroFactura();
+            }
+            if(!regVenta.getPaga() && regVenta.getSaldo() > importe)
+            {
+                regVenta.setSaldo(regVenta.getSaldo() - importe);
+                restarDeuda(regVenta.getDni(), importe);
+                auxArchivoVenta.sobreEscribirRegistro(regVenta, i);
+                return regVenta.getNumeroFactura();
+            }
+            if(!regVenta.getPaga() && regVenta.getSaldo() < importe)
+            {
+                regVenta.setPaga(true);
+                regVenta.setSaldo(0);
+                restarDeuda(regVenta.getDni(), importe);
+                auxArchivoVenta.sobreEscribirRegistro(regVenta, i);
+                return regVenta.getNumeroFactura();
+            }
+            if(!regVenta.getPaga() && regVenta.getSaldo() == importe)
+            {
+                regVenta.setPaga(true);
+                auxArchivoVenta.sobreEscribirRegistro(regVenta, i);
+            }
+        }
+    }
+    return false;
 }

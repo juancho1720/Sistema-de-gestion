@@ -6,6 +6,9 @@ using namespace std;
 
 #include "Venta.h"
 #include "FuncionesGenerales.h"
+#include "ArchivoVenta.h"
+#include "ArchivoArticulo.h"
+#include "ArchivoCliente.h"
 
 bool Venta::Cargar()
 {
@@ -163,3 +166,118 @@ void Venta::setDescripcionArticulo(const char *dA)
 {
     strcpy(descripcionArticulo, dA);
 }
+
+int Venta::generarNumeroFactura()
+{
+    ArchivoVenta auxArchivoVenta("ventas.dat");
+    int cantVentas = auxArchivoVenta.contarRegistros();
+    return cantVentas+1;
+}
+
+
+float Venta::consultarDeudaCliente(const char *dni)
+{
+    float saldo = 0;
+
+    ArchivoVenta auxArchivoVenta("ventas.dat");
+    Venta regVenta;
+    int cantVentas = auxArchivoVenta.contarRegistros();
+
+    ArchivoCliente auxArchivoCliente("clientes.dat");
+
+    for (int i=0; i< cantVentas; i++)
+    {
+        regVenta = auxArchivoVenta.leerRegistro(i);
+
+        if ( strcmp(dni, regVenta.getDni()) == 0 && !regVenta.getPaga())
+        {
+            saldo += regVenta.getSaldo();
+        }
+    }
+
+    return saldo;
+}
+
+
+ const char* Venta::buscarDescripcion(int codigoArticulo)
+{
+    ArchivoArticulo auxArchivoArticulo("articulos.dat");
+    Articulo regArticulo;
+    int cantArticulos = auxArchivoArticulo.contarRegistros();
+
+    for(int i=0; i<cantArticulos; i++)
+    {
+        regArticulo = auxArchivoArticulo.leerRegistro(i);
+
+        if(codigoArticulo == regArticulo.getCodigoArticulo())
+        {
+            return regArticulo.getDescripcion();
+        }
+    }
+    return "Error";
+}
+
+
+int Venta::restarStock(int codigoArticulo, int cantidadVendida)
+{
+    ArchivoArticulo auxArchivoArticulo("articulos.dat");
+    Articulo regArticulo;
+    int cantArticulos = auxArchivoArticulo.contarRegistros();
+
+    int stock;
+
+    for (int i=0; i< cantArticulos; i++)
+    {
+        regArticulo = auxArchivoArticulo.leerRegistro(i);
+
+        if (regArticulo.getCodigoArticulo() == codigoArticulo)
+        {
+            stock = regArticulo.getStock() - cantidadVendida;
+
+            if (stock >= 0)
+            {
+                regArticulo.setStock(stock);
+                auxArchivoArticulo.sobreEscribirRegistro(regArticulo, i);
+            }
+        }
+    }
+    return stock;
+}
+
+
+
+float Venta::calcularImporteFactura(int codA, int cantV)
+{
+    ArchivoArticulo auxArchivoArticulo("articulos.dat");
+    Articulo regArticulo;
+    int cantArticulos = auxArchivoArticulo.contarRegistros();
+
+    for(int i=0; i<cantArticulos; i++)
+    {
+        regArticulo = auxArchivoArticulo.leerRegistro(i);
+
+        if(regArticulo.getCodigoArticulo() == codA)
+        {
+            return regArticulo.getPrecioUnitario() * cantV;
+        }
+    }
+    return -1;
+}
+
+
+bool Venta::comprobarDeuda(const char *dni, float importe)
+{
+    ArchivoCliente auxArchivoCliente("clientes.dat");
+    Cliente regCliente;
+
+    int pos = auxArchivoCliente.buscarDni(dni);
+    regCliente = auxArchivoCliente.leerRegistro(pos);
+
+    if (regCliente.getMontoMaximo() < consultarDeudaCliente(dni) + importe)
+    {
+        return false;
+    }
+    return true;
+
+}
+

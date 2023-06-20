@@ -3,6 +3,9 @@
 #include "Cliente.h"
 #include "Fecha.h"
 
+
+
+
 class Venta
 {
 private:
@@ -35,4 +38,10 @@ public:
     bool getPaga();
     void setPaga(bool p);
     void setDescripcionArticulo(const char *dA);
+    int generarNumeroFactura();
+    float consultarDeudaCliente(const char *dni);
+    const char *buscarDescripcion(int codigoArticulo);
+    int restarStock(int codigoArticulo, int cantidadVendida);
+    float calcularImporteFactura(int codA, int cantV);
+    bool comprobarDeuda(const char *dni, float importe);
 };

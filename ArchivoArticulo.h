@@ -15,4 +15,7 @@ public:
     int sobreEscribirRegistro(Articulo reg, int pos);
     void cambiarPrecios();
     void aumentarPreciosPorcentual();
+    void leerRegistro(Articulo *vec, int cantidadRegistrosALeer);
+    bool guardar(Articulo *vec, int cantidadRegistrosAEscribir);
+    void vaciar();
 };

@@ -96,3 +96,42 @@ int ArchivoCliente::sobreEscribirRegistro(Cliente reg, int pos)
     return valor;
 }
 
+
+
+void ArchivoCliente::leerRegistro(Cliente *vec, int cantidadRegistrosALeer)
+{
+    FILE *p = fopen(nombre, "rb");
+	if (p == NULL)
+	{
+		return ;
+	}
+
+	fread(vec, sizeof(Cliente), cantidadRegistrosALeer, p);
+	fclose(p);
+}
+
+
+
+bool ArchivoCliente::guardar(Cliente *vec, int cantidadRegistrosAEscribir)
+{
+    FILE *p = fopen(nombre, "ab");
+	if (p == NULL)
+	{
+		return false;
+	}
+
+	int cantidadRegistrosEscritos = fwrite(vec, sizeof(Cliente), cantidadRegistrosAEscribir, p);
+	fclose(p);
+	return cantidadRegistrosEscritos == cantidadRegistrosAEscribir;
+}
+
+
+void ArchivoCliente::vaciar()
+{
+    FILE *p = fopen(nombre, "wb");
+	if (p == NULL)
+	{
+		return ;
+	}
+	fclose(p);
+}

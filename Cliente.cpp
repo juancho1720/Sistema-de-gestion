@@ -6,6 +6,7 @@ using namespace std;
 
 #include "FuncionesGenerales.h"
 #include "Cliente.h"
+#include "ArchivoCliente.h"
 
 bool Cliente::Cargar()
 {
@@ -95,3 +96,5 @@ float Cliente::getMontoMaximo()
 {
     return montoMaximo;
 }
+
+

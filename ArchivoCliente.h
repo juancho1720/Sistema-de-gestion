@@ -13,4 +13,7 @@ public:
     void escribirRegistro(Cliente reg);
     int buscarDni(const char *d);
     int sobreEscribirRegistro(Cliente reg, int pos);
+    void leerRegistro(Cliente *vec, int cantidadRegistrosALeer);
+    bool guardar(Cliente *vec, int cantidadRegistrosAEscribir);
+    void vaciar();
 };

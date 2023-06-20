@@ -13,4 +13,7 @@ public:
     void escribirRegistro(Pago reg);
     int buscarRecibo(int n);
     int sobreEscribirRegistro(Pago reg, int pos);
+    void leerRegistro(Pago *vec, int cantidadRegistrosALeer);
+    bool guardar(Pago *vec, int cantidadRegistrosAEscribir);
+    void vaciar();
 };
