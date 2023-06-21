@@ -28,4 +28,5 @@ public:
     void restaurarCopiaClientes();
     void restaurarCopiaPagos();
     void restaurarCopiaVentas();
+    void cambiarLimiteDeuda();
 };

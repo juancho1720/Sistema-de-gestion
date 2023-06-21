@@ -76,7 +76,8 @@ void MenuManager::ModuloClientes()
         cout << "1- Cargar nuevo." << endl;
         cout << "2- Listar todos." << endl;
         cout << "3- Buscar por DNI." << endl;
-        cout << "4- Borrar." << endl << endl;
+        cout << "4- Borrar." << endl;
+        cout << "5- Modificar limite." << endl << endl;
         cout << "0- Volver al menu principal." << endl;
         cin >> opcionMenu;
         switch(opcionMenu)
@@ -177,6 +178,11 @@ void MenuManager::ModuloClientes()
                 }
                 system("pause");
             }
+            break;
+        case 5:
+            system("cls");
+            cambiarLimiteDeuda();
+            system("pause");
             break;
         }
         system("cls");
@@ -1570,4 +1576,35 @@ void MenuManager::restaurarCopiaVentas()
         cout << "Falla al restaurar el backup" << endl;
     }
     delete []vec;
+}
+
+void MenuManager::cambiarLimiteDeuda()
+{
+    char dni[12];
+    float nuevoLimite;
+    ArchivoCliente auxArchivoCliente("clientes.dat");
+    Cliente regCliente;
+    int canClientes = auxArchivoCliente.contarRegistros();
+    bool bandera = false;
+
+    cout << "Ingresar DNI del cliente: ";
+    cargarCadena(dni, 11);
+
+    for(int x=0;x<canClientes;x++){
+        regCliente = auxArchivoCliente.leerRegistro(x);
+        if(!strcmp(regCliente.getDni(),dni)){
+            cout << "Ingresar nuevo limite: ";
+            cin >> nuevoLimite;
+            regCliente.setMontoMaximo(nuevoLimite);
+            bandera = true;
+        }
+        auxArchivoCliente.sobreEscribirRegistro(regCliente,x);
+    }
+    if(bandera){
+        cout << "Nuevo limite modificado con exito." << endl;
+    }
+    else{
+        cout << "No existe cliente con ese DNI" << endl;
+    }
+
 }

@@ -5,6 +5,7 @@ using namespace std;
 
 #include "ArchivoCliente.h"
 
+
 ArchivoCliente::ArchivoCliente(const char *n)
 {
     strcpy(nombre, n);
@@ -124,3 +125,11 @@ void ArchivoCliente::vaciar()
 	}
 	fclose(p);
 }
+
+
+
+
+
+
+
+
