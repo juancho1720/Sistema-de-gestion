@@ -907,51 +907,60 @@ void MenuManager::ModuloPagos()
             cantPagos = auxArchivoPago.contarRegistros();
             cantClientes = auxArchivoCliente.contarRegistros();
 
-            for(int i=0; i<cantClientes; i++)
+            if (comprobarClientesExistentes(dni) == true)
             {
-                regCliente = auxArchivoCliente.leerRegistro(i);
-
-                if(strcmp(regCliente.getDni(), dni) == 0)
+                for(int i=0; i<cantClientes; i++)
                 {
-                    for(int j=0; j<cantPagos; j++)
+                    regCliente = auxArchivoCliente.leerRegistro(i);
+
+                    if(strcmp(regCliente.getDni(), dni) == 0)
                     {
-                        regPago = auxArchivoPago.leerRegistro(j);
-
-                        if(mostrarTitulo && strcmp(regPago.getDni(), dni) == 0)
+                        for(int j=0; j<cantPagos; j++)
                         {
-                            hayVentas = true;
+                            regPago = auxArchivoPago.leerRegistro(j);
 
-                            cout << "Cliente: " << regCliente.getApellido() << ", " << regCliente.getNombre() << endl << endl;
-                            cout << left;
-                            cout << setw(20) << "Numero de Recibo";
-                            cout << setw(20) << "DNI";
-                            cout << setw(10) << "Importe";
-                            cout << setw(15) << "Factura";
-                            cout << setw(15) << "Forma de Pago";
-                            cout << setw(15) << "Fecha Recibo" << endl;
-                            cout << "-------------------------------------------------------------------------------------------------------------------------------------------------" << endl;
-                            mostrarTitulo = false;
-                        }
-                        if(strcmp(regPago.getDni(), dni) == 0)
-                        {
-                            importeTotal += regPago.getImporte();
-                            regPago.Mostrar();
-                            cout << "-------------------------------------------------------------------------------------------------------------------------------------------------" << endl;
+                            if(mostrarTitulo && strcmp(regPago.getDni(), dni) == 0)
+                            {
+                                hayVentas = true;
+
+                                cout << "Cliente: " << regCliente.getApellido() << ", " << regCliente.getNombre() << endl << endl;
+                                cout << left;
+                                cout << setw(20) << "Numero de Recibo";
+                                cout << setw(20) << "DNI";
+                                cout << setw(10) << "Importe";
+                                cout << setw(15) << "Factura";
+                                cout << setw(15) << "Forma de Pago";
+                                cout << setw(15) << "Fecha Recibo" << endl;
+                                cout << "-------------------------------------------------------------------------------------------------------------------------------------------------" << endl;
+                                mostrarTitulo = false;
+                            }
+                            if(strcmp(regPago.getDni(), dni) == 0)
+                            {
+                                importeTotal += regPago.getImporte();
+                                regPago.Mostrar();
+                                cout << "-------------------------------------------------------------------------------------------------------------------------------------------------" << endl;
+                            }
                         }
                     }
+                    if (importeTotal != 0)
+                    {
+                        cout << "Total Cobrado: $" << importeTotal;
+                        importeTotal = 0;
+                        cout << endl << endl;
+                    }
+                    mostrarTitulo = true;
                 }
-                if (importeTotal != 0)
+                if(!hayVentas)
                 {
-                    cout << "Total Cobrado: $" << importeTotal;
-                    importeTotal = 0;
-                    cout << endl << endl;
+                    cout << "No existen cobranzas de este cliente para este periodo." << endl;
                 }
-                mostrarTitulo = true;
             }
-            if(!hayVentas)
+            else
             {
-                cout << "No existen cobranzas de este cliente para este periodo." << endl;
+                system("cls");
+                cout << "El cliente ingresado no existe." << endl;
             }
+
             system("pause");
             break;
         case 3:
@@ -1315,10 +1324,10 @@ void MenuManager::exportarCtasCtes()
             if (i==0)
             {
                 archivoctasctes << "Fecha" << ";" << "Nombre" << ";" << "Apellido" <<  ";" << "Tipo Comprobante" <<  ";" << "Numero" <<  ";" << "Importe" <<
-                ";" << "Estado" << endl;
+                                ";" << "Estado" << endl;
             }
             archivoctasctes << regVenta.getFechaVenta().getAnio() << "/" << regVenta.getFechaVenta().getMes() << "/" << regVenta.getFechaVenta().getDia() << ";" << regVenta.getNombre() << ";" << regVenta.getApellido() << ";" << "F" << ";" << regVenta.getNumeroFactura() << ";" <<
-            regVenta.getImporte() << ";";
+                            regVenta.getImporte() << ";";
             if (regVenta.getPaga())
             {
                 archivoctasctes << "PAGA" << endl;
@@ -1334,7 +1343,7 @@ void MenuManager::exportarCtasCtes()
             regPago = auxArchivoPago.leerRegistro(i);
             strcpy(dni, regPago.getDni());
             archivoctasctes << regPago.getFechaPago().getAnio() << "/" << regPago.getFechaPago().getMes() << "/" << regPago.getFechaPago().getDia() << ";" << regPago.getNombre() << ";" << regPago.getApellido()
-            << ";" << "RBO" << ";" << regPago.getNumeroRecibo() << ";" << regPago.getImporte() << ";";
+                            << ";" << "RBO" << ";" << regPago.getNumeroRecibo() << ";" << regPago.getImporte() << ";";
             if (regPago.getActivo())
             {
                 archivoctasctes << "IMPUTADO" << endl;
@@ -1357,17 +1366,20 @@ void MenuManager::hacerBackupArticulos()
     int cantArticulos = auxArchivoArticulo.contarRegistros();
 
     Articulo *vec = new Articulo[cantArticulos];
-    if(vec==nullptr){
+    if(vec==nullptr)
+    {
         cout << "Falla en realizar backup" << endl;
         return;
     }
 
     auxArchivoArticulo.leerRegistro(vec, cantArticulos);
     articuloBkp.vaciar();
-    if(articuloBkp.guardar(vec, cantArticulos)){
+    if(articuloBkp.guardar(vec, cantArticulos))
+    {
         cout << "Backup realizado correctamente" << endl;
     }
-    else{
+    else
+    {
         cout << "Falla al realizar el backup" << endl;
     }
 
@@ -1381,17 +1393,20 @@ void MenuManager::hacerBackupClientes()
     int cantClientes = auxArchivoCliente.contarRegistros();
 
     Cliente *vec = new Cliente[cantClientes];
-    if(vec==nullptr){
+    if(vec==nullptr)
+    {
         cout << "Falla en realizar backup" << endl;
         return;
     }
 
     auxArchivoCliente.leerRegistro(vec, cantClientes);
     clientesBkp.vaciar();
-    if(clientesBkp.guardar(vec, cantClientes)){
+    if(clientesBkp.guardar(vec, cantClientes))
+    {
         cout << "Backup realizado correctamente" << endl;
     }
-    else{
+    else
+    {
         cout << "Falla al realizar el backup" << endl;
     }
 
@@ -1405,17 +1420,20 @@ void MenuManager::hacerBackupPagos()
     int cantPagos = auxArchivoPago.contarRegistros();
 
     Pago *vec = new Pago[cantPagos];
-    if(vec==nullptr){
+    if(vec==nullptr)
+    {
         cout << "Falla en realizar backup" << endl;
         return;
     }
 
     auxArchivoPago.leerRegistro(vec, cantPagos);
     pagosBkp.vaciar();
-    if(pagosBkp.guardar(vec, cantPagos)){
+    if(pagosBkp.guardar(vec, cantPagos))
+    {
         cout << "Backup realizado correctamente" << endl;
     }
-    else{
+    else
+    {
         cout << "Falla al realizar el backup" << endl;
     }
 
@@ -1429,17 +1447,20 @@ void MenuManager::hacerBackupVentas()
     int cantVentas = auxArchivoVenta.contarRegistros();
 
     Venta *vec = new Venta[cantVentas];
-    if(vec==nullptr){
+    if(vec==nullptr)
+    {
         cout << "Falla en realizar backup" << endl;
         return;
     }
 
     auxArchivoVenta.leerRegistro(vec, cantVentas);
     ventasBkp.vaciar();
-    if(ventasBkp.guardar(vec, cantVentas)){
+    if(ventasBkp.guardar(vec, cantVentas))
+    {
         cout << "Backup realizado correctamente" << endl;
     }
-    else{
+    else
+    {
         cout << "Falla al realizar el backup" << endl;
     }
 
@@ -1453,17 +1474,20 @@ void MenuManager::restaurarCopiaArticulos()
     int cantArticulos = articuloBkp.contarRegistros();
 
     Articulo *vec = new Articulo[cantArticulos];
-    if(vec==nullptr){
+    if(vec==nullptr)
+    {
         cout << "Falla en restaurar backup" << endl;
         return;
     }
 
     articuloBkp.leerRegistro(vec, cantArticulos);
     auxArchivoArticulo.vaciar();
-    if(auxArchivoArticulo.guardar(vec,cantArticulos)){
+    if(auxArchivoArticulo.guardar(vec,cantArticulos))
+    {
         cout << "Backup restaurado correctamente" << endl;
     }
-    else{
+    else
+    {
         cout << "Falla al restaurar el backup" << endl;
     }
     delete []vec;
@@ -1476,17 +1500,20 @@ void MenuManager::restaurarCopiaClientes()
     int cantClientes = clienteBkp.contarRegistros();
 
     Cliente *vec = new Cliente[cantClientes];
-    if(vec==nullptr){
+    if(vec==nullptr)
+    {
         cout << "Falla en restaurar backup" << endl;
         return;
     }
 
     clienteBkp.leerRegistro(vec, cantClientes);
     auxArchivoCliente.vaciar();
-    if(auxArchivoCliente.guardar(vec,cantClientes)){
+    if(auxArchivoCliente.guardar(vec,cantClientes))
+    {
         cout << "Backup restaurado correctamente" << endl;
     }
-    else{
+    else
+    {
         cout << "Falla al restaurar el backup" << endl;
     }
     delete []vec;
@@ -1499,17 +1526,20 @@ void MenuManager::restaurarCopiaPagos()
     int cantPagos = pagosBkp.contarRegistros();
 
     Pago *vec = new Pago[cantPagos];
-    if(vec==nullptr){
+    if(vec==nullptr)
+    {
         cout << "Falla en restaurar backup" << endl;
         return;
     }
 
     pagosBkp.leerRegistro(vec, cantPagos);
     auxArchivoPago.vaciar();
-    if(auxArchivoPago.guardar(vec,cantPagos)){
+    if(auxArchivoPago.guardar(vec,cantPagos))
+    {
         cout << "Backup restaurado correctamente" << endl;
     }
-    else{
+    else
+    {
         cout << "Falla al restaurar el backup" << endl;
     }
     delete []vec;
@@ -1522,17 +1552,20 @@ void MenuManager::restaurarCopiaVentas()
     int cantVentas = ventasBkp.contarRegistros();
 
     Venta *vec = new Venta[cantVentas];
-    if(vec==nullptr){
+    if(vec==nullptr)
+    {
         cout << "Falla en restaurar backup" << endl;
         return;
     }
 
     ventasBkp.leerRegistro(vec, cantVentas);
     auxArchivoVenta.vaciar();
-    if(auxArchivoVenta.guardar(vec,cantVentas)){
+    if(auxArchivoVenta.guardar(vec,cantVentas))
+    {
         cout << "Backup restaurado correctamente" << endl;
     }
-    else{
+    else
+    {
         cout << "Falla al restaurar el backup" << endl;
     }
     delete []vec;
