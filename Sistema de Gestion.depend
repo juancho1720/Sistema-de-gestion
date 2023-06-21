@@ -1,5 +1,5 @@
 # depslib dependency file v1.0
-1687299254 source:c:\users\sarmi\onedrive\documentos\github\sistema-de-gestion\archivoarticulo.cpp
+1687384017 source:c:\users\sarmi\onedrive\documentos\github\sistema-de-gestion\archivoarticulo.cpp
 	<iostream>
 	<string.h>
 	<iomanip>
@@ -107,7 +107,7 @@
 	"ArchivoPago.h"
 	<fstream>
 
-1687382910 source:c:\users\sarmi\onedrive\documentos\github\sistema-de-gestion\pago.cpp
+1687385215 source:c:\users\sarmi\onedrive\documentos\github\sistema-de-gestion\pago.cpp
 	<iostream>
 	<string.h>
 	<iomanip>

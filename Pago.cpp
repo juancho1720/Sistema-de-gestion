@@ -232,7 +232,7 @@ int Pago::imputarRecibos(const char *dni, float importe)
 
         if (strcmp(regVenta.getDni(), dni) == 0)
         {
-            if(!regVenta.getPaga() && regVenta.getSaldo() == importe)
+            if(!regVenta.getPaga() && regVenta.getSaldo() == importe) //regVenta.getSaldo() == 50 // importe == 50
             {
                 regVenta.setPaga(true);
                 regVenta.setSaldo(0);
@@ -242,7 +242,8 @@ int Pago::imputarRecibos(const char *dni, float importe)
             }
             if(!regVenta.getPaga() && regVenta.getSaldo() > importe)
             {
-                regVenta.setSaldo(regVenta.getSaldo() - importe);
+                //regVenta.setSaldo(regVenta.getSaldo() - importe); // Ver
+                regVenta.setSaldo(0);
                 restarDeuda(regVenta.getDni(), importe);
                 auxArchivoVenta.sobreEscribirRegistro(regVenta, i);
                 return regVenta.getNumeroFactura();
@@ -252,13 +253,9 @@ int Pago::imputarRecibos(const char *dni, float importe)
                 regVenta.setPaga(true);
                 regVenta.setSaldo(0);
                 restarDeuda(regVenta.getDni(), importe);
+                //saldoAcredor =  importe - regVenta.getSaldo() // ver
                 auxArchivoVenta.sobreEscribirRegistro(regVenta, i);
                 return regVenta.getNumeroFactura();
-            }
-            if(!regVenta.getPaga() && regVenta.getSaldo() == importe)
-            {
-                regVenta.setPaga(true);
-                auxArchivoVenta.sobreEscribirRegistro(regVenta, i);
             }
         }
     }
