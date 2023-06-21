@@ -26,9 +26,9 @@
 1687299254 c:\users\sarmi\onedrive\documentos\github\sistema-de-gestion\archivocliente.h
 	"Cliente.h"
 
-1687131591 c:\users\sarmi\onedrive\documentos\github\sistema-de-gestion\cliente.h
+1687386829 c:\users\sarmi\onedrive\documentos\github\sistema-de-gestion\cliente.h
 
-1687299254 source:c:\users\sarmi\onedrive\documentos\github\sistema-de-gestion\archivopago.cpp
+1687386011 source:c:\users\sarmi\onedrive\documentos\github\sistema-de-gestion\archivopago.cpp
 	<iostream>
 	<string.h>
 	"ArchivoPago.h"
@@ -62,9 +62,9 @@
 	"FuncionesGenerales.h"
 	"ArchivoArticulo.h"
 
-1687299254 c:\users\sarmi\onedrive\documentos\github\sistema-de-gestion\funcionesgenerales.h
+1687387633 c:\users\sarmi\onedrive\documentos\github\sistema-de-gestion\funcionesgenerales.h
 
-1687366302 source:c:\users\sarmi\onedrive\documentos\github\sistema-de-gestion\cliente.cpp
+1687386006 source:c:\users\sarmi\onedrive\documentos\github\sistema-de-gestion\cliente.cpp
 	<iostream>
 	<string.h>
 	<iomanip>
@@ -78,7 +78,7 @@
 	<iomanip>
 	"Fecha.h"
 
-1687382785 source:c:\users\sarmi\onedrive\documentos\github\sistema-de-gestion\funcionesgenerales.cpp
+1687387588 source:c:\users\sarmi\onedrive\documentos\github\sistema-de-gestion\funcionesgenerales.cpp
 	<iostream>
 	<string.h>
 	<fstream>
@@ -94,7 +94,7 @@
 1687376505 c:\users\sarmi\onedrive\documentos\github\sistema-de-gestion\menumanager.h
 	"ArchivoArticulo.h"
 
-1687376507 source:c:\users\sarmi\onedrive\documentos\github\sistema-de-gestion\menumanager.cpp
+1687388084 source:c:\users\sarmi\onedrive\documentos\github\sistema-de-gestion\menumanager.cpp
 	<iostream>
 	<string.h>
 	<iomanip>
@@ -107,7 +107,7 @@
 	"ArchivoPago.h"
 	<fstream>
 
-1687385215 source:c:\users\sarmi\onedrive\documentos\github\sistema-de-gestion\pago.cpp
+1687387682 source:c:\users\sarmi\onedrive\documentos\github\sistema-de-gestion\pago.cpp
 	<iostream>
 	<string.h>
 	<iomanip>
@@ -117,7 +117,7 @@
 	"ArchivoPago.h"
 	"ArchivoVenta.h"
 
-1687299254 source:c:\users\sarmi\onedrive\documentos\github\sistema-de-gestion\venta.cpp
+1687387666 source:c:\users\sarmi\onedrive\documentos\github\sistema-de-gestion\venta.cpp
 	<iostream>
 	<string.h>
 	<iomanip>

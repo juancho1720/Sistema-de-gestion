@@ -597,8 +597,10 @@ void MenuManager::ModuloReportes()
                             cout << setw(10) << "Numero";
                             cout << setw(10) << "Importe";
                             cout << setw(15) << "Estado";
-                            cout << setw(15) << "Fecha";
-                            cout << setw(10) << "Saldo Deudor" << endl;
+                            cout << setw(12) << "Fecha";
+                            //cout << right;
+                            cout << setw(10) << "Debe";
+                            cout << setw(10) << "Haber" << endl;
                             cout << "-------------------------------------------------------------------------------------------------------------------------------------------------" << endl;
                             mostrarTitulo = false;
                         }
@@ -617,7 +619,8 @@ void MenuManager::ModuloReportes()
                         }
                         regVenta.getFechaVenta().Mostrar();
                         cout << right;
-                        cout << setw(10) << importeTotal;
+                        cout << setw(10) << regVenta.getImporte();
+                        cout << setw(10) << " ";
                         cout << endl;
                         cout << "-------------------------------------------------------------------------------------------------------------------------------------------------" << endl;
                     }
@@ -648,13 +651,15 @@ void MenuManager::ModuloReportes()
                             }
                             regPago.getFechaPago().Mostrar();
                             cout << right;
-                            cout << setw(10) << importeTotal;
+                            cout << setw(10) << " ";
+                            cout << setw(10) << regPago.getImporte();
                             cout << endl;
                             cout << "-------------------------------------------------------------------------------------------------------------------------------------------------" << endl;
                         }
                     }
                 }
                 mostrarTitulo = true;
+                cout << "Saldo Actual: $" << regCliente.getSaldoDeudor() - regCliente.getSaldoAcreedor() << endl << endl;
             }
             if(!hayVentas)
             {
@@ -1093,7 +1098,7 @@ void MenuManager::ModuloPagos()
                     regPago.setActivo(false);
                     auxArchivoPago.sobreEscribirRegistro(regPago, pos);
 
-                    sumarDeuda(regPago.getDni(), regPago.getImporte());
+                    sumarSaldoDeudor(regPago.getDni(), regPago.getImporte());
 
                     cout << "Comprobante anulado exitosamente." << endl;
                 }
