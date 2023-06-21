@@ -533,9 +533,10 @@ void MenuManager::ModuloReportes()
             cantVentas = auxArchivoVenta.contarRegistros();
             cantClientes = auxArchivoCliente.contarRegistros();
             cantPagos = auxArchivoPago.contarRegistros();
-            importeTotal = 0;
             for(int i=0; i<cantClientes; i++)
             {
+                importeTotal = 0;
+
                 regCliente = auxArchivoCliente.leerRegistro(i);
 
                 for(int j=0; j<cantVentas; j++)
