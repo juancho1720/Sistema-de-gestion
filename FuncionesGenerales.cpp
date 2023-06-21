@@ -64,14 +64,13 @@ bool comprobarClientesExistentes(const char *dni)
     Cliente regCliente;
     int cantClientes = auxArchivoCliente.contarRegistros();
 
-    char confirmacion;
-
     for(int i=0; i<cantClientes; i++)
     {
         regCliente = auxArchivoCliente.leerRegistro(i);
 
-        if(strcmp(regCliente.getDni(),dni) == 0)
+        if(strcmp(regCliente.getDni(),dni) == 0 && regCliente.getActivo())
         {
+<<<<<<< Updated upstream
             if(!regCliente.getActivo())
             {
                 cout << "El cliente <" << regCliente.getApellido() << ", " << regCliente.getNombre() << "> ha sido borrado." << endl;
@@ -94,6 +93,8 @@ bool comprobarClientesExistentes(const char *dni)
                     return true;
                 }
             }
+=======
+>>>>>>> Stashed changes
             return true;
         }
     }
