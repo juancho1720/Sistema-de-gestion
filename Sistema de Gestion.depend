@@ -78,14 +78,14 @@
 	<iomanip>
 	"Fecha.h"
 
-1687132340 source:c:\users\sarmi\onedrive\documentos\github\sistema-de-gestion\main.cpp
+1687374019 source:c:\users\sarmi\onedrive\documentos\github\sistema-de-gestion\main.cpp
 	<iostream>
 	"MenuManager.h"
 
-1687299254 c:\users\sarmi\onedrive\documentos\github\sistema-de-gestion\menumanager.h
+1687373998 c:\users\sarmi\onedrive\documentos\github\sistema-de-gestion\menumanager.h
 	"ArchivoArticulo.h"
 
-1687369326 source:c:\users\sarmi\onedrive\documentos\github\sistema-de-gestion\menumanager.cpp
+1687374191 source:c:\users\sarmi\onedrive\documentos\github\sistema-de-gestion\menumanager.cpp
 	<iostream>
 	<string.h>
 	<iomanip>
