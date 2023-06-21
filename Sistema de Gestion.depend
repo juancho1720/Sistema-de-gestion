@@ -64,7 +64,7 @@
 
 1687299254 c:\users\sarmi\onedrive\documentos\github\sistema-de-gestion\funcionesgenerales.h
 
-1687365722 source:c:\users\sarmi\onedrive\documentos\github\sistema-de-gestion\cliente.cpp
+1687366302 source:c:\users\sarmi\onedrive\documentos\github\sistema-de-gestion\cliente.cpp
 	<iostream>
 	<string.h>
 	<iomanip>
@@ -94,7 +94,7 @@
 1687299254 c:\users\sarmi\onedrive\documentos\github\sistema-de-gestion\menumanager.h
 	"ArchivoArticulo.h"
 
-1687300145 source:c:\users\sarmi\onedrive\documentos\github\sistema-de-gestion\menumanager.cpp
+1687368292 source:c:\users\sarmi\onedrive\documentos\github\sistema-de-gestion\menumanager.cpp
 	<iostream>
 	<string.h>
 	<iomanip>
@@ -107,7 +107,7 @@
 	"ArchivoPago.h"
 	<fstream>
 
-1687300211 source:c:\users\sarmi\onedrive\documentos\github\sistema-de-gestion\pago.cpp
+1687367030 source:c:\users\sarmi\onedrive\documentos\github\sistema-de-gestion\pago.cpp
 	<iostream>
 	<string.h>
 	<iomanip>

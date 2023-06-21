@@ -84,7 +84,14 @@ void Pago::Mostrar()
     cout << setw(20) << numeroRecibo;
     cout << setw(20) << dni;
     cout << setw(10) << importe;
-    cout << setw(15) << numFactura;
+    if (numFactura == 0)
+    {
+        cout << setw(20) << "Anticipo";
+    }
+    else
+    {
+        cout << setw(20) << numFactura;
+    }
     switch(formaPago)
     {
     case 1:

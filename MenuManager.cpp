@@ -900,6 +900,7 @@ void MenuManager::ModuloPagos()
         case 2:
             system("cls");
             hayVentas = false;
+            mostrarTitulo = true;
             cout << "DNI: ";
             cargarCadena(dni, 11);
             system("cls");
@@ -910,15 +911,16 @@ void MenuManager::ModuloPagos()
             {
                 regCliente = auxArchivoCliente.leerRegistro(i);
 
-                for(int j=0; j<cantPagos; j++)
+                if(strcmp(regCliente.getDni(), dni) == 0)
                 {
-                    regPago = auxArchivoPago.leerRegistro(j);
-
-                    if( strcmp(regPago.getDni(), regCliente.getDni()) == 0)
+                    for(int j=0; j<cantPagos; j++)
                     {
-                        hayVentas = true;
-                        if(mostrarTitulo)
+                        regPago = auxArchivoPago.leerRegistro(j);
+
+                        if(mostrarTitulo && strcmp(regPago.getDni(), dni) == 0)
                         {
+                            hayVentas = true;
+
                             cout << "Cliente: " << regCliente.getApellido() << ", " << regCliente.getNombre() << endl << endl;
                             cout << left;
                             cout << setw(20) << "Numero de Recibo";
@@ -930,9 +932,12 @@ void MenuManager::ModuloPagos()
                             cout << "-------------------------------------------------------------------------------------------------------------------------------------------------" << endl;
                             mostrarTitulo = false;
                         }
-                        importeTotal += regPago.getImporte();
-                        regPago.Mostrar();
-                        cout << "-------------------------------------------------------------------------------------------------------------------------------------------------" << endl;
+                        if(strcmp(regPago.getDni(), dni) == 0)
+                        {
+                            importeTotal += regPago.getImporte();
+                            regPago.Mostrar();
+                            cout << "-------------------------------------------------------------------------------------------------------------------------------------------------" << endl;
+                        }
                     }
                 }
                 if (importeTotal != 0)
@@ -945,7 +950,7 @@ void MenuManager::ModuloPagos()
             }
             if(!hayVentas)
             {
-                cout << "No existen cobranzas para este periodo." << endl;
+                cout << "No existen cobranzas de este cliente para este periodo." << endl;
             }
             system("pause");
             break;
@@ -978,6 +983,7 @@ void MenuManager::ModuloPagos()
                             cout << setw(20) << "Numero de Recibo";
                             cout << setw(20) << "DNI";
                             cout << setw(10) << "Importe";
+                            cout << setw(20) << "Numero Factura";
                             cout << setw(15) << "Forma de Pago";
                             cout << setw(15) << "Fecha Recibo" << endl;
                             cout << "-------------------------------------------------------------------------------------------------------------------------------------------------" << endl;
