@@ -1312,7 +1312,7 @@ void MenuManager::cobrosMensualesTipo()
     system("pause");
 }
 
-void MenuManager::exportarClientes()
+void MenuManager::exportarClientes() // Ver de agregar exp articulos
 {
     ArchivoCliente auxArchivoCliente("clientes.dat");
     Cliente regCliente;

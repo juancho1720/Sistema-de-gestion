@@ -248,7 +248,17 @@ int Pago::imputarRecibos(const char *dni, float importe)
                 auxArchivoVenta.sobreEscribirRegistro(regVenta, i);
                 return regVenta.getNumeroFactura();
             }
-            if(!regVenta.getPaga() && regVenta.getSaldo() < importe)
+            if(!regVenta.getPaga() && regVenta.getSaldo() == saldoAcreedor)
+            {
+                regVenta.setPaga(true);
+                regVenta.setSaldo(0);
+                restarDeuda(regVenta.getDni(), importe);
+                //saldoAcredor =  importe - regVenta.getSaldo() // ver
+                auxArchivoVenta.sobreEscribirRegistro(regVenta, i);
+                return regVenta.getNumeroFactura();
+            }
+            //IDEA
+            if(!regVenta.getPaga() && regVenta.getSaldo() == )
             {
                 regVenta.setPaga(true);
                 regVenta.setSaldo(0);
