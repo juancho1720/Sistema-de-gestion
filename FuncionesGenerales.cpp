@@ -94,13 +94,7 @@ bool comprobarClientesExistentes(const char *dni)
                     return true;
                 }
             }
-            else
-            {
-                system("cls");
-                cout << "El cliente ingresado ya existe." << endl;
-                system("pause");
-                return true;
-            }
+            return true;
         }
     }
     return false;

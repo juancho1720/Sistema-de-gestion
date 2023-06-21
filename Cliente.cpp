@@ -27,6 +27,9 @@ bool Cliente::Cargar()
     }
     else
     {
+        system("cls");
+        cout << "El cliente ingresado ya existe." << endl;
+        system("pause");
         return false;
     }
 }
@@ -39,6 +42,14 @@ void Cliente::Mostrar()
         cout << setw(20) << nombre;
         cout << setw(15) << dni;
         cout << setw(20) << montoMaximo << endl;
+        if (activo)
+        {
+            cout << setw(20) << "Activo." << endl;
+        }
+        else
+        {
+            cout << setw(20) << "Inactivo." << endl;
+        }
     }
 }
 
