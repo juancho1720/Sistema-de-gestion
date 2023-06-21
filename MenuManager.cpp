@@ -1606,5 +1606,4 @@ void MenuManager::cambiarLimiteDeuda()
     else{
         cout << "No existe cliente con ese DNI" << endl;
     }
-
 }
