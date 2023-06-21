@@ -70,7 +70,7 @@ bool Pago::Cargar()
     else
     {
         system("cls");
-        cout << "No se cargo el recibo." << endl;
+        cout << "El cliente no existe. No se cargo el recibo." << endl;
         system("pause");
         return false;
     }

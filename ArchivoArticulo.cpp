@@ -100,29 +100,75 @@ void ArchivoArticulo::cambiarPrecios()
     ArchivoArticulo auxArchivoArticulo("articulos.dat");
     Articulo regArticulo;
     int cantArticulos = auxArchivoArticulo.contarRegistros();
-
-    for (int i=0; i<cantArticulos; i++)
+    int opcionMenu, codidoProducto;
+    do
     {
-        regArticulo = auxArchivoArticulo.leerRegistro(i);
-
-        cout << left;
-        cout << setw(20) << "Descripcion";
-        cout << setw(15) << "Codigo";
-        cout << setw(15) << "Stock";
-        cout << setw(20) << "Precio Unitario" << endl;
-        cout << "------------------------------------------------------------------------------" << endl;
-        regArticulo.Mostrar();
-        cout << "------------------------------------------------------------------------------" << endl;
-        cout << "Ingrese nuevo precio: " << endl;
-        cin >> nuevoPrecio;
-
-        regArticulo.setPrecioUnitario(nuevoPrecio);
-        if (auxArchivoArticulo.sobreEscribirRegistro(regArticulo, i) != 0)
+        cout << "1- Cambiar todos los precios." << endl;
+        cout << "2- Cambiar el precio de un articulo." << endl << endl;
+        cout << "0- Volver al menu principal." << endl;
+        cin >> opcionMenu;
+        switch(opcionMenu)
         {
+        case 1:
             system("cls");
-            cout << "Precio modificado con exito!!!" << endl;
+            for (int i=0; i<cantArticulos; i++)
+            {
+                regArticulo = auxArchivoArticulo.leerRegistro(i);
+
+                cout << left;
+                cout << setw(20) << "Descripcion";
+                cout << setw(15) << "Codigo";
+                cout << setw(15) << "Stock";
+                cout << setw(20) << "Precio Unitario" << endl;
+                cout << "------------------------------------------------------------------------------" << endl;
+                regArticulo.Mostrar();
+                cout << "------------------------------------------------------------------------------" << endl;
+                cout << "Ingrese nuevo precio: " << endl;
+                cin >> nuevoPrecio;
+
+                regArticulo.setPrecioUnitario(nuevoPrecio);
+                if (auxArchivoArticulo.sobreEscribirRegistro(regArticulo, i) != 0)
+                {
+                    system("cls");
+                    cout << "Precio modificado con exito!!!" << endl;
+                }
+            }
+            break;
+        case 2:
+            system("cls");
+            cout << "Ingrese el codigo del producto:" << endl;
+            cin >> codidoProducto;
+            for (int i=0; i<cantArticulos; i++)
+            {
+                regArticulo = auxArchivoArticulo.leerRegistro(i);
+
+                if (regArticulo.getCodigoArticulo() == codidoProducto)
+                {
+                    cout << left;
+                    cout << setw(20) << "Descripcion";
+                    cout << setw(15) << "Codigo";
+                    cout << setw(15) << "Stock";
+                    cout << setw(20) << "Precio Unitario" << endl;
+                    cout << "------------------------------------------------------------------------------" << endl;
+                    regArticulo.Mostrar();
+                    cout << "------------------------------------------------------------------------------" << endl;
+                    cout << "Ingrese nuevo precio: " << endl;
+                    cin >> nuevoPrecio;
+
+                    regArticulo.setPrecioUnitario(nuevoPrecio);
+                    if (auxArchivoArticulo.sobreEscribirRegistro(regArticulo, i) != 0)
+                    {
+                        system("cls");
+                        cout << "Precio modificado con exito!!!" << endl;
+                    }
+                }
+            }
+            break;
         }
     }
+    while (opcionMenu != 0);
+
+
 }
 
 void ArchivoArticulo::aumentarPreciosPorcentual()
@@ -153,13 +199,13 @@ void ArchivoArticulo::aumentarPreciosPorcentual()
 void ArchivoArticulo::leerRegistro(Articulo *vec, int cantidadRegistrosALeer)
 {
     FILE *p = fopen(nombre, "rb");
-	if (p == NULL)
-	{
-		return ;
-	}
+    if (p == NULL)
+    {
+        return ;
+    }
 
-	fread(vec, sizeof(Articulo), cantidadRegistrosALeer, p);
-	fclose(p);
+    fread(vec, sizeof(Articulo), cantidadRegistrosALeer, p);
+    fclose(p);
 }
 
 
@@ -167,23 +213,23 @@ void ArchivoArticulo::leerRegistro(Articulo *vec, int cantidadRegistrosALeer)
 bool ArchivoArticulo::guardar(Articulo *vec, int cantidadRegistrosAEscribir)
 {
     FILE *p = fopen(nombre, "ab");
-	if (p == NULL)
-	{
-		return false;
-	}
+    if (p == NULL)
+    {
+        return false;
+    }
 
-	int cantidadRegistrosEscritos = fwrite(vec, sizeof(Articulo), cantidadRegistrosAEscribir, p);
-	fclose(p);
-	return cantidadRegistrosEscritos == cantidadRegistrosAEscribir;
+    int cantidadRegistrosEscritos = fwrite(vec, sizeof(Articulo), cantidadRegistrosAEscribir, p);
+    fclose(p);
+    return cantidadRegistrosEscritos == cantidadRegistrosAEscribir;
 }
 
 
 void ArchivoArticulo::vaciar()
 {
     FILE *p = fopen(nombre, "wb");
-	if (p == NULL)
-	{
-		return ;
-	}
-	fclose(p);
+    if (p == NULL)
+    {
+        return ;
+    }
+    fclose(p);
 }

@@ -158,7 +158,7 @@ float restarDeuda(const char *dni, float importe)
 
 void imputarSaldos()
 {
-    ArchivoVenta auxArchivoVenta("venta.dat");
+    ArchivoVenta auxArchivoVenta("ventas.dat");
     Venta regVenta;
     int cantVentas = auxArchivoVenta.contarRegistros();
 
