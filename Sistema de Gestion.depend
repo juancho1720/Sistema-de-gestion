@@ -18,7 +18,7 @@
 1687131562 c:\users\sarmi\onedrive\documentos\github\sistema-de-gestion\archivobackup.h
 	"Articulo.h"
 
-1687300157 source:c:\users\sarmi\onedrive\documentos\github\sistema-de-gestion\archivocliente.cpp
+1687376374 source:c:\users\sarmi\onedrive\documentos\github\sistema-de-gestion\archivocliente.cpp
 	<iostream>
 	<string.h>
 	"ArchivoCliente.h"
@@ -82,10 +82,10 @@
 	<iostream>
 	"MenuManager.h"
 
-1687373998 c:\users\sarmi\onedrive\documentos\github\sistema-de-gestion\menumanager.h
+1687376505 c:\users\sarmi\onedrive\documentos\github\sistema-de-gestion\menumanager.h
 	"ArchivoArticulo.h"
 
-1687374191 source:c:\users\sarmi\onedrive\documentos\github\sistema-de-gestion\menumanager.cpp
+1687376507 source:c:\users\sarmi\onedrive\documentos\github\sistema-de-gestion\menumanager.cpp
 	<iostream>
 	<string.h>
 	<iomanip>

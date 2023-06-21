@@ -5,6 +5,7 @@
 class MenuManager
 {
 public:
+    void MenuBienvenida();
     void MenuGeneral();
     void ModuloClientes();
     void ModuloVentas();
@@ -29,4 +30,5 @@ public:
     void restaurarCopiaPagos();
     void restaurarCopiaVentas();
     void cambiarLimiteDeuda();
+    void MenuDespedida();
 };

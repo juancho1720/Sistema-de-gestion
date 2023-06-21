@@ -13,6 +13,43 @@ using namespace std;
 #include "ArchivoPago.h"
 #include <fstream>
 
+void MenuManager::MenuBienvenida()
+{
+    cout << right;
+    cout << setw(35) << "                      BIENVENIDO AL SISTEMA DE GESTION" << endl;
+    cout << setw(35) << "                             <ERROR 404>" << endl << endl;
+
+    cout << setw(35) << "-----------------------------------------------------------------------------" << endl << endl;
+
+    cout << setw(35) << "                      Universidad Tecnologica Nacional" << endl << endl;
+
+    cout << setw(35) << "-----------------------------------------------------------------------------" << endl << endl;
+
+    cout << left;
+    cout << setw(35) << "Carrera: Tecnicatura Universitaria en Programacion / Sistemas Informaticos" << endl;
+    cout << setw(35) << "Materia: Laboratorio II" << endl << endl;
+
+    cout << setw(35) << "Profesores:" << endl;
+    cout << setw(35) << "Simon, Angel" << endl;
+    cout << setw(35) << "Lara Campos, Brian Esteban" << endl << endl;
+
+    cout << setw(35) << "Jefes de trabajos practicos:" << endl;
+    cout << setw(35) << "Gonzalez, Juan Agustin" << endl;
+    cout << setw(35) << "Varela, Mariano" << endl << endl;
+
+    cout << setw(35) << "Ayudantes de trabajos practicos:" << endl;
+    cout << setw(35) << "Vargas Pabon" << endl;
+    cout << setw(25) << "Gabriel de Jesus" << endl << endl;
+
+    cout << setw(35) << "Alumnos:" << endl;
+    cout << setw(35) << "Juan Romero - Legajo 27542" << endl;
+    cout << setw(35) << "Juan Manuel Sarmiento - Legajo 27543" << endl;
+    cout << setw(35)<< "Valentina Conde - Legajo 25862" << endl << endl;
+
+    system("pause");
+    system("cls");
+}
+
 void MenuManager::MenuGeneral()
 {
     int opcionMenu;
@@ -1608,3 +1645,10 @@ void MenuManager::cambiarLimiteDeuda()
     }
 }
 
+void MenuManager::MenuDespedida()
+{
+    system("cls");
+    cout << "____________________________________________________________" << endl << endl;
+    cout << "        Muchas gracias por utilizar nuestro programa!!!" << endl;
+    cout << "____________________________________________________________" << endl << endl;
+}
