@@ -1444,7 +1444,7 @@ void MenuManager::restaurarCopiaArticulos()
 {
     ArchivoArticulo auxArchivoArticulo("articulos.dat");
     ArchivoArticulo articuloBkp("articulos.bkp");
-    int cantArticulos = auxArchivoArticulo.contarRegistros();
+    int cantArticulos = articuloBkp.contarRegistros();
 
     Articulo *vec = new Articulo[cantArticulos];
     if(vec==nullptr){
@@ -1467,7 +1467,7 @@ void MenuManager::restaurarCopiaClientes()
 {
     ArchivoCliente auxArchivoCliente("clientes.dat");
     ArchivoCliente clienteBkp("clientes.bkp");
-    int cantClientes = auxArchivoCliente.contarRegistros();
+    int cantClientes = clienteBkp.contarRegistros();
 
     Cliente *vec = new Cliente[cantClientes];
     if(vec==nullptr){
@@ -1490,7 +1490,7 @@ void MenuManager::restaurarCopiaPagos()
 {
     ArchivoPago auxArchivoPago("pagos.dat");
     ArchivoPago pagosBkp("pagos.bkp");
-    int cantPagos = auxArchivoPago.contarRegistros();
+    int cantPagos = pagosBkp.contarRegistros();
 
     Pago *vec = new Pago[cantPagos];
     if(vec==nullptr){
@@ -1513,7 +1513,7 @@ void MenuManager::restaurarCopiaVentas()
 {
     ArchivoVenta auxArchivoVenta("ventas.dat");
     ArchivoVenta ventasBkp("ventas.bkp");
-    int cantVentas = auxArchivoVenta.contarRegistros();
+    int cantVentas = ventasBkp.contarRegistros();
 
     Venta *vec = new Venta[cantVentas];
     if(vec==nullptr){
