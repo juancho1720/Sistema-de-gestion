@@ -849,6 +849,7 @@ void MenuManager::ModuloArticulos()
                     system("pause");
                 }
             }
+            break;
         case 7:
             system("cls");
             auxArchivoArticulo.cambiarPrecios();
