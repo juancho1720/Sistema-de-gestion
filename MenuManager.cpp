@@ -1093,6 +1093,7 @@ void MenuManager::ModuloBackUp()
         }
     }
     while(op != 0);
+    system("cls");
 }
 
 void MenuManager::MenuBackUp()
@@ -1113,22 +1114,27 @@ void MenuManager::MenuBackUp()
         case 1:
             system("cls");
             hacerBackupArticulos();
+            system("pause");
             break;
         case 2:
             system("cls");
             hacerBackupClientes();
+            system("pause");
             break;
         case 3:
             system("cls");
             hacerBackupPagos();
+            system("pause");
             break;
         case 4:
             system("cls");
             hacerBackupVentas();
+            system("pause");
             break;
         }
     }
     while(op!=0);
+    system("cls");
 }
 
 void MenuManager::MenuRestaurarArchivo()
@@ -1149,22 +1155,27 @@ void MenuManager::MenuRestaurarArchivo()
         case 1:
             system("cls");
             restaurarCopiaArticulos();
+            system("pause");
             break;
         case 2:
             system("cls");
             restaurarCopiaClientes();
+            system("pause");
             break;
         case 3:
             system("cls");
             restaurarCopiaPagos();
+            system("pause");
             break;
         case 4:
             system("cls");
             restaurarCopiaVentas();
+            system("pause");
             break;
         }
     }
     while(op!=0);
+    system("cls");
 }
 
 int MenuManager::sumarStock(int codigoArticulo, int cantidadArticulo)
