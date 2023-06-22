@@ -17,6 +17,7 @@ public:
     int sumarStock(int codigoArticulo, int cantidadArticulo);
     void ventasMensualesProductos();
     void cobrosMensualesTipo();
+    void exportarArticulos();
     void exportarClientes();
     void exportarCtasCtes();
     void MenuBackUp();

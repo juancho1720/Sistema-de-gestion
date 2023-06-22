@@ -109,4 +109,7 @@ float Cliente::getMontoMaximo()
     return montoMaximo;
 }
 
-
+float Cliente::getSaldoAcreedor()
+{
+    return saldoAcreedor;
+}

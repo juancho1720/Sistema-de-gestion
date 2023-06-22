@@ -504,7 +504,8 @@ void MenuManager::ModuloReportes()
         cout << "4- Cantidad de ventas mensuales por producto." << endl;
         cout << "5- Cantidad de cobranzas por formas de pago." << endl;
         cout << "6- Exportar listado de clientes a Excel." << endl;
-        cout << "7- Exportar cuentas corrientes a Excel." << endl << endl;
+        cout << "7- Exportar cuentas corrientes a Excel." << endl;
+        cout << "8- Exportar listado de articulos a Excel." << endl << endl;
         cout << "0- Volver al menu principal." << endl;
         cin >> opcionMenu;
         switch(opcionMenu)
@@ -687,6 +688,10 @@ void MenuManager::ModuloReportes()
         case 7:
             system("cls");
             exportarCtasCtes();
+            break;
+        case 8:
+            system("cls");
+            exportarArticulos();
             break;
         }
         system("cls");
@@ -1103,7 +1108,7 @@ void MenuManager::ModuloPagos()
                     regPago.setActivo(false);
                     auxArchivoPago.sobreEscribirRegistro(regPago, pos);
 
-                    sumarSaldoDeudor(regPago.getDni(), regPago.getImporte());
+                    sumarDeuda(regPago.getDni(), regPago.getImporte());
 
                     cout << "Comprobante anulado exitosamente." << endl;
                 }
@@ -1333,7 +1338,34 @@ void MenuManager::cobrosMensualesTipo()
     system("pause");
 }
 
-void MenuManager::exportarClientes() // Ver de agregar exp articulos
+
+void MenuManager::exportarArticulos()
+{
+    ArchivoArticulo auxArchivoArticulo("articulos.dat");
+    Articulo regArticulo;
+    int cantArticulos = auxArchivoArticulo.contarRegistros();
+
+    ofstream archivoArticulos("articulos.csv", ios::out);
+    if(!archivoArticulos){
+        cout << "No se pudo crear el archivo" << endl;
+    }
+    else
+    {
+        for(int x=0;x<cantArticulos;x++){
+            regArticulo = auxArchivoArticulo.leerRegistro(x);
+            if(x==0){
+                archivoArticulos << "Descripcion" << ";" << "Stock" << ";" << "Precio unitario" << "Codigo" << endl;
+            }
+            archivoArticulos << regArticulo.getDescripcion() << ";" << regArticulo.getStock() << ";" << regArticulo.getPrecioUnitario() << ";" << regArticulo.getCodigoArticulo() << endl;
+        }
+        archivoArticulos.close();
+        cout << "Archivo creado con exito" << endl;
+        cout << cantArticulos << " articulos exportados a excel" << endl;
+        system("pause");
+    }
+}
+
+void MenuManager::exportarClientes()
 {
     ArchivoCliente auxArchivoCliente("clientes.dat");
     Cliente regCliente;
