@@ -20,7 +20,7 @@ bool Cliente::Cargar()
     if(comprobarClientesExistentes(dni) == false)
     {
         saldoDeudor = 0;
-        //saldoAcreedor = 0;
+        saldoAcreedor = 0;
         cout << "Monto maximo de Deuda Habilitado: " << endl;
         cin >> montoMaximo;
         return true;
@@ -90,6 +90,15 @@ float Cliente::getSaldoDeudor()
     return saldoDeudor;
 }
 
+void Cliente::setSaldoAcreedor(float s)
+{
+    saldoAcreedor = s;
+}
+
+float Cliente::getSaldoAcreedor()
+{
+    return saldoAcreedor;
+}
 void Cliente::setMontoMaximo(float mM)
 {
     montoMaximo = mM;

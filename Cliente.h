@@ -22,6 +22,8 @@ public:
     void setActivo(bool a);
     void setSaldoDeudor(float s);
     float getSaldoDeudor();
+    void setSaldoAcreedor(float s);
+    float getSaldoAcreedor();
     void setMontoMaximo(float mM);
     float getMontoMaximo();
     float getSaldoAcreedor();

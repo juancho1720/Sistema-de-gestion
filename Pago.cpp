@@ -70,7 +70,7 @@ bool Pago::Cargar()
     else
     {
         system("cls");
-        cout << "No se cargo el recibo." << endl;
+        cout << "El cliente no existe. No se cargo el recibo." << endl;
         system("pause");
         return false;
     }
@@ -200,7 +200,7 @@ bool Pago::cancelarFactura(const char *dni, int numFactura, float importe)
                     {
                         regVenta.setPaga(true);
                         regVenta.setSaldo(0);
-                        restarDeuda(regVenta.getDni(), importe);
+                        restarSaldoDeudor(regVenta.getDni(), importe);
                         auxArchivoVenta.sobreEscribirRegistro(regVenta, i);
                         return true;
                     }
@@ -226,39 +226,67 @@ int Pago::imputarRecibos(const char *dni, float importe)
 
     ArchivoPago auxArchivoPago("pagos.dat");
 
+    ArchivoCliente auxArchivoCliente("clientes.dat");
+    Cliente regCliente;
+
     for (int i=0; i<cantVentas; i++)
     {
         regVenta = auxArchivoVenta.leerRegistro(i);
 
         if (strcmp(regVenta.getDni(), dni) == 0)
         {
+            regCliente = auxArchivoCliente.leerRegistro(auxArchivoCliente.buscarDni(dni));
+
             if(!regVenta.getPaga() && regVenta.getSaldo() == importe)
             {
                 regVenta.setPaga(true);
                 regVenta.setSaldo(0);
-                restarDeuda(regVenta.getDni(), importe);
+                restarSaldoDeudor(regVenta.getDni(), importe);
                 auxArchivoVenta.sobreEscribirRegistro(regVenta, i);
                 return regVenta.getNumeroFactura();
             }
             if(!regVenta.getPaga() && regVenta.getSaldo() > importe)
             {
-                regVenta.setSaldo(regVenta.getSaldo() - importe);
-                restarDeuda(regVenta.getDni(), importe);
+                regVenta.setSaldo(0);
+                restarSaldoDeudor(regVenta.getDni(), importe);
                 auxArchivoVenta.sobreEscribirRegistro(regVenta, i);
                 return regVenta.getNumeroFactura();
             }
             if(!regVenta.getPaga() && regVenta.getSaldo() < importe)
             {
                 regVenta.setPaga(true);
+                sumarSaldoAcreedor(dni, importe - regVenta.getSaldo());
                 regVenta.setSaldo(0);
-                restarDeuda(regVenta.getDni(), importe);
+                restarSaldoDeudor(regVenta.getDni(), importe);
                 auxArchivoVenta.sobreEscribirRegistro(regVenta, i);
                 return regVenta.getNumeroFactura();
             }
-            if(!regVenta.getPaga() && regVenta.getSaldo() == importe)
+
+            if (!regVenta.getPaga() && regVenta.getSaldo() == regCliente.getSaldoAcreedor())
             {
                 regVenta.setPaga(true);
+                restarSaldoAcreedor(dni, regVenta.getSaldo());
+                regVenta.setSaldo(0);
+                restarSaldoDeudor(regVenta.getDni(), importe);
                 auxArchivoVenta.sobreEscribirRegistro(regVenta, i);
+                return regVenta.getNumeroFactura();
+            }
+            if (!regVenta.getPaga() && regVenta.getSaldo() > regCliente.getSaldoAcreedor())
+            {
+                regVenta.setSaldo(regVenta.getSaldo() - regCliente.getSaldoAcreedor());
+                restarSaldoDeudor(regVenta.getDni(), regCliente.getSaldoAcreedor());
+                restarSaldoAcreedor(dni, regCliente.getSaldoAcreedor());
+                auxArchivoVenta.sobreEscribirRegistro(regVenta, i);
+                return regVenta.getNumeroFactura();
+            }
+            if (!regVenta.getPaga() && regVenta.getSaldo() < regCliente.getSaldoAcreedor())
+            {
+                regVenta.setPaga(true);
+                restarSaldoDeudor(regVenta.getDni(), regVenta.getSaldo());
+                regVenta.setSaldo(0);
+                restarSaldoAcreedor(dni, regVenta.getSaldo());
+                auxArchivoVenta.sobreEscribirRegistro(regVenta, i);
+                return regVenta.getNumeroFactura();
             }
         }
     }

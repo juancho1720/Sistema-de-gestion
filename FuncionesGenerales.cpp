@@ -118,7 +118,7 @@ bool comprobarArticulosExistentes(int codigoArticulo)
     return false;
 }
 
-float sumarDeuda(const char *dni, float importe)
+float sumarSaldoDeudor(const char *dni, float importe)
 {
     ArchivoCliente auxArchivoCliente("clientes.dat");
     Cliente regCliente;
@@ -137,7 +137,7 @@ float sumarDeuda(const char *dni, float importe)
     return -1;
 }
 
-float restarDeuda(const char *dni, float importe)
+float restarSaldoDeudor(const char *dni, float importe)
 {
     ArchivoCliente auxArchivoCliente("clientes.dat");
     Cliente regCliente;
@@ -156,9 +156,47 @@ float restarDeuda(const char *dni, float importe)
     return -1;
 }
 
+float sumarSaldoAcreedor(const char *dni, float importe)
+{
+    ArchivoCliente auxArchivoCliente("clientes.dat");
+    Cliente regCliente;
+    int cantClientes = auxArchivoCliente.contarRegistros();
+
+    for (int i=0; i< cantClientes; i++)
+    {
+        regCliente = auxArchivoCliente.leerRegistro(i);
+
+        if ( strcmp(regCliente.getDni(), dni) == 0)
+        {
+            regCliente.setSaldoAcreedor(importe);
+            auxArchivoCliente.sobreEscribirRegistro(regCliente, i);
+        }
+    }
+    return -1;
+}
+
+float restarSaldoAcreedor(const char *dni, float importe)
+{
+    ArchivoCliente auxArchivoCliente("clientes.dat");
+    Cliente regCliente;
+    int cantClientes = auxArchivoCliente.contarRegistros();
+
+    for (int i=0; i< cantClientes; i++)
+    {
+        regCliente = auxArchivoCliente.leerRegistro(i);
+
+        if ( strcmp(regCliente.getDni(), dni) == 0)
+        {
+            regCliente.setSaldoAcreedor(-importe);
+            auxArchivoCliente.sobreEscribirRegistro(regCliente, i);
+        }
+    }
+    return -1;
+}
+
 void imputarSaldos()
 {
-    ArchivoVenta auxArchivoVenta("venta.dat");
+    ArchivoVenta auxArchivoVenta("ventas.dat");
     Venta regVenta;
     int cantVentas = auxArchivoVenta.contarRegistros();
 
@@ -184,7 +222,7 @@ void imputarSaldos()
             {
                 regVenta.setPaga(true);
                 regVenta.setSaldo(0);
-                restarDeuda(regVenta.getDni(), saldo);
+                restarSaldoDeudor(regVenta.getDni(), saldo);
                 auxArchivoVenta.sobreEscribirRegistro(regVenta, i);
             }
         }
@@ -196,7 +234,7 @@ void imputarSaldos()
             if (!regPago.getActivo() && regVenta.getSaldo() == 0)
             {
                 regVenta.setPaga(true);
-                restarDeuda(regVenta.getDni(), saldo);
+                restarSaldoDeudor(regVenta.getDni(), saldo);
                 auxArchivoVenta.sobreEscribirRegistro(regVenta, i);
             }
         }

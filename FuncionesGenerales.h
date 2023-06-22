@@ -10,11 +10,14 @@ bool comprobarClientesExistentes(const char *dni);
 
 bool comprobarArticulosExistentes(int codigoArticulo);
 
-float sumarDeuda(const char *dni, float importe);
+float sumarSaldoDeudor(const char *dni, float importe);
 
 //imputarSaldos
-float restarDeuda(const char *dni, float importe);
+float restarSaldoDeudor(const char *dni, float importe);
 
 //imputarSaldos COMENTO LA FUNCION Y NO TIRA ERROR. BUSCAR DONDE SE USA.
 void imputarSaldos();
 
+float sumarSaldoAcreedor(const char *dni, float importe);
+
+float restarSaldoAcreedor(const char *dni, float importe);
