@@ -580,6 +580,8 @@ void MenuManager::ModuloReportes()
             cantClientes = auxArchivoCliente.contarRegistros();
             cantPagos = auxArchivoPago.contarRegistros();
 
+            bool mostrarCliente;
+
             for(int i=0; i<cantClientes; i++)
             {
                 importeTotal = 0;
@@ -604,7 +606,6 @@ void MenuManager::ModuloReportes()
                             cout << setw(10) << "Importe";
                             cout << setw(15) << "Estado";
                             cout << setw(12) << "Fecha";
-                            //cout << right;
                             cout << setw(10) << "Debe";
                             cout << setw(10) << "Haber" << endl;
                             cout << "-------------------------------------------------------------------------------------------------------------------------------------------------" << endl;
@@ -624,6 +625,7 @@ void MenuManager::ModuloReportes()
                             cout << setw(15) << "Pendiente";
                         }
                         regVenta.getFechaVenta().Mostrar();
+                        mostrarCliente = true;
                         cout << right;
                         cout << setw(10) << regVenta.getImporte();
                         cout << setw(10) << " ";
@@ -665,14 +667,19 @@ void MenuManager::ModuloReportes()
                     }
                 }
                 mostrarTitulo = true;
-                if(regCliente.getSaldoDeudor() - regCliente.getSaldoAcreedor() >= 0)
+                if(regCliente.getSaldoDeudor() - regCliente.getSaldoAcreedor() > 0)
                 {
                     cout << setw(69) << "Saldo Deudor Actual: $" << regCliente.getSaldoDeudor() - regCliente.getSaldoAcreedor() << endl << endl;
                 }
-                else
+                if(regCliente.getSaldoDeudor() - regCliente.getSaldoAcreedor() == 0 && mostrarCliente )
+                {
+                    cout << setw(69) << "Saldo Deudor Actual: $" << ( regCliente.getSaldoDeudor() - regCliente.getSaldoAcreedor()) << endl << endl;
+                }
+                if(regCliente.getSaldoDeudor() - regCliente.getSaldoAcreedor() < 0)
                 {
                     cout << setw(69) << "Saldo Acreedor Actual: $" << ( regCliente.getSaldoDeudor() - regCliente.getSaldoAcreedor()) * -1 << endl << endl;
                 }
+                mostrarCliente = false;
             }
             if(!hayVentas)
             {
