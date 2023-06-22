@@ -62,7 +62,7 @@
 	"FuncionesGenerales.h"
 	"ArchivoArticulo.h"
 
-1687387633 c:\users\sarmi\onedrive\documentos\github\sistema-de-gestion\funcionesgenerales.h
+1687398028 c:\users\sarmi\onedrive\documentos\github\sistema-de-gestion\funcionesgenerales.h
 
 1687386006 source:c:\users\sarmi\onedrive\documentos\github\sistema-de-gestion\cliente.cpp
 	<iostream>
@@ -78,23 +78,14 @@
 	<iomanip>
 	"Fecha.h"
 
-1687387588 source:c:\users\sarmi\onedrive\documentos\github\sistema-de-gestion\funcionesgenerales.cpp
-	<iostream>
-	<string.h>
-	<fstream>
-	"ArchivoVenta.h"
-	"ArchivoArticulo.h"
-	"ArchivoCliente.h"
-	"ArchivoPago.h"
-
-1687374019 source:c:\users\sarmi\onedrive\documentos\github\sistema-de-gestion\main.cpp
+1687389302 source:c:\users\sarmi\onedrive\documentos\github\sistema-de-gestion\main.cpp
 	<iostream>
 	"MenuManager.h"
 
 1687376505 c:\users\sarmi\onedrive\documentos\github\sistema-de-gestion\menumanager.h
 	"ArchivoArticulo.h"
 
-1687388084 source:c:\users\sarmi\onedrive\documentos\github\sistema-de-gestion\menumanager.cpp
+1687398307 source:c:\users\sarmi\onedrive\documentos\github\sistema-de-gestion\menumanager.cpp
 	<iostream>
 	<string.h>
 	<iomanip>
@@ -107,7 +98,7 @@
 	"ArchivoPago.h"
 	<fstream>
 
-1687387682 source:c:\users\sarmi\onedrive\documentos\github\sistema-de-gestion\pago.cpp
+1687397909 source:c:\users\sarmi\onedrive\documentos\github\sistema-de-gestion\pago.cpp
 	<iostream>
 	<string.h>
 	<iomanip>
@@ -117,7 +108,7 @@
 	"ArchivoPago.h"
 	"ArchivoVenta.h"
 
-1687387666 source:c:\users\sarmi\onedrive\documentos\github\sistema-de-gestion\venta.cpp
+1687397275 source:c:\users\sarmi\onedrive\documentos\github\sistema-de-gestion\venta.cpp
 	<iostream>
 	<string.h>
 	<iomanip>
@@ -126,4 +117,13 @@
 	"ArchivoVenta.h"
 	"ArchivoArticulo.h"
 	"ArchivoCliente.h"
+
+1687398132 source:c:\users\sarmi\onedrive\documentos\github\sistema-de-gestion\funcionesgenerales.cpp
+	<iostream>
+	<string.h>
+	<fstream>
+	"ArchivoVenta.h"
+	"ArchivoArticulo.h"
+	"ArchivoCliente.h"
+	"ArchivoPago.h"
 

@@ -8,9 +8,9 @@ int main()
 {
     MenuManager menu;
 
-    menu.MenuBienvenida();
+    //menu.MenuBienvenida();
     menu.MenuGeneral();
-    menu.MenuDespedida();
+    //menu.MenuDespedida();
 
     return 0;
 }

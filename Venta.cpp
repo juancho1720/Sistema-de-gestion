@@ -48,7 +48,9 @@ bool Venta::Cargar()
                 }
                 saldo = importe;
                 sumarSaldoDeudor(dni, importe);
+
                 paga = false;
+
                 return true;
             }
             else

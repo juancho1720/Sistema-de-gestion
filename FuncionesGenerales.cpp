@@ -151,6 +151,8 @@ float restarSaldoDeudor(const char *dni, float importe)
         {
             regCliente.setSaldoDeudor(regCliente.getSaldoDeudor() - importe);
             auxArchivoCliente.sobreEscribirRegistro(regCliente, i);
+            cout << "Cambia saldo deudor a " << regCliente.getSaldoDeudor() << endl;
+            system("pause");
         }
     }
     return -1;
@@ -168,8 +170,10 @@ float sumarSaldoAcreedor(const char *dni, float importe)
 
         if ( strcmp(regCliente.getDni(), dni) == 0)
         {
-            regCliente.setSaldoAcreedor(importe);
+            regCliente.setSaldoAcreedor(regCliente.getSaldoDeudor() + importe);
             auxArchivoCliente.sobreEscribirRegistro(regCliente, i);
+            cout << "Cambia saldo acreedor a " << regCliente.getSaldoAcreedor() << endl;
+            system("pause");
         }
     }
     return -1;
@@ -187,8 +191,10 @@ float restarSaldoAcreedor(const char *dni, float importe)
 
         if ( strcmp(regCliente.getDni(), dni) == 0)
         {
-            regCliente.setSaldoAcreedor(-importe);
+            regCliente.setSaldoAcreedor(regCliente.getSaldoAcreedor() - importe);
             auxArchivoCliente.sobreEscribirRegistro(regCliente, i);
+            cout << "Cambia saldo acreedor a " << regCliente.getSaldoAcreedor() << endl;
+            system("pause");
         }
     }
     return -1;

@@ -528,8 +528,9 @@ void MenuManager::ModuloReportes()
                     cout << left;
                     cout << setw(15) << "DNI";
                     cout << setw(20) << "Nombre";
-                    cout << setw(20) << "Apellido" << endl;
-                    cout << "-------------------------------------------" << endl;
+                    cout << setw(20) << "Apellido";
+                    cout << setw(20) << "Monto Maximo" << endl;
+                    cout << "---------------------------------------------------------------" << endl;
                     regCliente.Mostrar();
                     cout << endl << "Saldo Deudor: $" << consultarDeudaCliente(regCliente.getDni()) << endl << endl;
                     system("pause");
@@ -556,11 +557,12 @@ void MenuManager::ModuloReportes()
                     cout << left;
                     cout << setw(15) << "DNI";
                     cout << setw(20) << "Nombre";
-                    cout << setw(20) << "Apellido" << endl;
-                    cout << "-------------------------------------------" << endl;
+                    cout << setw(20) << "Apellido";
+                    cout << setw(20) << "Monto Maximo" << endl;
+                    cout << "---------------------------------------------------------------" << endl;
                     regCliente.Mostrar();
                     cout << endl << "Saldo Deudor: $" << consultarDeudaCliente(regCliente.getDni()) << endl;
-                    cout << "-------------------------------------------" << endl << endl << endl;
+                    cout << "---------------------------------------------------------------" << endl << endl << endl;
                     noHayDeudores = false;
                 }
             }
@@ -576,11 +578,14 @@ void MenuManager::ModuloReportes()
             cantVentas = auxArchivoVenta.contarRegistros();
             cantClientes = auxArchivoCliente.contarRegistros();
             cantPagos = auxArchivoPago.contarRegistros();
+
             for(int i=0; i<cantClientes; i++)
             {
                 importeTotal = 0;
 
                 regCliente = auxArchivoCliente.leerRegistro(i);
+
+                regPago.imputarRecibos(regCliente.getDni(), 0);
 
                 for(int j=0; j<cantVentas; j++)
                 {
@@ -659,7 +664,7 @@ void MenuManager::ModuloReportes()
                     }
                 }
                 mostrarTitulo = true;
-                cout << "Saldo Actual: $" << regCliente.getSaldoDeudor() - regCliente.getSaldoAcreedor() << endl << endl;
+                cout << setw(69) << "Saldo Actual: $" << regCliente.getSaldoDeudor() - regCliente.getSaldoAcreedor() << endl << endl;
             }
             if(!hayVentas)
             {
@@ -1139,6 +1144,7 @@ void MenuManager::ModuloBackUp()
             MenuRestaurarArchivo();
             break;
         }
+        system("cls");
     }
     while(op != 0);
 }
@@ -1161,20 +1167,25 @@ void MenuManager::MenuBackUp()
         case 1:
             system("cls");
             hacerBackupArticulos();
+            system("pause");
             break;
         case 2:
             system("cls");
             hacerBackupClientes();
+            system("pause");
             break;
         case 3:
             system("cls");
             hacerBackupPagos();
+            system("pause");
             break;
         case 4:
             system("cls");
             hacerBackupVentas();
+            system("pause");
             break;
         }
+        system("cls");
     }
     while(op!=0);
 }
@@ -1197,20 +1208,25 @@ void MenuManager::MenuRestaurarArchivo()
         case 1:
             system("cls");
             restaurarCopiaArticulos();
+            system("pause");
             break;
         case 2:
             system("cls");
             restaurarCopiaClientes();
+            system("pause");
             break;
         case 3:
             system("cls");
             restaurarCopiaPagos();
+            system("pause");
             break;
         case 4:
             system("cls");
             restaurarCopiaVentas();
+            system("pause");
             break;
         }
+        system("cls");
     }
     while(op!=0);
 }
