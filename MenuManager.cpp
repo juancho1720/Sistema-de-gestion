@@ -63,7 +63,8 @@ void MenuManager::MenuGeneral()
         cout << "3- Ventas." << endl;
         cout << "4- Pagos." << endl;
         cout << "5- Reportes." << endl;
-        cout << "6- BackUp." << endl << endl;
+        cout << "6- BackUp." << endl;
+        cout << "7- Importar datos para prueba con Angel." << endl << endl;
         cout << "0- Salir." << endl;
         cin >> opcionMenu;
         switch(opcionMenu)
@@ -91,6 +92,10 @@ void MenuManager::MenuGeneral()
         case 6:
             system("cls");
             ModuloBackUp();
+            break;
+        case 7:
+            system("cls");
+            ModuloImportaciones();
             break;
         }
     }
@@ -1209,6 +1214,47 @@ void MenuManager::MenuBackUp()
     while(op!=0);
 }
 
+void MenuManager::ModuloImportaciones()
+{
+    int op;
+    do
+    {
+        cout << "IMPORTAR ARCHIVOS .CSV" << endl;
+        cout << "------------------------------" << endl;
+        cout << "1- Importar clientes." << endl;
+        cout << "2- Importar articulos." << endl;
+        cout << "3- Importar  Pagos." << endl;
+        cout << "4- Importar Ventas." << endl << endl;
+        cout << "0- Volver al menu principal." << endl;
+        cin >> op;
+        switch(op)
+        {
+        case 1:
+            system("cls");
+
+            system("pause");
+            break;
+        case 2:
+            system("cls");
+
+            system("pause");
+            break;
+        case 3:
+            system("cls");
+
+            system("pause");
+            break;
+        case 4:
+            system("cls");
+
+            system("pause");
+            break;
+        }
+        system("cls");
+    }
+    while(op!=0);
+}
+
 void MenuManager::MenuRestaurarArchivo()
 {
     int op;
@@ -1351,7 +1397,6 @@ void MenuManager::cobrosMensualesTipo()
     }
     system("pause");
 }
-
 
 void MenuManager::exportarArticulos()
 {

@@ -199,4 +199,3 @@ float restarSaldoAcreedor(const char *dni, float importe)
     }
     return -1;
 }
-

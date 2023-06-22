@@ -176,7 +176,6 @@ int Venta::generarNumeroFactura()
     return cantVentas+1;
 }
 
-
 float Venta::consultarDeudaCliente(const char *dni)
 {
     float saldo = 0;
@@ -200,8 +199,7 @@ float Venta::consultarDeudaCliente(const char *dni)
     return saldo;
 }
 
-
- const char* Venta::buscarDescripcion(int codigoArticulo)
+const char* Venta::buscarDescripcion(int codigoArticulo)
 {
     ArchivoArticulo auxArchivoArticulo("articulos.dat");
     Articulo regArticulo;
@@ -218,7 +216,6 @@ float Venta::consultarDeudaCliente(const char *dni)
     }
     return "Error";
 }
-
 
 int Venta::restarStock(int codigoArticulo, int cantidadVendida)
 {
@@ -246,8 +243,6 @@ int Venta::restarStock(int codigoArticulo, int cantidadVendida)
     return stock;
 }
 
-
-
 float Venta::calcularImporteFactura(int codA, int cantV)
 {
     ArchivoArticulo auxArchivoArticulo("articulos.dat");
@@ -266,7 +261,6 @@ float Venta::calcularImporteFactura(int codA, int cantV)
     return -1;
 }
 
-
 bool Venta::comprobarDeuda(const char *dni, float importe)
 {
     ArchivoCliente auxArchivoCliente("clientes.dat");
@@ -282,4 +276,3 @@ bool Venta::comprobarDeuda(const char *dni, float importe)
     return true;
 
 }
-
