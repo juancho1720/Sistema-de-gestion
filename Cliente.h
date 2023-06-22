@@ -26,5 +26,4 @@ public:
     float getSaldoAcreedor();
     void setMontoMaximo(float mM);
     float getMontoMaximo();
-    float getSaldoAcreedor();
 };

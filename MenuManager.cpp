@@ -1108,7 +1108,7 @@ void MenuManager::ModuloPagos()
                     regPago.setActivo(false);
                     auxArchivoPago.sobreEscribirRegistro(regPago, pos);
 
-                    sumarDeuda(regPago.getDni(), regPago.getImporte());
+                    sumarSaldoDeudor(regPago.getDni(), regPago.getImporte());
 
                     cout << "Comprobante anulado exitosamente." << endl;
                 }
