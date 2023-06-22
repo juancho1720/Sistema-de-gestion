@@ -5,6 +5,7 @@
 class MenuManager
 {
 public:
+    void MenuBienvenida();
     void MenuGeneral();
     void ModuloClientes();
     void ModuloVentas();
@@ -16,6 +17,7 @@ public:
     int sumarStock(int codigoArticulo, int cantidadArticulo);
     void ventasMensualesProductos();
     void cobrosMensualesTipo();
+    void exportarArticulos();
     void exportarClientes();
     void exportarCtasCtes();
     void MenuBackUp();
@@ -29,4 +31,5 @@ public:
     void restaurarCopiaPagos();
     void restaurarCopiaVentas();
     void cambiarLimiteDeuda();
+    void MenuDespedida();
 };

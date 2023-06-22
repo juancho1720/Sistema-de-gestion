@@ -13,6 +13,43 @@ using namespace std;
 #include "ArchivoPago.h"
 #include <fstream>
 
+void MenuManager::MenuBienvenida()
+{
+    cout << right;
+    cout << setw(35) << "                      BIENVENIDO AL SISTEMA DE GESTION" << endl;
+    cout << setw(35) << "                             <ERROR 404>" << endl << endl;
+
+    cout << setw(35) << "-----------------------------------------------------------------------------" << endl << endl;
+
+    cout << setw(35) << "                      Universidad Tecnologica Nacional" << endl << endl;
+
+    cout << setw(35) << "-----------------------------------------------------------------------------" << endl << endl;
+
+    cout << left;
+    cout << setw(35) << "Carrera: Tecnicatura Universitaria en Programacion / Sistemas Informaticos" << endl;
+    cout << setw(35) << "Materia: Laboratorio II" << endl << endl;
+
+    cout << setw(35) << "Profesores:" << endl;
+    cout << setw(35) << "Simon, Angel" << endl;
+    cout << setw(35) << "Lara Campos, Brian Esteban" << endl << endl;
+
+    cout << setw(35) << "Jefes de trabajos practicos:" << endl;
+    cout << setw(35) << "Gonzalez, Juan Agustin" << endl;
+    cout << setw(35) << "Varela, Mariano" << endl << endl;
+
+    cout << setw(35) << "Ayudantes de trabajos practicos:" << endl;
+    cout << setw(35) << "Vargas Pabon" << endl;
+    cout << setw(25) << "Gabriel de Jesus" << endl << endl;
+
+    cout << setw(35) << "Alumnos:" << endl;
+    cout << setw(35) << "Juan Romero - Legajo 27542" << endl;
+    cout << setw(35) << "Juan Manuel Sarmiento - Legajo 27543" << endl;
+    cout << setw(35)<< "Valentina Conde - Legajo 25862" << endl << endl;
+
+    system("pause");
+    system("cls");
+}
+
 void MenuManager::MenuGeneral()
 {
     int opcionMenu;
@@ -467,7 +504,8 @@ void MenuManager::ModuloReportes()
         cout << "4- Cantidad de ventas mensuales por producto." << endl;
         cout << "5- Cantidad de cobranzas por formas de pago." << endl;
         cout << "6- Exportar listado de clientes a Excel." << endl;
-        cout << "7- Exportar cuentas corrientes a Excel." << endl << endl;
+        cout << "7- Exportar cuentas corrientes a Excel." << endl;
+        cout << "8- Exportar listado de articulos a Excel." << endl << endl;
         cout << "0- Volver al menu principal." << endl;
         cin >> opcionMenu;
         switch(opcionMenu)
@@ -560,8 +598,10 @@ void MenuManager::ModuloReportes()
                             cout << setw(10) << "Numero";
                             cout << setw(10) << "Importe";
                             cout << setw(15) << "Estado";
-                            cout << setw(15) << "Fecha";
-                            cout << setw(10) << "Saldo Deudor" << endl;
+                            cout << setw(12) << "Fecha";
+                            //cout << right;
+                            cout << setw(10) << "Debe";
+                            cout << setw(10) << "Haber" << endl;
                             cout << "-------------------------------------------------------------------------------------------------------------------------------------------------" << endl;
                             mostrarTitulo = false;
                         }
@@ -580,7 +620,8 @@ void MenuManager::ModuloReportes()
                         }
                         regVenta.getFechaVenta().Mostrar();
                         cout << right;
-                        cout << setw(10) << importeTotal;
+                        cout << setw(10) << regVenta.getImporte();
+                        cout << setw(10) << " ";
                         cout << endl;
                         cout << "-------------------------------------------------------------------------------------------------------------------------------------------------" << endl;
                     }
@@ -611,13 +652,15 @@ void MenuManager::ModuloReportes()
                             }
                             regPago.getFechaPago().Mostrar();
                             cout << right;
-                            cout << setw(10) << importeTotal;
+                            cout << setw(10) << " ";
+                            cout << setw(10) << regPago.getImporte();
                             cout << endl;
                             cout << "-------------------------------------------------------------------------------------------------------------------------------------------------" << endl;
                         }
                     }
                 }
                 mostrarTitulo = true;
+                cout << "Saldo Actual: $" << regCliente.getSaldoDeudor() - regCliente.getSaldoAcreedor() << endl << endl;
             }
             if(!hayVentas)
             {
@@ -640,6 +683,10 @@ void MenuManager::ModuloReportes()
         case 7:
             system("cls");
             exportarCtasCtes();
+            break;
+        case 8:
+            system("cls");
+            exportarArticulos();
             break;
         }
         system("cls");
@@ -1275,6 +1322,33 @@ void MenuManager::cobrosMensualesTipo()
     system("pause");
 }
 
+
+void MenuManager::exportarArticulos()
+{
+    ArchivoArticulo auxArchivoArticulo("articulos.dat");
+    Articulo regArticulo;
+    int cantArticulos = auxArchivoArticulo.contarRegistros();
+
+    ofstream archivoArticulos("articulos.csv", ios::out);
+    if(!archivoArticulos){
+        cout << "No se pudo crear el archivo" << endl;
+    }
+    else
+    {
+        for(int x=0;x<cantArticulos;x++){
+            regArticulo = auxArchivoArticulo.leerRegistro(x);
+            if(x==0){
+                archivoArticulos << "Descripcion" << ";" << "Stock" << ";" << "Precio unitario" << "Codigo" << endl;
+            }
+            archivoArticulos << regArticulo.getDescripcion() << ";" << regArticulo.getStock() << ";" << regArticulo.getPrecioUnitario() << ";" << regArticulo.getCodigoArticulo() << endl;
+        }
+        archivoArticulos.close();
+        cout << "Archivo creado con exito" << endl;
+        cout << cantArticulos << " articulos exportados a excel" << endl;
+        system("pause");
+    }
+}
+
 void MenuManager::exportarClientes()
 {
     ArchivoCliente auxArchivoCliente("clientes.dat");
@@ -1608,3 +1682,10 @@ void MenuManager::cambiarLimiteDeuda()
     }
 }
 
+void MenuManager::MenuDespedida()
+{
+    system("cls");
+    cout << "____________________________________________________________" << endl << endl;
+    cout << "        Muchas gracias por utilizar nuestro programa!!!" << endl;
+    cout << "____________________________________________________________" << endl << endl;
+}
