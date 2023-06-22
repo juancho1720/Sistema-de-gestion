@@ -70,7 +70,7 @@
 1687299254 c:\users\sarmi\onedrive\documentos\github\sistema-de-gestion\archivoventa.h
 	"Venta.h"
 
-1687398132 source:c:\users\sarmi\onedrive\documentos\github\sistema-de-gestion\funcionesgenerales.cpp
+1687470245 source:c:\users\sarmi\onedrive\documentos\github\sistema-de-gestion\funcionesgenerales.cpp
 	<iostream>
 	<string.h>
 	<fstream>
@@ -114,7 +114,7 @@
 	"Cliente.h"
 	"ArchivoCliente.h"
 
-1687399591 source:c:\users\sarmi\onedrive\documentos\github\sistema-de-gestion\menumanager.cpp
+1687472712 source:c:\users\sarmi\onedrive\documentos\github\sistema-de-gestion\menumanager.cpp
 	<iostream>
 	<string.h>
 	<iomanip>

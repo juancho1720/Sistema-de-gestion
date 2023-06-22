@@ -1,0 +1,13 @@
+Fecha;Nombre;Apellido;Tipo Comprobante;Numero;Importe;Estado
+1/1/1;j;s;F;1;100;PAGA
+1/1/1;j;s;F;2;100;PAGA
+1/1/1;s;j;F;3;100;PAGA
+1/1/1;s;j;F;4;100;PAGA
+2023/6/22;Juan Manuel;Sarmiento;F;5;1000;PAGA
+1/1/1;j;s;RBO;1;100;IMPUTADO
+1/1/1;j;s;RBO;2;100;IMPUTADO
+1/1/1;j;s;RBO;3;50;IMPUTADO
+1/1/1;s;j;RBO;4;100;IMPUTADO
+1/1/1;s;j;RBO;5;100;IMPUTADO
+2023/6/22;Juan Manuel;Sarmiento;RBO;6;1000;IMPUTADO
+2023/6/22;Juan Manuel;Sarmiento;RBO;7;500;IMPUTADO

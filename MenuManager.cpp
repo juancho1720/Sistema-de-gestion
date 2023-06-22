@@ -1699,6 +1699,12 @@ void MenuManager::cambiarLimiteDeuda()
         if(!strcmp(regCliente.getDni(),dni)){
             cout << "Ingresar nuevo limite: ";
             cin >> nuevoLimite;
+            while (nuevoLimite < 0)
+            {
+                cout << "El limite no puede ser menor a $0.-" << endl << endl;
+                cout << "Ingresar nuevo limite: " << endl;
+                cin >> nuevoLimite;
+            }
             regCliente.setMontoMaximo(nuevoLimite);
             bandera = true;
         }
