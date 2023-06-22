@@ -665,7 +665,14 @@ void MenuManager::ModuloReportes()
                     }
                 }
                 mostrarTitulo = true;
-                cout << setw(69) << "Saldo Actual: $" << regCliente.getSaldoDeudor() - regCliente.getSaldoAcreedor() << endl << endl;
+                if(regCliente.getSaldoDeudor() - regCliente.getSaldoAcreedor() >= 0)
+                {
+                    cout << setw(69) << "Saldo Deudor Actual: $" << regCliente.getSaldoDeudor() - regCliente.getSaldoAcreedor() << endl << endl;
+                }
+                else
+                {
+                    cout << setw(69) << "Saldo Acreedor Actual: $" << ( regCliente.getSaldoDeudor() - regCliente.getSaldoAcreedor()) * -1 << endl << endl;
+                }
             }
             if(!hayVentas)
             {
