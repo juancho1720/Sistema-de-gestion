@@ -10,7 +10,10 @@ public:
     ArchivoPago(const char *n);
     Pago leerRegistro(int pos);
     int contarRegistros();
-    void escribirRegistro(Pago reg);
+    void escribirRegistro();
+    void listarXCliente();
+    void listarTodosXMes();
+    void anular();
     int buscarRecibo(int n);
     int sobreEscribirRegistro(Pago reg, int pos);
     void leerRegistro(Pago *vec, int cantidadRegistrosALeer);

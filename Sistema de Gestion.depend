@@ -1,11 +1,12 @@
 # depslib dependency file v1.0
-1687526444 source:c:\users\sarmi\onedrive\documentos\github\sistema-de-gestion\archivoarticulo.cpp
+1687528549 source:c:\users\sarmi\onedrive\documentos\github\sistema-de-gestion\archivoarticulo.cpp
 	<iostream>
 	<string.h>
 	<iomanip>
 	"ArchivoArticulo.h"
+	"MenuManager.h"
 
-1687528368 c:\users\sarmi\onedrive\documentos\github\sistema-de-gestion\archivoarticulo.h
+1687528558 c:\users\sarmi\onedrive\documentos\github\sistema-de-gestion\archivoarticulo.h
 	"Articulo.h"
 
 1687131585 c:\users\sarmi\onedrive\documentos\github\sistema-de-gestion\articulo.h
@@ -33,12 +34,12 @@
 
 1687479669 c:\users\sarmi\onedrive\documentos\github\sistema-de-gestion\cliente.h
 
-1687386011 source:c:\users\sarmi\onedrive\documentos\github\sistema-de-gestion\archivopago.cpp
+1687528498 source:c:\users\sarmi\onedrive\documentos\github\sistema-de-gestion\archivopago.cpp
 	<iostream>
 	<string.h>
 	"ArchivoPago.h"
 
-1687299254 c:\users\sarmi\onedrive\documentos\github\sistema-de-gestion\archivopago.h
+1687529062 c:\users\sarmi\onedrive\documentos\github\sistema-de-gestion\archivopago.h
 	"Pago.h"
 
 1687299254 c:\users\sarmi\onedrive\documentos\github\sistema-de-gestion\pago.h
@@ -124,7 +125,7 @@
 	"ArchivoArticulo.h"
 	"ArchivoCliente.h"
 
-1687528371 source:c:\users\sarmi\onedrive\documentos\github\sistema-de-gestion\menumanager.cpp
+1687529064 source:c:\users\sarmi\onedrive\documentos\github\sistema-de-gestion\menumanager.cpp
 	<iostream>
 	<string.h>
 	<iomanip>

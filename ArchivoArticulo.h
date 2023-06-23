@@ -10,7 +10,7 @@ public:
     ArchivoArticulo(const char *n);
     Articulo leerRegistro(int pos);
     int contarRegistros();
-    void escribirRegistro(Articulo reg);
+    void escribirRegistro();
     void listarTodos();
     void buscarXCodigo();
     void borrar();

@@ -39,8 +39,9 @@ int ArchivoArticulo::contarRegistros()
     return tam/sizeof(Articulo);
 }
 
-void ArchivoArticulo::escribirRegistro(Articulo reg)
+void ArchivoArticulo::escribirRegistro()
 {
+    Articulo reg;
     FILE *p = fopen("articulos.dat","ab");
     if(p == NULL)
     {

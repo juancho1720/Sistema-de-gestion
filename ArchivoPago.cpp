@@ -1,9 +1,13 @@
 #include <iostream>
 #include <string.h>
+#include <iomanip>
 
 using namespace std;
 
 #include "ArchivoPago.h"
+#include "ArchivoCliente.h"
+#include "ArchivoVenta.h"
+#include "FuncionesGenerales.h"
 
 ArchivoPago::ArchivoPago(const char *n)
 {
@@ -37,8 +41,9 @@ int ArchivoPago::contarRegistros()
     return tam/sizeof(Pago);
 }
 
-void ArchivoPago::escribirRegistro(Pago reg)
+void ArchivoPago::escribirRegistro()
 {
+    Pago reg;
     FILE *p = fopen("pagos.dat","ab");
     if(p == NULL)
     {
@@ -56,6 +61,210 @@ void ArchivoPago::escribirRegistro(Pago reg)
     {
         cout << "Pago no agregado!!!" << endl;
         system("pause");
+    }
+}
+
+void ArchivoPago::listarXCliente()
+{
+    bool hayVentas = false;
+    bool mostrarTitulo = true;
+    char dni[12];
+    ArchivoPago auxArchivoPago("pagos.dat");
+    Pago regPago;
+    int cantPagos = auxArchivoPago.contarRegistros();
+    ArchivoCliente auxArchivoCliente("clientes.dat");
+    Cliente regCliente;
+    int cantClientes = auxArchivoCliente.contarRegistros();
+    float importeTotal = 0;
+    cout << "DNI: ";
+    cargarCadena(dni, 11);
+    system("cls");
+
+    if (comprobarClientesExistentes(dni) == true)
+    {
+        for(int i=0; i<cantClientes; i++)
+        {
+            regCliente = auxArchivoCliente.leerRegistro(i);
+
+            if(strcmp(regCliente.getDni(), dni) == 0)
+            {
+                for(int j=0; j<cantPagos; j++)
+                {
+                    regPago = auxArchivoPago.leerRegistro(j);
+
+                    if(mostrarTitulo && strcmp(regPago.getDni(), dni) == 0)
+                    {
+                        hayVentas = true;
+
+                        cout << "Cliente: " << regCliente.getApellido() << ", " << regCliente.getNombre() << endl << endl;
+                        cout << left;
+                        cout << setw(20) << "Numero de Recibo";
+                        cout << setw(20) << "DNI";
+                        cout << setw(10) << "Importe";
+                        cout << setw(15) << "Factura";
+                        cout << setw(15) << "Forma de Pago";
+                        cout << setw(15) << "Fecha Recibo" << endl;
+                        cout << "-------------------------------------------------------------------------------------------------------------------------------------------------" << endl;
+                        mostrarTitulo = false;
+                    }
+                    if(strcmp(regPago.getDni(), dni) == 0)
+                    {
+                        importeTotal += regPago.getImporte();
+                        regPago.Mostrar();
+                        cout << "-------------------------------------------------------------------------------------------------------------------------------------------------" << endl;
+                    }
+                }
+            }
+            if (importeTotal != 0)
+            {
+                cout << "Total Cobrado: $" << importeTotal;
+                importeTotal = 0;
+                cout << endl << endl;
+            }
+            mostrarTitulo = true;
+        }
+        if(!hayVentas)
+        {
+            cout << "No existen cobranzas de este cliente para este periodo." << endl;
+        }
+    }
+    else
+    {
+        system("cls");
+        cout << "El cliente ingresado no existe." << endl;
+    }
+
+    system("pause");
+}
+
+void ArchivoPago::listarTodosXMes()
+{
+    bool hayVentas = false;
+    bool mostrarTitulo = true;
+    int mes, anio;
+    ArchivoPago auxArchivoPago("pagos.dat");
+    Pago regPago;
+    int cantPagos = auxArchivoPago.contarRegistros();
+    ArchivoCliente auxArchivoCliente("clientes.dat");
+    Cliente regCliente;
+    int cantClientes = auxArchivoCliente.contarRegistros();
+    float importeTotal = 0;
+    cout << "Mes: ";
+    cin >> mes;
+    cout << "Anio: ";
+    cin >> anio;
+    system("cls");
+    cantPagos = auxArchivoPago.contarRegistros();
+    cantClientes = auxArchivoCliente.contarRegistros();
+
+    for(int i=0; i<cantClientes; i++)
+    {
+        regCliente = auxArchivoCliente.leerRegistro(i);
+
+        for(int j=0; j<cantPagos; j++)
+        {
+            regPago = auxArchivoPago.leerRegistro(j);
+
+            if(strcmp(regPago.getDni(), regCliente.getDni()) == 0 && regPago.getFechaPago().getAnio() == anio && regPago.getFechaPago().getMes() == mes)
+            {
+                hayVentas = true;
+                if(mostrarTitulo)
+                {
+                    cout << "Cliente: " << regCliente.getApellido() << ", " << regCliente.getNombre() << endl << endl;
+                    cout << left;
+                    cout << setw(20) << "Numero de Recibo";
+                    cout << setw(20) << "DNI";
+                    cout << setw(10) << "Importe";
+                    cout << setw(20) << "Numero Factura";
+                    cout << setw(15) << "Forma de Pago";
+                    cout << setw(15) << "Fecha Recibo" << endl;
+                    cout << "-------------------------------------------------------------------------------------------------------------------------------------------------" << endl;
+                    mostrarTitulo = false;
+                }
+                importeTotal += regPago.getImporte();
+                regPago.Mostrar();
+                cout << "-------------------------------------------------------------------------------------------------------------------------------------------------" << endl;
+            }
+        }
+        if (importeTotal != 0)
+        {
+            cout << "Total Cobrado: $" << importeTotal;
+            importeTotal = 0;
+            cout << endl << endl;
+        }
+        mostrarTitulo = true;
+    }
+    if(!hayVentas)
+    {
+        cout << "No existen cobranzas para este periodo." << endl;
+    }
+    system("pause");
+}
+
+void ArchivoPago::anular()
+{
+    int nR;
+    char confirmacion;
+    ArchivoPago auxArchivoPago("pagos.dat");
+    Pago regPago;
+    ArchivoVenta auxArchivoVenta("ventas.dat");
+    Venta regVenta;
+    cout << "Numero de Recibo: ";
+    cin >> nR;
+    system("cls");
+    int pos = auxArchivoPago.buscarRecibo(nR);
+
+    if(pos < 0)
+    {
+        cout<<"No existe un recibo con ese numero"<<endl;
+        system("pause");
+    }
+    else
+    {
+
+        regPago = auxArchivoPago.leerRegistro(pos);
+
+        if (regPago.getActivo())
+        {
+            cout << "Cliente: " << buscarApellido(regPago.getDni()) << ", " << buscarNombre(regPago.getDni()) << endl << endl;
+            cout << left;
+            cout << setw(20) << "Numero de Recibo";
+            cout << setw(20) << "DNI";
+            cout << setw(10) << "Importe";
+            cout << setw(15) << "Fecha Recibo" << endl;
+            regPago.Mostrar();
+
+            cout << "El comprobante seleccionado sera anulado." << endl;
+            cout << "Confirma??? S/N" << endl;
+            cin >> confirmacion;
+
+            if (confirmacion == 's' || confirmacion == 'S')
+            {
+                regPago.setActivo(false);
+                auxArchivoPago.sobreEscribirRegistro(regPago, pos);
+
+                sumarSaldoDeudor(regPago.getDni(), regPago.getImporte());
+
+                regVenta = auxArchivoVenta.leerRegistro(auxArchivoVenta.buscarFactura(regVenta.getNumeroFactura()));
+                regVenta.setSaldo(regVenta.getImporte());
+                auxArchivoVenta.sobreEscribirRegistro(regVenta, auxArchivoVenta.buscarFactura(regVenta.getNumeroFactura()) );
+
+                cout << "Comprobante anulado exitosamente." << endl;
+            }
+            else
+            {
+                system("cls");
+                cout << "El comprobante no ha sido anulado." << endl;
+            }
+        }
+        else
+        {
+            system("cls");
+            cout << "El comprobante ya ha sido anulado anteriormente." << endl;
+        }
+
+        system("pause");
+        system("cls");
     }
 }
 
@@ -98,34 +307,34 @@ int ArchivoPago::sobreEscribirRegistro(Pago reg, int pos)
 void ArchivoPago::leerRegistro(Pago *vec, int cantidadRegistrosALeer)
 {
     FILE *p = fopen(nombre, "rb");
-	if (p == NULL)
-	{
-		return ;
-	}
+    if (p == NULL)
+    {
+        return ;
+    }
 
-	fread(vec, sizeof(Pago), cantidadRegistrosALeer, p);
-	fclose(p);
+    fread(vec, sizeof(Pago), cantidadRegistrosALeer, p);
+    fclose(p);
 }
 
 bool ArchivoPago::guardar(Pago *vec, int cantidadRegistrosAEscribir)
 {
     FILE *p = fopen(nombre, "ab");
-	if (p == NULL)
-	{
-		return false;
-	}
+    if (p == NULL)
+    {
+        return false;
+    }
 
-	int cantidadRegistrosEscritos = fwrite(vec, sizeof(Pago), cantidadRegistrosAEscribir, p);
-	fclose(p);
-	return cantidadRegistrosEscritos == cantidadRegistrosAEscribir;
+    int cantidadRegistrosEscritos = fwrite(vec, sizeof(Pago), cantidadRegistrosAEscribir, p);
+    fclose(p);
+    return cantidadRegistrosEscritos == cantidadRegistrosAEscribir;
 }
 
 void ArchivoPago::vaciar()
 {
     FILE *p = fopen(nombre, "wb");
-	if (p == NULL)
-	{
-		return ;
-	}
-	fclose(p);
+    if (p == NULL)
+    {
+        return ;
+    }
+    fclose(p);
 }

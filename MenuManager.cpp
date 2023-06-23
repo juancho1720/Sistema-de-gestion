@@ -144,12 +144,9 @@ void MenuManager::ModuloClientes()
 void MenuManager::ModuloArticulos()
 {
     int opcionMenu;
-    int codigo;
-    int cantArticulos;
-    int pos;
-    char confirmacion;
-    Articulo regArticulo;
+
     ArchivoArticulo auxArchivoArticulo("articulos.dat");
+
     do
     {
         cout << "MODULO ARTICULOS" << endl;
@@ -168,7 +165,7 @@ void MenuManager::ModuloArticulos()
         {
         case 1:
             system("cls");
-            auxArchivoArticulo.escribirRegistro(regArticulo);
+            auxArchivoArticulo.escribirRegistro();
             system("pause");
             break;
         case 2:
@@ -284,187 +281,19 @@ void MenuManager::ModuloPagos()
         {
         case 1:
             system("cls");
-            auxArchivoPago.escribirRegistro(regPago);
+            auxArchivoPago.escribirRegistro();
             break;
         case 2:
             system("cls");
-            hayVentas = false;
-            mostrarTitulo = true;
-            cout << "DNI: ";
-            cargarCadena(dni, 11);
-            system("cls");
-            cantPagos = auxArchivoPago.contarRegistros();
-            cantClientes = auxArchivoCliente.contarRegistros();
-
-            if (comprobarClientesExistentes(dni) == true)
-            {
-                for(int i=0; i<cantClientes; i++)
-                {
-                    regCliente = auxArchivoCliente.leerRegistro(i);
-
-                    if(strcmp(regCliente.getDni(), dni) == 0)
-                    {
-                        for(int j=0; j<cantPagos; j++)
-                        {
-                            regPago = auxArchivoPago.leerRegistro(j);
-
-                            if(mostrarTitulo && strcmp(regPago.getDni(), dni) == 0)
-                            {
-                                hayVentas = true;
-
-                                cout << "Cliente: " << regCliente.getApellido() << ", " << regCliente.getNombre() << endl << endl;
-                                cout << left;
-                                cout << setw(20) << "Numero de Recibo";
-                                cout << setw(20) << "DNI";
-                                cout << setw(10) << "Importe";
-                                cout << setw(15) << "Factura";
-                                cout << setw(15) << "Forma de Pago";
-                                cout << setw(15) << "Fecha Recibo" << endl;
-                                cout << "-------------------------------------------------------------------------------------------------------------------------------------------------" << endl;
-                                mostrarTitulo = false;
-                            }
-                            if(strcmp(regPago.getDni(), dni) == 0)
-                            {
-                                importeTotal += regPago.getImporte();
-                                regPago.Mostrar();
-                                cout << "-------------------------------------------------------------------------------------------------------------------------------------------------" << endl;
-                            }
-                        }
-                    }
-                    if (importeTotal != 0)
-                    {
-                        cout << "Total Cobrado: $" << importeTotal;
-                        importeTotal = 0;
-                        cout << endl << endl;
-                    }
-                    mostrarTitulo = true;
-                }
-                if(!hayVentas)
-                {
-                    cout << "No existen cobranzas de este cliente para este periodo." << endl;
-                }
-            }
-            else
-            {
-                system("cls");
-                cout << "El cliente ingresado no existe." << endl;
-            }
-
-            system("pause");
+            auxArchivoPago.listarXCliente();
             break;
         case 3:
             system("cls");
-            hayVentas = false;
-            cout << "Mes: ";
-            cin >> mes;
-            cout << "Anio: ";
-            cin >> anio;
-            system("cls");
-            cantPagos = auxArchivoPago.contarRegistros();
-            cantClientes = auxArchivoCliente.contarRegistros();
-
-            for(int i=0; i<cantClientes; i++)
-            {
-                regCliente = auxArchivoCliente.leerRegistro(i);
-
-                for(int j=0; j<cantPagos; j++)
-                {
-                    regPago = auxArchivoPago.leerRegistro(j);
-
-                    if(strcmp(regPago.getDni(), regCliente.getDni()) == 0 && regPago.getFechaPago().getAnio() == anio && regPago.getFechaPago().getMes() == mes)
-                    {
-                        hayVentas = true;
-                        if(mostrarTitulo)
-                        {
-                            cout << "Cliente: " << regCliente.getApellido() << ", " << regCliente.getNombre() << endl << endl;
-                            cout << left;
-                            cout << setw(20) << "Numero de Recibo";
-                            cout << setw(20) << "DNI";
-                            cout << setw(10) << "Importe";
-                            cout << setw(20) << "Numero Factura";
-                            cout << setw(15) << "Forma de Pago";
-                            cout << setw(15) << "Fecha Recibo" << endl;
-                            cout << "-------------------------------------------------------------------------------------------------------------------------------------------------" << endl;
-                            mostrarTitulo = false;
-                        }
-                        importeTotal += regPago.getImporte();
-                        regPago.Mostrar();
-                        cout << "-------------------------------------------------------------------------------------------------------------------------------------------------" << endl;
-                    }
-                }
-                if (importeTotal != 0)
-                {
-                    cout << "Total Cobrado: $" << importeTotal;
-                    importeTotal = 0;
-                    cout << endl << endl;
-                }
-                mostrarTitulo = true;
-            }
-            if(!hayVentas)
-            {
-                cout << "No existen cobranzas para este periodo." << endl;
-            }
-            system("pause");
+            auxArchivoPago.listarTodosXMes();
             break;
         case 4:
             system("cls");
-            cout << "Numero de Recibo: ";
-            cin >> nR;
-            system("cls");
-            pos = auxArchivoPago.buscarRecibo(nR);
-
-            if(pos < 0)
-            {
-                cout<<"No existe un recibo con ese numero"<<endl;
-                system("pause");
-            }
-            else
-            {
-
-                regPago = auxArchivoPago.leerRegistro(pos);
-
-                if (regPago.getActivo())
-                {
-                    cout << "Cliente: " << buscarApellido(regPago.getDni()) << ", " << buscarNombre(regPago.getDni()) << endl << endl;
-                    cout << left;
-                    cout << setw(20) << "Numero de Recibo";
-                    cout << setw(20) << "DNI";
-                    cout << setw(10) << "Importe";
-                    cout << setw(15) << "Fecha Recibo" << endl;
-                    regPago.Mostrar();
-
-                    cout << "El comprobante seleccionado sera anulado." << endl;
-                    cout << "Confirma??? S/N" << endl;
-                    cin >> confirmacion;
-
-                    if (confirmacion == 's' || confirmacion == 'S')
-                    {
-                        regPago.setActivo(false);
-                        auxArchivoPago.sobreEscribirRegistro(regPago, pos);
-
-                        sumarSaldoDeudor(regPago.getDni(), regPago.getImporte());
-
-                        regVenta = auxArchivoVenta.leerRegistro(auxArchivoVenta.buscarFactura(regVenta.getNumeroFactura()));
-                        regVenta.setSaldo(regVenta.getImporte());
-                        auxArchivoVenta.sobreEscribirRegistro(regVenta, auxArchivoVenta.buscarFactura(regVenta.getNumeroFactura()) );
-
-                        cout << "Comprobante anulado exitosamente." << endl;
-                    }
-                    else
-                    {
-                        system("cls");
-                        cout << "El comprobante no ha sido anulado." << endl;
-                    }
-                }
-                else
-                {
-                    system("cls");
-                    cout << "El comprobante ya ha sido anulado anteriormente." << endl;
-                }
-
-                system("pause");
-                system("cls");
-            }
+            auxArchivoPago.anular();
             break;
         }
         system("cls");
