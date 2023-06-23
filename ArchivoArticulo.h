@@ -12,6 +12,10 @@ public:
     int contarRegistros();
     void escribirRegistro(Articulo reg);
     void listarTodos();
+    void buscarXCodigo();
+    void borrar();
+    void consultarStockXCodigo();
+    void cargarStock();
     int buscarCodigo(int c);
     int sobreEscribirRegistro(Articulo reg, int pos);
     void cambiarPrecios();

@@ -5,6 +5,7 @@
 using namespace std;
 
 #include "ArchivoArticulo.h"
+#include "MenuManager.h"
 
 ArchivoArticulo::ArchivoArticulo(const char *n)
 {
@@ -87,6 +88,151 @@ void ArchivoArticulo::listarTodos()
         cout << "No hay articulos activos para listar." << endl;
     }
     system("pause");
+}
+
+void ArchivoArticulo::buscarXCodigo()
+{
+    int codigo;
+    Articulo regArticulo;
+    ArchivoArticulo auxArchivoArticulo("articulos.dat");
+    cout << "Codigo: ";
+    cin >> codigo;
+    system("cls");
+    int pos = auxArchivoArticulo.buscarCodigo(codigo);
+    if(pos == -1)
+    {
+        cout<<"No existe un articulo con ese codigo"<<endl;
+        system("pause");
+    }
+    else
+    {
+        regArticulo = auxArchivoArticulo.leerRegistro(pos);
+        if(regArticulo.getEstado() == true)
+        {
+            cout << left;
+            cout << setw(20) << "Descripcion";
+            cout << setw(15) << "Codigo";
+            cout << setw(15) << "Stock";
+            cout << setw(20) << "Precio Unitario" << endl;
+            cout << "------------------------------------------------------------------------------" << endl;
+            regArticulo.Mostrar();
+            cout << "------------------------------------------------------------------------------" << endl;
+            system("pause");
+        }
+        else
+        {
+            cout << "No hay articulo activos con ese codigo." << endl;
+            system("pause");
+        }
+    }
+}
+
+void ArchivoArticulo::borrar()
+{
+    int codigo;
+    char confirmacion;
+    Articulo regArticulo;
+    ArchivoArticulo auxArchivoArticulo("articulos.dat");
+    cout << "Codigo: ";
+    cin >> codigo;
+    system("cls");
+    int pos = auxArchivoArticulo.buscarCodigo(codigo);
+    regArticulo = auxArchivoArticulo.leerRegistro(pos);
+    if(pos == -1 || regArticulo.getEstado() == false)
+    {
+        cout<<"No existe un articulo con ese codigo"<<endl;
+        system("pause");
+    }
+    else
+    {
+        cout << "El articulo <" << regArticulo.getDescripcion() << "> sera eliminado." << endl;
+        cout << "Confirma??? S/N" << endl;
+        cin >> confirmacion;
+        if (confirmacion == 's' || confirmacion == 'S')
+        {
+            system("cls");
+            regArticulo.setEstado(false);
+            auxArchivoArticulo.sobreEscribirRegistro(regArticulo, pos);
+            cout << "Articulo borrado exitosamente." << endl;
+        }
+        else
+        {
+            system("cls");
+            cout << "El articulo no ha sido borrado." << endl;
+        }
+        system("pause");
+    }
+}
+
+void ArchivoArticulo::consultarStockXCodigo()
+{
+    int codigo;
+    Articulo regArticulo;
+    ArchivoArticulo auxArchivoArticulo("articulos.dat");
+    cout << "Codigo: ";
+    cin >> codigo;
+    system("cls");
+    int pos = auxArchivoArticulo.buscarCodigo(codigo);
+    if(pos == -1)
+    {
+        cout<<"No existe un articulo con ese codigo"<<endl;
+        system("pause");
+    }
+    else
+    {
+        regArticulo = auxArchivoArticulo.leerRegistro(pos);
+        if(regArticulo.getEstado() == true)
+        {
+            cout << left;
+            cout << setw(20) << "Descripcion";
+            cout << setw(15) << "Codigo";
+            cout << setw(15) << "Stock";
+            cout << setw(20) << "Precio Unitario" << endl;
+            cout << "------------------------------------------------------------------------------" << endl;
+            regArticulo.Mostrar();
+            cout << "------------------------------------------------------------------------------" << endl;
+            system("pause");
+        }
+        else
+        {
+            cout << "No hay articulo activos con ese codigo." << endl;
+            system("pause");
+        }
+    }
+}
+
+void ArchivoArticulo::cargarStock()
+{
+    int codigo, cantArticulos;
+    Articulo regArticulo;
+    ArchivoArticulo auxArchivoArticulo("articulos.dat");
+    MenuManager menu;
+    cout << "Codigo: ";
+    cin >> codigo;
+    system("cls");
+    int pos = auxArchivoArticulo.buscarCodigo(codigo);
+    if(pos == -1)
+    {
+        cout<<"No existe un articulo con ese codigo"<<endl;
+        system("pause");
+    }
+    else
+    {
+        regArticulo = auxArchivoArticulo.leerRegistro(pos);
+        if(regArticulo.getEstado() == true)
+        {
+            cout << "Cantidad de unidades a sumar en stock: ";
+            cin >> cantArticulos;
+            menu.sumarStock(codigo, cantArticulos);
+            cout << "Unidades agregadas correctamente al stock." << endl;
+            system("pause");
+        }
+        else
+        {
+            cout << "No hay articulo activos con ese codigo." << endl;
+            system("pause");
+        }
+    }
 }
 
 int ArchivoArticulo::buscarCodigo(int c)

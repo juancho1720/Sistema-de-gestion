@@ -141,6 +141,72 @@ void MenuManager::ModuloClientes()
     while(opcionMenu!=0);
 }
 
+void MenuManager::ModuloArticulos()
+{
+    int opcionMenu;
+    int codigo;
+    int cantArticulos;
+    int pos;
+    char confirmacion;
+    Articulo regArticulo;
+    ArchivoArticulo auxArchivoArticulo("articulos.dat");
+    do
+    {
+        cout << "MODULO ARTICULOS" << endl;
+        cout << "------------------------------" << endl;
+        cout << "1- Cargar nuevo." << endl;
+        cout << "2- Listar todos." << endl;
+        cout << "3- Buscar por codigo." << endl;
+        cout << "4- Borrar." << endl;
+        cout << "5- Consultar stock por codigo." << endl;
+        cout << "6- Cargar stock por codigo." << endl;
+        cout << "7- Cambiar precios manualmente." << endl;
+        cout << "8- Cambiar todos los precios porcentualmente." << endl << endl;
+        cout << "0- Volver al menu principal." << endl;
+        cin >> opcionMenu;
+        switch(opcionMenu)
+        {
+        case 1:
+            system("cls");
+            auxArchivoArticulo.escribirRegistro(regArticulo);
+            system("pause");
+            break;
+        case 2:
+            system("cls");
+            auxArchivoArticulo.listarTodos();
+            break;
+        case 3:
+            system("cls");
+            auxArchivoArticulo.buscarXCodigo();
+            break;
+        case 4:
+            system("cls");
+            auxArchivoArticulo.borrar();
+            break;
+        case 5:
+            system("cls");
+            auxArchivoArticulo.consultarStockXCodigo();
+            break;
+        case 6:
+            system("cls");
+            auxArchivoArticulo.cargarStock();
+            break;
+        case 7:
+            system("cls");
+            auxArchivoArticulo.cambiarPrecios();
+            system("pause");
+            break;
+        case 8:
+            system("cls");
+            auxArchivoArticulo.aumentarPreciosPorcentual();
+            system("pause");
+            break;
+        }
+        system("cls");
+    }
+    while(opcionMenu!=0);
+}
+
 void MenuManager::ModuloVentas()
 {
     int opcionMenu;
@@ -179,272 +245,6 @@ void MenuManager::ModuloVentas()
         case 5:
             system("cls");
             auxArchivoVenta.anularVenta();
-            break;
-        }
-        system("cls");
-    }
-    while(opcionMenu!=0);
-}
-
-void MenuManager::ModuloReportes()
-{
-    int opcionMenu;
-
-    ArchivoCliente auxArchivoCliente("clientes.dat");
-
-    do
-    {
-        cout << "MODULO REPORTES" << endl;
-        cout << "------------------------------" << endl;
-        cout << "1- Listar saldos deudores por DNI." << endl;
-        cout << "2- Listar todos los saldos deudores." << endl;
-        cout << "3- Listar movimientos totales." << endl;
-        cout << "4- Listar movimientos totales por cliente." << endl;
-        cout << "5- Cantidad de ventas mensuales por producto." << endl;
-        cout << "6- Cantidad de cobranzas por formas de pago." << endl;
-        cout << "7- Exportar listado de clientes a Excel." << endl;
-        cout << "8- Exportar cuentas corrientes a Excel." << endl;
-        cout << "9- Exportar listado de articulos a Excel." << endl << endl;
-        cout << "0- Volver al menu principal." << endl;
-        cin >> opcionMenu;
-        switch(opcionMenu)
-        {
-        case 1:
-            system("cls");
-            auxArchivoCliente.listarDeudoresXDni();
-            break;
-        case 2:
-            system("cls");
-            auxArchivoCliente.listarDeudores();
-            break;
-        case 3:
-            system("cls");
-            auxArchivoCliente.listarMovimientos();
-            break;
-        case 4:
-            system("cls");
-            auxArchivoCliente.listarMovimientosXDni();
-            break;
-        case 5:
-            system("cls");
-            ventasMensualesProductos();
-            break;
-        case 6:
-            system("cls");
-            cobrosMensualesTipo();
-            break;
-        case 7:
-            system("cls");
-            exportarClientes();
-            break;
-        case 8:
-            system("cls");
-            exportarCtasCtes();
-            break;
-        case 9:
-            system("cls");
-            exportarArticulos();
-            break;
-        }
-        system("cls");
-    }
-    while(opcionMenu!=0);
-    system("cls");
-}
-
-float MenuManager::consultarDeudaCliente(const char *dni)
-{
-    float saldo = 0;
-
-    ArchivoVenta auxArchivoVenta("ventas.dat");
-    Venta regVenta;
-    int cantVentas = auxArchivoVenta.contarRegistros();
-
-    ArchivoCliente auxArchivoCliente("clientes.dat");
-
-    for (int i=0; i< cantVentas; i++)
-    {
-        regVenta = auxArchivoVenta.leerRegistro(i);
-
-        if ( strcmp(dni, regVenta.getDni()) == 0 && !regVenta.getPaga())
-        {
-            saldo += regVenta.getSaldo();
-        }
-    }
-
-    return saldo;
-}
-
-void MenuManager::ModuloArticulos()
-{
-    int opcionMenu;
-    int codigo;
-    int cantArticulos;
-    int pos;
-    char confirmacion;
-    Articulo regArticulo;
-    ArchivoArticulo auxArchivoArticulo("articulos.dat");
-    do
-    {
-        cout << "MODULO ARTICULOS" << endl;
-        cout << "------------------------------" << endl;
-        cout << "1- Cargar nuevo." << endl;
-        cout << "2- Listar todos." << endl;
-        cout << "3- Buscar por codigo." << endl;
-        cout << "4- Borrar." << endl;
-        cout << "5- Consultar stock por codigo." << endl;
-        cout << "6- Cargar stock por codigo." << endl;
-        cout << "7- Cambiar precios manualmente." << endl;
-        cout << "8- Cambiar todos los precios porcentualmente." << endl << endl;
-        cout << "0- Volver al menu principal." << endl;
-        cin >> opcionMenu;
-        switch(opcionMenu)
-        {
-        case 1:
-            system("cls");
-            auxArchivoArticulo.escribirRegistro(regArticulo);
-            system("pause");
-            break;
-        case 2:
-            system("cls");
-            auxArchivoArticulo.listarTodos();
-            break;
-        case 3:
-            system("cls");
-            cout << "Codigo: ";
-            cin >> codigo;
-            system("cls");
-            pos = auxArchivoArticulo.buscarCodigo(codigo);
-            if(pos == -1)
-            {
-                cout<<"No existe un articulo con ese codigo"<<endl;
-                system("pause");
-            }
-            else
-            {
-                regArticulo = auxArchivoArticulo.leerRegistro(pos);
-                if(regArticulo.getEstado() == true)
-                {
-                    cout << left;
-                    cout << setw(20) << "Descripcion";
-                    cout << setw(15) << "Codigo";
-                    cout << setw(15) << "Stock";
-                    cout << setw(20) << "Precio Unitario" << endl;
-                    cout << "------------------------------------------------------------------------------" << endl;
-                    regArticulo.Mostrar();
-                    cout << "------------------------------------------------------------------------------" << endl;
-                    system("pause");
-                }
-                else
-                {
-                    cout << "No hay articulo activos con ese codigo." << endl;
-                    system("pause");
-                }
-            }
-            break;
-        case 4:
-            system("cls");
-            cout << "Codigo: ";
-            cin >> codigo;
-            system("cls");
-            pos = auxArchivoArticulo.buscarCodigo(codigo);
-            regArticulo = auxArchivoArticulo.leerRegistro(pos);
-            if(pos == -1 || regArticulo.getEstado() == false)
-            {
-                cout<<"No existe un articulo con ese codigo"<<endl;
-                system("pause");
-            }
-            else
-            {
-                cout << "El articulo <" << regArticulo.getDescripcion() << "> sera eliminado." << endl;
-                cout << "Confirma??? S/N" << endl;
-                cin >> confirmacion;
-                if (confirmacion == 's' || confirmacion == 'S')
-                {
-                    system("cls");
-                    regArticulo.setEstado(false);
-                    auxArchivoArticulo.sobreEscribirRegistro(regArticulo, pos);
-                    cout << "Articulo borrado exitosamente." << endl;
-                }
-                else
-                {
-                    system("cls");
-                    cout << "El articulo no ha sido borrado." << endl;
-                }
-                system("pause");
-            }
-            break;
-        case 5:
-            system("cls");
-            cout << "Codigo: ";
-            cin >> codigo;
-            system("cls");
-            pos = auxArchivoArticulo.buscarCodigo(codigo);
-            if(pos == -1)
-            {
-                cout<<"No existe un articulo con ese codigo"<<endl;
-                system("pause");
-            }
-            else
-            {
-                regArticulo = auxArchivoArticulo.leerRegistro(pos);
-                if(regArticulo.getEstado() == true)
-                {
-                    cout << left;
-                    cout << setw(20) << "Descripcion";
-                    cout << setw(15) << "Codigo";
-                    cout << setw(15) << "Stock";
-                    cout << setw(20) << "Precio Unitario" << endl;
-                    cout << "------------------------------------------------------------------------------" << endl;
-                    regArticulo.Mostrar();
-                    cout << "------------------------------------------------------------------------------" << endl;
-                    system("pause");
-                }
-                else
-                {
-                    cout << "No hay articulo activos con ese codigo." << endl;
-                    system("pause");
-                }
-            }
-            break;
-        case 6:
-            system("cls");
-            cout << "Codigo: ";
-            cin >> codigo;
-            system("cls");
-            pos = auxArchivoArticulo.buscarCodigo(codigo);
-            if(pos == -1)
-            {
-                cout<<"No existe un articulo con ese codigo"<<endl;
-                system("pause");
-            }
-            else
-            {
-                regArticulo = auxArchivoArticulo.leerRegistro(pos);
-                if(regArticulo.getEstado() == true)
-                {
-                    cout << "Cantidad de unidades a sumar en stock: ";
-                    cin >> cantArticulos;
-                    sumarStock(codigo, cantArticulos);
-                    cout << "Unidades agregadas correctamente al stock." << endl;
-                    system("pause");
-                }
-                else
-                {
-                    cout << "No hay articulo activos con ese codigo." << endl;
-                    system("pause");
-                }
-            }
-            break;
-        case 7:
-            system("cls");
-            auxArchivoArticulo.cambiarPrecios();
-            system("pause");
-            break;
-        case 8:
-            system("cls");
-            auxArchivoArticulo.aumentarPreciosPorcentual();
-            system("pause");
             break;
         }
         system("cls");
@@ -670,6 +470,95 @@ void MenuManager::ModuloPagos()
         system("cls");
     }
     while (opcionPagos != 0);
+}
+
+void MenuManager::ModuloReportes()
+{
+    int opcionMenu;
+
+    ArchivoCliente auxArchivoCliente("clientes.dat");
+
+    do
+    {
+        cout << "MODULO REPORTES" << endl;
+        cout << "------------------------------" << endl;
+        cout << "1- Listar saldos deudores por DNI." << endl;
+        cout << "2- Listar todos los saldos deudores." << endl;
+        cout << "3- Listar movimientos totales." << endl;
+        cout << "4- Listar movimientos totales por cliente." << endl;
+        cout << "5- Cantidad de ventas mensuales por producto." << endl;
+        cout << "6- Cantidad de cobranzas por formas de pago." << endl;
+        cout << "7- Exportar listado de clientes a Excel." << endl;
+        cout << "8- Exportar cuentas corrientes a Excel." << endl;
+        cout << "9- Exportar listado de articulos a Excel." << endl << endl;
+        cout << "0- Volver al menu principal." << endl;
+        cin >> opcionMenu;
+        switch(opcionMenu)
+        {
+        case 1:
+            system("cls");
+            auxArchivoCliente.listarDeudoresXDni();
+            break;
+        case 2:
+            system("cls");
+            auxArchivoCliente.listarDeudores();
+            break;
+        case 3:
+            system("cls");
+            auxArchivoCliente.listarMovimientos();
+            break;
+        case 4:
+            system("cls");
+            auxArchivoCliente.listarMovimientosXDni();
+            break;
+        case 5:
+            system("cls");
+            ventasMensualesProductos();
+            break;
+        case 6:
+            system("cls");
+            cobrosMensualesTipo();
+            break;
+        case 7:
+            system("cls");
+            exportarClientes();
+            break;
+        case 8:
+            system("cls");
+            exportarCtasCtes();
+            break;
+        case 9:
+            system("cls");
+            exportarArticulos();
+            break;
+        }
+        system("cls");
+    }
+    while(opcionMenu!=0);
+    system("cls");
+}
+
+float MenuManager::consultarDeudaCliente(const char *dni)
+{
+    float saldo = 0;
+
+    ArchivoVenta auxArchivoVenta("ventas.dat");
+    Venta regVenta;
+    int cantVentas = auxArchivoVenta.contarRegistros();
+
+    ArchivoCliente auxArchivoCliente("clientes.dat");
+
+    for (int i=0; i< cantVentas; i++)
+    {
+        regVenta = auxArchivoVenta.leerRegistro(i);
+
+        if ( strcmp(dni, regVenta.getDni()) == 0 && !regVenta.getPaga())
+        {
+            saldo += regVenta.getSaldo();
+        }
+    }
+
+    return saldo;
 }
 
 void MenuManager::ModuloBackUp()

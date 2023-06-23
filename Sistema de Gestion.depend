@@ -5,7 +5,7 @@
 	<iomanip>
 	"ArchivoArticulo.h"
 
-1687526393 c:\users\sarmi\onedrive\documentos\github\sistema-de-gestion\archivoarticulo.h
+1687528368 c:\users\sarmi\onedrive\documentos\github\sistema-de-gestion\archivoarticulo.h
 	"Articulo.h"
 
 1687131585 c:\users\sarmi\onedrive\documentos\github\sistema-de-gestion\articulo.h
@@ -51,12 +51,14 @@
 	"Cliente.h"
 	"Fecha.h"
 
-1687527404 source:c:\users\sarmi\onedrive\documentos\github\sistema-de-gestion\archivoventa.cpp
+1687527623 source:c:\users\sarmi\onedrive\documentos\github\sistema-de-gestion\archivoventa.cpp
 	<iostream>
 	<string.h>
 	<iomanip>
 	"ArchivoVenta.h"
 	"ArchivoCliente.h"
+	"ArchivoArticulo.h"
+	"MenuManager.h"
 	"FuncionesGenerales.h"
 
 1687527458 c:\users\sarmi\onedrive\documentos\github\sistema-de-gestion\archivoventa.h
@@ -122,7 +124,7 @@
 	"ArchivoArticulo.h"
 	"ArchivoCliente.h"
 
-1687527460 source:c:\users\sarmi\onedrive\documentos\github\sistema-de-gestion\menumanager.cpp
+1687528371 source:c:\users\sarmi\onedrive\documentos\github\sistema-de-gestion\menumanager.cpp
 	<iostream>
 	<string.h>
 	<iomanip>
