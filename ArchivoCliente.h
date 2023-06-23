@@ -10,7 +10,7 @@ public:
     ArchivoCliente(const char *n);
     Cliente leerRegistro(int pos);
     int contarRegistros();
-    void escribirRegistro(Cliente reg);
+    void escribirRegistro();
     void listarTodos();
     void mostrarXDni();
     void borrarCliente();

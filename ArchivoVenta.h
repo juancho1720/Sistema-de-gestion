@@ -12,7 +12,11 @@ public:
     ArchivoVenta(const char *n);
     Venta leerRegistro(int pos);
     int contarRegistros();
-    void escribirRegistro(Venta reg);
+    void escribirRegistro();
+    void listarXCliente();
+    void listarXMes();
+    void listarXClienteXMes();
+    void anularVenta();
     int buscarFactura(int n);
     int sobreEscribirRegistro(Venta reg, int pos);
     void leerRegistro(Venta *vec, int cantidadRegistrosALeer);

@@ -58,6 +58,37 @@ void ArchivoArticulo::escribirRegistro(Articulo reg)
     }
 }
 
+void ArchivoArticulo::listarTodos()
+{
+    Articulo regArticulo;
+    ArchivoArticulo auxArchivoArticulo("articulos.dat");
+    int cantArticulos = auxArchivoArticulo.contarRegistros();
+    if (cantArticulos != -1)
+    {
+        cout << left;
+        cout << setw(20) << "Descripcion";
+        cout << setw(15) << "Codigo";
+        cout << setw(15) << "Stock";
+        cout << setw(20) << "Precio Unitario" << endl;
+        cout << "------------------------------------------------------------------------------" << endl;
+        for (int i=0; i< cantArticulos; i++)
+        {
+            regArticulo = auxArchivoArticulo.leerRegistro(i);
+
+            if (regArticulo.getEstado() == true)
+            {
+                regArticulo.Mostrar();
+                cout << "------------------------------------------------------------------------------" << endl;
+            }
+        }
+    }
+    else
+    {
+        cout << "No hay articulos activos para listar." << endl;
+    }
+    system("pause");
+}
+
 int ArchivoArticulo::buscarCodigo(int c)
 {
     Articulo reg;

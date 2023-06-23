@@ -42,8 +42,9 @@ int ArchivoCliente::contarRegistros()
     return tam/sizeof(Cliente);
 }
 
-void ArchivoCliente::escribirRegistro(Cliente reg)
+void ArchivoCliente::escribirRegistro()
 {
+    Cliente reg;
     FILE *p = fopen("clientes.dat","ab");
     if(p == NULL)
     {
@@ -382,8 +383,6 @@ void ArchivoCliente::listarMovimientos()
 
 void ArchivoCliente::listarMovimientosXDni()
 {
-    bool hayVentas = false;
-
     Venta regVenta;
     ArchivoVenta auxArchivoVenta("ventas.dat");
 
@@ -393,13 +392,8 @@ void ArchivoCliente::listarMovimientosXDni()
     Pago regPago;
     ArchivoPago auxArchivoPago("pagos.dat");
 
-    int cantVentas = auxArchivoVenta.contarRegistros();
-    int cantClientes = auxArchivoCliente.contarRegistros();
-    int cantPagos = auxArchivoPago.contarRegistros();
-
     int importeTotal;
 
-    bool mostrarCliente;
     bool mostrarTitulo;
 
     char dni[12];
@@ -416,10 +410,9 @@ void ArchivoCliente::listarMovimientosXDni()
     }
     else
     {
-        hayVentas = false;
-        cantVentas = auxArchivoVenta.contarRegistros();
-        cantClientes = auxArchivoCliente.contarRegistros();
-        cantPagos = auxArchivoPago.contarRegistros();
+        bool hayVentas = false;
+        int cantVentas = auxArchivoVenta.contarRegistros();
+        int cantPagos = auxArchivoPago.contarRegistros();
 
         bool mostrarCliente;
 

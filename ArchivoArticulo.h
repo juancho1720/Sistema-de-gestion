@@ -11,6 +11,7 @@ public:
     Articulo leerRegistro(int pos);
     int contarRegistros();
     void escribirRegistro(Articulo reg);
+    void listarTodos();
     int buscarCodigo(int c);
     int sobreEscribirRegistro(Articulo reg, int pos);
     void cambiarPrecios();

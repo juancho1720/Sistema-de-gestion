@@ -1,11 +1,11 @@
 # depslib dependency file v1.0
-1687384017 source:c:\users\sarmi\onedrive\documentos\github\sistema-de-gestion\archivoarticulo.cpp
+1687526444 source:c:\users\sarmi\onedrive\documentos\github\sistema-de-gestion\archivoarticulo.cpp
 	<iostream>
 	<string.h>
 	<iomanip>
 	"ArchivoArticulo.h"
 
-1687299254 c:\users\sarmi\onedrive\documentos\github\sistema-de-gestion\archivoarticulo.h
+1687526393 c:\users\sarmi\onedrive\documentos\github\sistema-de-gestion\archivoarticulo.h
 	"Articulo.h"
 
 1687131585 c:\users\sarmi\onedrive\documentos\github\sistema-de-gestion\articulo.h
@@ -18,7 +18,7 @@
 1687131562 c:\users\sarmi\onedrive\documentos\github\sistema-de-gestion\archivobackup.h
 	"Articulo.h"
 
-1687526209 source:c:\users\sarmi\onedrive\documentos\github\sistema-de-gestion\archivocliente.cpp
+1687526952 source:c:\users\sarmi\onedrive\documentos\github\sistema-de-gestion\archivocliente.cpp
 	<iostream>
 	<string.h>
 	<iomanip>
@@ -28,7 +28,7 @@
 	"FuncionesGenerales.h"
 	"MenuManager.h"
 
-1687526155 c:\users\sarmi\onedrive\documentos\github\sistema-de-gestion\archivocliente.h
+1687526492 c:\users\sarmi\onedrive\documentos\github\sistema-de-gestion\archivocliente.h
 	"Cliente.h"
 
 1687479669 c:\users\sarmi\onedrive\documentos\github\sistema-de-gestion\cliente.h
@@ -51,12 +51,15 @@
 	"Cliente.h"
 	"Fecha.h"
 
-1687299254 source:c:\users\sarmi\onedrive\documentos\github\sistema-de-gestion\archivoventa.cpp
+1687527404 source:c:\users\sarmi\onedrive\documentos\github\sistema-de-gestion\archivoventa.cpp
 	<iostream>
 	<string.h>
+	<iomanip>
 	"ArchivoVenta.h"
+	"ArchivoCliente.h"
+	"FuncionesGenerales.h"
 
-1687299254 c:\users\sarmi\onedrive\documentos\github\sistema-de-gestion\archivoventa.h
+1687527458 c:\users\sarmi\onedrive\documentos\github\sistema-de-gestion\archivoventa.h
 	"Venta.h"
 
 1687299254 source:c:\users\sarmi\onedrive\documentos\github\sistema-de-gestion\articulo.cpp
@@ -119,7 +122,7 @@
 	"ArchivoArticulo.h"
 	"ArchivoCliente.h"
 
-1687526127 source:c:\users\sarmi\onedrive\documentos\github\sistema-de-gestion\menumanager.cpp
+1687527460 source:c:\users\sarmi\onedrive\documentos\github\sistema-de-gestion\menumanager.cpp
 	<iostream>
 	<string.h>
 	<iomanip>

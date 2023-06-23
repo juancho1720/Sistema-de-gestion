@@ -100,11 +100,6 @@ void MenuManager::MenuGeneral()
 void MenuManager::ModuloClientes()
 {
     int opcionMenu;
-    char dni[12];
-    int cantClientes;
-    int pos;
-    char confirmacion;
-    Cliente regCliente;
     ArchivoCliente auxArchivoCliente("clientes.dat");
     do
     {
@@ -121,7 +116,7 @@ void MenuManager::ModuloClientes()
         {
         case 1:
             system("cls");
-            auxArchivoCliente.escribirRegistro(regCliente);
+            auxArchivoCliente.escribirRegistro();
             break;
         case 2:
             system("cls");
@@ -148,27 +143,9 @@ void MenuManager::ModuloClientes()
 
 void MenuManager::ModuloVentas()
 {
-
     int opcionMenu;
-    char dni[12];
-    int cantVentas;
-    int cantClientes;
-    int pos;
-    char confirmacion;
-    int nF;
-    int mes, anio;
-    bool hayVentas;
-    bool mostrarTitulo = true;
-    float importeTotal = 0;
 
     ArchivoVenta auxArchivoVenta("ventas.dat");
-    Venta regVenta;
-
-    ArchivoCliente auxArchivoCliente("clientes.dat");
-    Cliente regCliente;
-
-    ArchivoArticulo auxArchivoArticulo("articulos.dat");
-    Articulo regArticulo;
 
     do
     {
@@ -185,235 +162,23 @@ void MenuManager::ModuloVentas()
         {
         case 1:
             system("cls");
-            auxArchivoVenta.escribirRegistro(regVenta);
+            auxArchivoVenta.escribirRegistro();
             break;
         case 2:
             system("cls");
-            hayVentas = false;
-            cout << "DNI: ";
-            cargarCadena(dni, 11);
-            system("cls");
-            cantVentas = auxArchivoVenta.contarRegistros();
-
-            for(int i=0; i<cantVentas; i++)
-            {
-                regVenta = auxArchivoVenta.leerRegistro(i);
-
-                if( strcmp(regVenta.getDni(),dni) == 0)
-                {
-                    hayVentas = true;
-                    if(mostrarTitulo)
-                    {
-                        cout << "Cliente: " << regVenta.getApellido() << ", " << regVenta.getNombre() << endl << endl;
-                        cout << left;
-                        cout << setw(10) << "Codigo";
-                        cout << setw(20) << "Descripcion";
-                        cout << setw(10) << "Cantidad";
-                        cout << setw(20) << "Numero de Factura";
-                        cout << setw(10) << "Importe";
-                        cout << setw(15) << "Estado";
-                        if(regVenta.getSaldo() != 0)
-                        {
-                            cout << setw(10) << "Saldo";
-                        }
-                        cout << setw(15) << "Fecha Factura" << endl;
-                        cout << "-------------------------------------------------------------------------------------------------------------------------------------------------" << endl;
-                        mostrarTitulo = false;
-                    }
-                    regVenta.Mostrar();
-                    cout << "-------------------------------------------------------------------------------------------------------------------------------------------------" << endl;
-                }
-            }
-            if(!hayVentas)
-            {
-                cout << "No existen ventas para este cliente." << endl;
-            }
-            mostrarTitulo = true;
-            system("pause");
+            auxArchivoVenta.listarXCliente();
             break;
         case 3:
             system("cls");
-            hayVentas = false;
-            cout << "Mes: ";
-            cin >> mes;
-            cout << "Anio: ";
-            cin >> anio;
-            system("cls");
-            cantVentas = auxArchivoVenta.contarRegistros();
-            cantClientes = auxArchivoCliente.contarRegistros();
-
-            for(int i=0; i<cantClientes; i++)
-            {
-                regCliente = auxArchivoCliente.leerRegistro(i);
-
-                for(int j=0; j<cantVentas; j++)
-                {
-                    regVenta = auxArchivoVenta.leerRegistro(j);
-
-                    if( regVenta.getFechaVenta().getAnio() == anio && regVenta.getFechaVenta().getMes() == mes && strcmp(regCliente.getDni(),regVenta.getDni()) == 0 && regCliente.getActivo())
-                    {
-                        hayVentas = true;
-                        if(mostrarTitulo)
-                        {
-                            cout << "Cliente: " << regVenta.getApellido() << ", " << regVenta.getNombre() << endl << endl;
-                            cout << left;
-                            cout << setw(10) << "Codigo";
-                            cout << setw(20) << "Descripcion";
-                            cout << setw(10) << "Cantidad";
-                            cout << setw(20) << "Numero de Factura";
-                            cout << setw(10) << "Importe";
-                            cout << setw(15) << "Estado";
-                            if(regVenta.getActiva() && regVenta.getSaldo() != 0)
-                            {
-                                cout << setw(10) << "Saldo";
-                            }
-                            cout << setw(15) << "Fecha Factura" << endl;
-                            cout << "-------------------------------------------------------------------------------------------------------------------------------------------------" << endl;
-                            mostrarTitulo = false;
-                        }
-                        importeTotal += regVenta.getImporte();
-                        regVenta.Mostrar();
-                        cout << "-------------------------------------------------------------------------------------------------------------------------------------------------" << endl;
-                    }
-                }
-                if (importeTotal != 0)
-                {
-                    cout << "Total Facturado: $" << importeTotal;
-                    importeTotal = 0;
-                    cout << endl << endl;
-                }
-                mostrarTitulo = true;
-            }
-            if(!hayVentas)
-            {
-                cout << "No existen ventas para este cliente." << endl;
-            }
-            system("pause");
+            auxArchivoVenta.listarXMes();
             break;
         case 4:
             system("cls");
-            hayVentas = false;
-            cout << "DNI: ";
-            cargarCadena(dni, 11);
-            cout << "Mes: ";
-            cin >> mes;
-            cout << "Anio: ";
-            cin >> anio;
-            system("cls");
-            cantVentas = auxArchivoVenta.contarRegistros();
-            cantClientes = auxArchivoCliente.contarRegistros();
-
-            for(int i=0; i<cantClientes; i++)
-            {
-                regCliente = auxArchivoCliente.leerRegistro(i);
-
-                for(int j=0; j<cantVentas; j++)
-                {
-                    regVenta = auxArchivoVenta.leerRegistro(j);
-
-                    if( regVenta.getFechaVenta().getAnio() == anio && regVenta.getFechaVenta().getMes() == mes && strcmp(regCliente.getDni(),regVenta.getDni()) == 0 && strcmp(regCliente.getDni(),dni) == 0 && regCliente.getActivo())
-                    {
-                        hayVentas = true;
-                        if(mostrarTitulo)
-                        {
-                            cout << "Cliente: " << regVenta.getApellido() << ", " << regVenta.getNombre() << endl << endl;
-                            cout << left;
-                            cout << setw(10) << "Codigo";
-                            cout << setw(20) << "Descripcion";
-                            cout << setw(10) << "Cantidad";
-                            cout << setw(20) << "Numero de Factura";
-                            cout << setw(10) << "Importe";
-                            cout << setw(15) << "Estado";
-                            cout << setw(10) << "Saldo";
-                            cout << setw(15) << "Fecha Factura" << endl;
-                            cout << "-------------------------------------------------------------------------------------------------------------------------------------------------" << endl;
-                            mostrarTitulo = false;
-                        }
-                        importeTotal += regVenta.getImporte();
-                        regVenta.Mostrar();
-                        cout << "-------------------------------------------------------------------------------------------------------------------------------------------------" << endl;
-                    }
-                }
-                if (importeTotal != 0)
-                {
-                    cout << "Total Facturado: $" << importeTotal;
-                    importeTotal = 0;
-                    cout << endl << endl;
-                }
-                mostrarTitulo = true;
-            }
-            if(!hayVentas)
-            {
-                cout << "No existen ventas para este cliente." << endl;
-            }
-            system("pause");
+            auxArchivoVenta.listarXClienteXMes();
             break;
         case 5:
             system("cls");
-            cout << "Numero de Factura: ";
-            cin >> nF;
-            system("cls");
-            pos = auxArchivoVenta.buscarFactura(nF);
-            if(pos == -1)
-            {
-                cout<<"No existe una factura con ese numero"<<endl;
-                system("pause");
-            }
-            else
-            {
-                regVenta = auxArchivoVenta.leerRegistro(pos);
-
-                if (regVenta.getActiva())
-                {
-                    if(regVenta.getSaldo() == regVenta.getImporte())
-                    {
-                        cout << "El comprobante seleccionado sera anulado." << endl;
-                        cout << "Confirma??? S/N" << endl;
-                        cin >> confirmacion;
-                        if (confirmacion == 's' || confirmacion == 'S')
-                        {
-                            system("cls");
-                            regVenta = auxArchivoVenta.leerRegistro(pos);
-                            regVenta.setPaga(true);
-                            regVenta.setActiva(false);
-
-                            int cantArticulos = auxArchivoArticulo.contarRegistros();
-                            for (int i=0; i<cantArticulos; i++)
-                            {
-                                regArticulo = auxArchivoArticulo.leerRegistro(i);
-
-                                if (regArticulo.getCodigoArticulo() == regVenta.getCodigoArticulo())
-                                {
-                                    sumarStock(regVenta.getCodigoArticulo(), regVenta.getCatidadVendida());
-                                }
-                            }
-                            auxArchivoVenta.sobreEscribirRegistro(regVenta, pos);
-
-                            regCliente = auxArchivoCliente.leerRegistro(auxArchivoCliente.buscarDni(regVenta.getDni()));
-                            regCliente.setSaldoDeudor( regCliente.getSaldoDeudor() - regVenta.getImporte() );
-                            auxArchivoCliente.sobreEscribirRegistro(regCliente, auxArchivoCliente.buscarDni(regVenta.getDni()));
-                            cout << "Comprobante anulado exitosamente." << endl;
-                        }
-                        else
-                        {
-                            system("cls");
-                            cout << "El comprobante no ha sido anulado." << endl;
-                        }
-                    }
-                    else
-                    {
-                        system("cls");
-                        cout << "No se puede anular una factura con un recibo aplicado." << endl;
-                    }
-                }
-                else
-                {
-                    system("cls");
-                    cout << "La factura ya ha sido anulada anteriormente." << endl;
-                }
-
-                system("pause");
-            }
+            auxArchivoVenta.anularVenta();
             break;
         }
         system("cls");
@@ -424,19 +189,9 @@ void MenuManager::ModuloVentas()
 void MenuManager::ModuloReportes()
 {
     int opcionMenu;
-    char dni[12];
-    int pos;
-    int cantVentas, cantPagos;
-    bool noHayDeudores;
-    bool hayVentas;
-    bool mostrarTitulo;
-    float importeTotal = 0;
+
     ArchivoCliente auxArchivoCliente("clientes.dat");
-    Cliente regCliente;
-    ArchivoVenta auxArchivoVenta("ventas.dat");
-    Venta regVenta;
-    ArchivoPago auxArchivoPago("pagos.dat");
-    Pago regPago;
+
     do
     {
         cout << "MODULO REPORTES" << endl;
@@ -552,31 +307,7 @@ void MenuManager::ModuloArticulos()
             break;
         case 2:
             system("cls");
-            cantArticulos = auxArchivoArticulo.contarRegistros();
-            if (cantArticulos != -1)
-            {
-                cout << left;
-                cout << setw(20) << "Descripcion";
-                cout << setw(15) << "Codigo";
-                cout << setw(15) << "Stock";
-                cout << setw(20) << "Precio Unitario" << endl;
-                cout << "------------------------------------------------------------------------------" << endl;
-                for (int i=0; i< cantArticulos; i++)
-                {
-                    regArticulo = auxArchivoArticulo.leerRegistro(i);
-
-                    if (regArticulo.getEstado() == true)
-                    {
-                        regArticulo.Mostrar();
-                        cout << "------------------------------------------------------------------------------" << endl;
-                    }
-                }
-            }
-            else
-            {
-                cout << "No hay articulos activos para listar." << endl;
-            }
-            system("pause");
+            auxArchivoArticulo.listarTodos();
             break;
         case 3:
             system("cls");
