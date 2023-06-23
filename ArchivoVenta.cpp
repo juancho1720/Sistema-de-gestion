@@ -244,6 +244,68 @@ void ArchivoVenta::listarXClienteXMes()
     system("pause");
 }
 
+void ArchivoVenta::imprimirPorPantalla()
+{
+    int numFactura;
+
+    ArchivoVenta auxArchivoVenta("ventas.dat");
+    Venta regVenta;
+    int cantVentas = auxArchivoVenta.contarRegistros();
+
+    cout << "Numero de Factura: " << endl;
+    cin >> numFactura;
+
+    system("cls");
+
+    for(int i=0; i<cantVentas; i++)
+    {
+        regVenta = auxArchivoVenta.leerRegistro(i);
+
+        if( numFactura == regVenta.getNumeroFactura() )
+        {
+
+            cout << "Numero de Factura: " << numFactura << "                                Fecha: ";
+            regVenta.getFechaVenta().Mostrar();
+            cout << left;
+
+            cout << endl << endl;
+
+            cout << "__________________________________________________________________" << endl << endl;
+
+            cout << "                            MUEBLERIA LOS JUANES" << endl;
+
+            cout << "__________________________________________________________________" << endl << endl << endl << endl;
+
+            cout << "Cliente: " << regVenta.getApellido() << ", " << regVenta.getNombre() << endl << endl << endl << endl;
+
+            cout << setw(10) << "Codigo";
+            cout << setw(45) << "Detalle";
+            cout << setw(5) << "";
+            cout << setw(10) << "Importe" << endl;
+
+            cout << "__________________________________________________________________" << endl << endl;
+
+            cout << setw(10) << regVenta.getCodigoArticulo();
+            cout << setw(45) << regVenta.getDescripcionArticulo();
+            cout << setw(5) << "$";
+            cout << setw(10) << regVenta.getImporte() << endl << endl;
+
+            cout << "__________________________________________________________________" << endl << endl;
+
+            cout << right;
+            cout << setw(55) << "Total:";
+            cout << left;
+            cout << setw(5) << "$";
+            cout << setw(5) << regVenta.getImporte() << endl << endl;
+
+            system("pause");
+            return;
+        }
+    }
+    cout << "El numero de factura ingresado no existe." << endl;
+    system("pause");
+}
+
 void ArchivoVenta::anularVenta()
 {
     ArchivoVenta auxArchivoVenta("ventas.dat");

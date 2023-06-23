@@ -13,6 +13,7 @@ public:
     void escribirRegistro();
     void listarXCliente();
     void listarTodosXMes();
+    void imprimirPorPantalla();
     void anular();
     int buscarRecibo(int n);
     int sobreEscribirRegistro(Pago reg, int pos);

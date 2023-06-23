@@ -16,6 +16,7 @@ public:
     void listarXCliente();
     void listarXMes();
     void listarXClienteXMes();
+    void imprimirPorPantalla();
     void anularVenta();
     int buscarFactura(int n);
     int sobreEscribirRegistro(Venta reg, int pos);

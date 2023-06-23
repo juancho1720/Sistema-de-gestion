@@ -218,7 +218,8 @@ void MenuManager::ModuloVentas()
         cout << "2- Listar por cliente." << endl;
         cout << "3- Listar todas por mes." << endl;
         cout << "4- Listar por cliente por mes." << endl;
-        cout << "5- Anular venta." << endl << endl;
+        cout << "5- Imprimir por pantalla una factura." << endl;
+        cout << "6- Anular venta." << endl << endl;
         cout << "0- Volver al menu principal." << endl;
         cin >> opcionMenu;
         switch(opcionMenu)
@@ -240,6 +241,10 @@ void MenuManager::ModuloVentas()
             auxArchivoVenta.listarXClienteXMes();
             break;
         case 5:
+            system("cls");
+            auxArchivoVenta.imprimirPorPantalla();
+            break;
+        case 6:
             system("cls");
             auxArchivoVenta.anularVenta();
             break;
@@ -274,7 +279,8 @@ void MenuManager::ModuloPagos()
         cout << "1- Cargar ." << endl;
         cout << "2- Listar por cliente." << endl;
         cout << "3- Listar todos por mes." << endl;
-        cout << "4- Anular pago." << endl << endl;
+        cout << "4- Imprimir por pantalla un recibo." << endl;
+        cout << "5- Anular pago." << endl << endl;
         cout << "0- Volver al menu principal." << endl;
         cin >> opcionPagos;
         switch(opcionPagos)
@@ -292,6 +298,10 @@ void MenuManager::ModuloPagos()
             auxArchivoPago.listarTodosXMes();
             break;
         case 4:
+            system("cls");
+            auxArchivoPago.imprimirPorPantalla();
+            break;
+        case 5:
             system("cls");
             auxArchivoPago.anular();
             break;

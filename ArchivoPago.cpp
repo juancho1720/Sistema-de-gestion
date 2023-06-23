@@ -201,6 +201,68 @@ void ArchivoPago::listarTodosXMes()
     system("pause");
 }
 
+void ArchivoPago::imprimirPorPantalla()
+{
+    int numRecibo;
+
+    ArchivoPago auxArchivoPago("pagos.dat");
+    Pago regPago;
+    int cantPagos = auxArchivoPago.contarRegistros();
+
+    cout << "Numero de Recibo: " << endl;
+    cin >> numRecibo;
+
+    system("cls");
+
+    for(int i=0; i<cantPagos; i++)
+    {
+        regPago = auxArchivoPago.leerRegistro(i);
+
+        if( numRecibo == regPago.getNumeroRecibo() )
+        {
+
+            cout << "Numero de Recibo: " << numRecibo << "                                Fecha: ";
+            regPago.getFechaPago().Mostrar();
+            cout << left;
+
+            cout << endl << endl;
+
+            cout << "__________________________________________________________________" << endl << endl;
+
+            cout << "                            MUEBLERIA LOS JUANES" << endl;
+
+            cout << "__________________________________________________________________" << endl << endl << endl << endl;
+
+            cout << "Cliente: " << regPago.getApellido() << ", " << regPago.getNombre() << endl << endl << endl << endl;
+
+            cout << setw(25) << "Numero de Factura";
+            cout << setw(25) << "Forma de pago";
+            cout << setw(5) << "";
+            cout << setw(10) << "Importe" << endl;
+
+            cout << "__________________________________________________________________" << endl << endl;
+
+            cout << setw(25) << regPago.getNumFactura();
+            cout << setw(25) << regPago.getFormaPago();
+            cout << setw(5) << "$";
+            cout << setw(10) << regPago.getImporte() << endl << endl;
+
+            cout << "__________________________________________________________________" << endl << endl;
+
+            cout << right;
+            cout << setw(55) << "Total:";
+            cout << left;
+            cout << setw(5) << "$";
+            cout << setw(5) << regPago.getImporte() << endl << endl;
+
+            system("pause");
+            return;
+        }
+    }
+    cout << "El numero de recibo ingresado no existe." << endl;
+    system("pause");
+}
+
 void ArchivoPago::anular()
 {
     int nR;
