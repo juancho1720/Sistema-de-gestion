@@ -23,6 +23,12 @@ bool Cliente::Cargar()
         saldoAcreedor = 0;
         cout << "Monto maximo de Deuda Habilitado: " << endl;
         cin >> montoMaximo;
+        while (montoMaximo < 0)
+        {
+            cout << "El monto no puede ser menor a $0.-" << endl << endl;
+            cout << "Ingresar nuevo limite: " << endl;
+            cin >> montoMaximo;
+        }
         return true;
     }
     else

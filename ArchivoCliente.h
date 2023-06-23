@@ -11,6 +11,9 @@ public:
     Cliente leerRegistro(int pos);
     int contarRegistros();
     void escribirRegistro(Cliente reg);
+    void listarTodos();
+    void mostrarXDni();
+    void borrarCliente();
     int buscarDni(const char *d);
     int sobreEscribirRegistro(Cliente reg, int pos);
     void leerRegistro(Cliente *vec, int cantidadRegistrosALeer);

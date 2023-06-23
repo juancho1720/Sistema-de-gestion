@@ -125,96 +125,15 @@ void MenuManager::ModuloClientes()
             break;
         case 2:
             system("cls");
-            cantClientes = auxArchivoCliente.contarRegistros();
-            if (cantClientes != -1)
-            {
-                cout << left;
-                cout << setw(15) << "Apellido";
-                cout << setw(20) << "Nombre";
-                cout << setw(15) << "DNI";
-                cout << setw(20) << "Monto Maximo" << endl;
-                cout << "-------------------------------------------------------------" << endl;
-                for (int i=0; i< cantClientes; i++)
-                {
-                    regCliente = auxArchivoCliente.leerRegistro(i);
-
-                    if (regCliente.getActivo() == true)
-                    {
-                        regCliente.Mostrar();
-                        cout << "-------------------------------------------------------------" << endl;
-                    }
-                }
-            }
-            else
-            {
-                cout << "No hay cliente activos para listar." << endl;
-            }
-            system("pause");
+            auxArchivoCliente.listarTodos();
             break;
         case 3:
             system("cls");
-            cout << "DNI: ";
-            cargarCadena(dni, 11);
-            system("cls");
-            pos = auxArchivoCliente.buscarDni(dni);
-            if(pos == -1)
-            {
-                cout<<"No existe un cliente con ese numero de DNI"<<endl;
-                system("pause");
-            }
-            else
-            {
-                regCliente = auxArchivoCliente.leerRegistro(pos);
-                if(regCliente.getActivo() == true)
-                {
-                    cout << left;
-                    cout << setw(15) << "Apellido";
-                    cout << setw(20) << "Nombre";
-                    cout << setw(15) << "DNI";
-                    cout << setw(20) << "Monto Maximo" << endl;
-                    cout << "-------------------------------------------------------------" << endl;
-                    regCliente.Mostrar();
-                    cout << "-------------------------------------------------------------" << endl;
-                    system("pause");
-                }
-                else
-                {
-                    cout << "No hay clientes activos con ese numero de DNI." << endl;
-                    system("pause");
-                }
-            }
+            auxArchivoCliente.mostrarXDni();
             break;
         case 4:
             system("cls");
-            cout << "DNI: ";
-            cargarCadena(dni, 11);
-            system("cls");
-            pos = auxArchivoCliente.buscarDni(dni);
-            regCliente = auxArchivoCliente.leerRegistro(pos);
-            if(pos == -1 || !regCliente.getActivo())
-            {
-                cout<<"No existe un cliente con ese numero de DNI"<<endl;
-                system("pause");
-            }
-            else
-            {
-                cout << "El cliente <" << regCliente.getApellido() << ", " << regCliente.getNombre() << "> sera eliminado." << endl;
-                cout << "Confirma??? S/N" << endl;
-                cin >> confirmacion;
-                if (confirmacion == 's' || confirmacion == 'S')
-                {
-                    system("cls");
-                    regCliente.setActivo(false);
-                    auxArchivoCliente.sobreEscribirRegistro(regCliente, pos);
-                    cout << "Cliente borrado exitosamente." << endl;
-                }
-                else
-                {
-                    system("cls");
-                    cout << "El cliente no ha sido borrado." << endl;
-                }
-                system("pause");
-            }
+            auxArchivoCliente.borrarCliente();
             break;
         case 5:
             system("cls");
