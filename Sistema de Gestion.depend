@@ -18,14 +18,17 @@
 1687131562 c:\users\sarmi\onedrive\documentos\github\sistema-de-gestion\archivobackup.h
 	"Articulo.h"
 
-1687524956 source:c:\users\sarmi\onedrive\documentos\github\sistema-de-gestion\archivocliente.cpp
+1687526209 source:c:\users\sarmi\onedrive\documentos\github\sistema-de-gestion\archivocliente.cpp
 	<iostream>
 	<string.h>
 	<iomanip>
 	"ArchivoCliente.h"
+	"ArchivoVenta.h"
+	"ArchivoPago.h"
 	"FuncionesGenerales.h"
+	"MenuManager.h"
 
-1687524955 c:\users\sarmi\onedrive\documentos\github\sistema-de-gestion\archivocliente.h
+1687526155 c:\users\sarmi\onedrive\documentos\github\sistema-de-gestion\archivocliente.h
 	"Cliente.h"
 
 1687479669 c:\users\sarmi\onedrive\documentos\github\sistema-de-gestion\cliente.h
@@ -116,7 +119,7 @@
 	"ArchivoArticulo.h"
 	"ArchivoCliente.h"
 
-1687524965 source:c:\users\sarmi\onedrive\documentos\github\sistema-de-gestion\menumanager.cpp
+1687526127 source:c:\users\sarmi\onedrive\documentos\github\sistema-de-gestion\menumanager.cpp
 	<iostream>
 	<string.h>
 	<iomanip>

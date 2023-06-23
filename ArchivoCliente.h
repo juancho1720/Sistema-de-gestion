@@ -14,6 +14,10 @@ public:
     void listarTodos();
     void mostrarXDni();
     void borrarCliente();
+    void listarDeudoresXDni();
+    void listarDeudores();
+    void listarMovimientos();
+    void listarMovimientosXDni();
     int buscarDni(const char *d);
     int sobreEscribirRegistro(Cliente reg, int pos);
     void leerRegistro(Cliente *vec, int cantidadRegistrosALeer);

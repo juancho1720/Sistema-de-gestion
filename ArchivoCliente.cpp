@@ -5,7 +5,10 @@
 using namespace std;
 
 #include "ArchivoCliente.h"
+#include "ArchivoVenta.h"
+#include "ArchivoPago.h"
 #include "FuncionesGenerales.h"
+#include "MenuManager.h"
 
 ArchivoCliente::ArchivoCliente(const char *n)
 {
@@ -170,6 +173,369 @@ void ArchivoCliente::borrarCliente()
     }
 }
 
+void ArchivoCliente::listarDeudoresXDni()
+{
+    char dni[12];
+    Cliente regCliente;
+    ArchivoCliente auxArchivoCliente("clientes.dat");
+    MenuManager regMenu;
+    cout << "DNI: ";
+    cargarCadena(dni, 11);
+    system("cls");
+    int pos = auxArchivoCliente.buscarDni(dni);
+    if(pos == -1)
+    {
+        cout<<"No existe un cliente con ese numero de DNI"<<endl;
+        system("pause");
+    }
+    else
+    {
+        regCliente = auxArchivoCliente.leerRegistro(pos);
+        if(regCliente.getActivo() == true && regMenu.consultarDeudaCliente(regCliente.getDni()) != 0)
+        {
+            cout << left;
+            cout << setw(15) << "DNI";
+            cout << setw(20) << "Nombre";
+            cout << setw(20) << "Apellido";
+            cout << setw(20) << "Monto Maximo" << endl;
+            cout << "---------------------------------------------------------------" << endl;
+            regCliente.Mostrar();
+            cout << endl << "Saldo Deudor: $" << regMenu.consultarDeudaCliente(regCliente.getDni()) << endl << endl;
+            system("pause");
+        }
+        else
+        {
+            cout << "El cliente no posee saldo deudor." << endl;
+            system("pause");
+        }
+    }
+}
+
+void ArchivoCliente::listarDeudores()
+{
+    bool noHayDeudores = true;
+    Cliente regCliente;
+    ArchivoCliente auxArchivoCliente("clientes.dat");
+    MenuManager regMenu;
+    int cantClientes = auxArchivoCliente.contarRegistros();
+
+    for (int i=0; i< cantClientes; i++)
+    {
+        regCliente = auxArchivoCliente.leerRegistro(i);
+
+        if(regMenu.consultarDeudaCliente(regCliente.getDni()) != 0)
+        {
+            cout << left;
+            cout << setw(15) << "DNI";
+            cout << setw(20) << "Nombre";
+            cout << setw(20) << "Apellido";
+            cout << setw(20) << "Monto Maximo" << endl;
+            cout << "---------------------------------------------------------------" << endl;
+            regCliente.Mostrar();
+            cout << endl << "Saldo Deudor: $" << regMenu.consultarDeudaCliente(regCliente.getDni()) << endl;
+            cout << "---------------------------------------------------------------" << endl << endl << endl;
+            noHayDeudores = false;
+        }
+    }
+    if(noHayDeudores)
+    {
+        cout << "No hay clientes con saldo deudor." << endl;
+    }
+    system("pause");
+}
+
+void ArchivoCliente::listarMovimientos()
+{
+    bool hayVentas = false;
+
+    Venta regVenta;
+    ArchivoVenta auxArchivoVenta("ventas.dat");
+
+    Cliente regCliente;
+    ArchivoCliente auxArchivoCliente("clientes.dat");
+
+    Pago regPago;
+    ArchivoPago auxArchivoPago("pagos.dat");
+
+    int cantVentas = auxArchivoVenta.contarRegistros();
+    int cantClientes = auxArchivoCliente.contarRegistros();
+    int cantPagos = auxArchivoPago.contarRegistros();
+
+    int importeTotal;
+
+    bool mostrarCliente;
+    bool mostrarTitulo;
+
+    for(int i=0; i<cantClientes; i++)
+    {
+        importeTotal = 0;
+
+        regCliente = auxArchivoCliente.leerRegistro(i);
+
+        regPago.imputarRecibos(regCliente.getDni(), 0);
+
+        for(int j=0; j<cantVentas; j++)
+        {
+            regVenta = auxArchivoVenta.leerRegistro(j);
+
+            if(regCliente.getActivo() && strcmp(regCliente.getDni(), regVenta.getDni()) == 0)
+            {
+                hayVentas = true;
+                if(mostrarTitulo)
+                {
+                    cout << "Cliente: " << regCliente.getApellido() << ", " << regCliente.getNombre() << endl << endl;
+                    cout << left;
+                    cout << setw(10) << "Tipo";
+                    cout << setw(10) << "Numero";
+                    cout << setw(10) << "Importe";
+                    cout << setw(15) << "Estado";
+                    cout << setw(12) << "Fecha";
+                    cout << setw(10) << "Debe";
+                    cout << setw(10) << "Haber" << endl;
+                    cout << "-------------------------------------------------------------------------------------------------------------------------------------------------" << endl;
+                    mostrarTitulo = false;
+                }
+                importeTotal += regVenta.getImporte();
+                cout << left;
+                cout << setw(10) << "FC";
+                cout << setw(10) << regVenta.getNumeroFactura();
+                cout << setw(10) << regVenta.getImporte();
+                if(regVenta.getActiva())
+                {
+                    if (regVenta.getPaga())
+                    {
+                        cout << setw(15) << "Paga";
+                    }
+                    if (!regVenta.getPaga())
+                    {
+                        cout << setw(15) << "Pendiente";
+                    }
+                }
+                else
+                {
+                    cout << setw(15) << "Anulada";
+                }
+
+                regVenta.getFechaVenta().Mostrar();
+                mostrarCliente = true;
+                cout << right;
+                cout << setw(10) << regVenta.getImporte();
+                cout << setw(10) << " ";
+                cout << endl;
+                cout << "-------------------------------------------------------------------------------------------------------------------------------------------------" << endl;
+            }
+        }
+
+        for(int z=0; z<cantPagos; z++)
+        {
+            regPago = auxArchivoPago.leerRegistro(z);
+
+            if(regCliente.getActivo() && strcmp(regCliente.getDni(), regPago.getDni()) == 0)
+            {
+                if(regCliente.getActivo())
+                {
+                    cout << left;
+                    mostrarTitulo = false;
+                    importeTotal -= regPago.getImporte();
+                    cout << left;
+                    cout << setw(10) << "RBO";
+                    cout << setw(10) << regPago.getNumeroRecibo();
+                    cout << setw(10) << regPago.getImporte();
+                    if (regPago.getActivo())
+                    {
+                        cout << setw(15) << "Aplicado";
+                    }
+                    if (!regPago.getActivo())
+                    {
+                        cout << setw(15) << "Anulado";
+                    }
+                    regPago.getFechaPago().Mostrar();
+                    cout << right;
+                    cout << setw(10) << " ";
+                    cout << setw(10) << regPago.getImporte();
+                    cout << endl;
+                    cout << "-------------------------------------------------------------------------------------------------------------------------------------------------" << endl;
+                }
+            }
+        }
+        mostrarTitulo = true;
+        if(regCliente.getSaldoDeudor() - regCliente.getSaldoAcreedor() > 0)
+        {
+            cout << setw(69) << "Saldo Deudor Actual: $" << regCliente.getSaldoDeudor() - regCliente.getSaldoAcreedor() << endl << endl;
+        }
+        if(regCliente.getSaldoDeudor() - regCliente.getSaldoAcreedor() == 0 && mostrarCliente )
+        {
+            cout << setw(69) << "Saldo Deudor Actual: $" << ( regCliente.getSaldoDeudor() - regCliente.getSaldoAcreedor()) << endl << endl;
+        }
+        if(regCliente.getSaldoDeudor() - regCliente.getSaldoAcreedor() < 0)
+        {
+            cout << setw(69) << "Saldo Acreedor Actual: $" << ( regCliente.getSaldoDeudor() - regCliente.getSaldoAcreedor()) * -1 << endl << endl;
+        }
+        mostrarCliente = false;
+    }
+    if(!hayVentas)
+    {
+        cout << "No existen movimientos para listar." << endl;
+    }
+    system("pause");
+}
+
+void ArchivoCliente::listarMovimientosXDni()
+{
+    bool hayVentas = false;
+
+    Venta regVenta;
+    ArchivoVenta auxArchivoVenta("ventas.dat");
+
+    Cliente regCliente;
+    ArchivoCliente auxArchivoCliente("clientes.dat");
+
+    Pago regPago;
+    ArchivoPago auxArchivoPago("pagos.dat");
+
+    int cantVentas = auxArchivoVenta.contarRegistros();
+    int cantClientes = auxArchivoCliente.contarRegistros();
+    int cantPagos = auxArchivoPago.contarRegistros();
+
+    int importeTotal;
+
+    bool mostrarCliente;
+    bool mostrarTitulo;
+
+    char dni[12];
+
+    cout << "DNI: ";
+    cargarCadena(dni, 11);
+    system("cls");
+    int pos = auxArchivoCliente.buscarDni(dni);
+
+    if(pos == -1)
+    {
+        cout<<"No existe un cliente con ese numero de DNI"<<endl;
+        system("pause");
+    }
+    else
+    {
+        hayVentas = false;
+        cantVentas = auxArchivoVenta.contarRegistros();
+        cantClientes = auxArchivoCliente.contarRegistros();
+        cantPagos = auxArchivoPago.contarRegistros();
+
+        bool mostrarCliente;
+
+        importeTotal = 0;
+
+        regCliente = auxArchivoCliente.leerRegistro( auxArchivoCliente.buscarDni(dni));
+
+        regPago.imputarRecibos(regCliente.getDni(), 0);
+
+        for(int j=0; j<cantVentas; j++)
+        {
+            regVenta = auxArchivoVenta.leerRegistro(j);
+
+            if(regCliente.getActivo() && strcmp(regCliente.getDni(), regVenta.getDni()) == 0)
+            {
+                hayVentas = true;
+                if(mostrarTitulo)
+                {
+                    cout << "Cliente: " << regCliente.getApellido() << ", " << regCliente.getNombre() << endl << endl;
+                    cout << left;
+                    cout << setw(10) << "Tipo";
+                    cout << setw(10) << "Numero";
+                    cout << setw(10) << "Importe";
+                    cout << setw(15) << "Estado";
+                    cout << setw(12) << "Fecha";
+                    cout << setw(10) << "Debe";
+                    cout << setw(10) << "Haber" << endl;
+                    cout << "-------------------------------------------------------------------------------------------------------------------------------------------------" << endl;
+                    mostrarTitulo = false;
+                }
+                importeTotal += regVenta.getImporte();
+                cout << left;
+                cout << setw(10) << "FC";
+                cout << setw(10) << regVenta.getNumeroFactura();
+                cout << setw(10) << regVenta.getImporte();
+                if(regVenta.getActiva())
+                {
+                    if (regVenta.getPaga())
+                    {
+                        cout << setw(15) << "Paga";
+                    }
+                    if (!regVenta.getPaga())
+                    {
+                        cout << setw(15) << "Pendiente";
+                    }
+                }
+                else
+                {
+                    cout << setw(15) << "Anulada";
+                }
+
+                regVenta.getFechaVenta().Mostrar();
+                mostrarCliente = true;
+                cout << right;
+                cout << setw(10) << regVenta.getImporte();
+                cout << setw(10) << " ";
+                cout << endl;
+                cout << "-------------------------------------------------------------------------------------------------------------------------------------------------" << endl;
+            }
+        }
+
+        for(int z=0; z<cantPagos; z++)
+        {
+            regPago = auxArchivoPago.leerRegistro(z);
+
+            if(regCliente.getActivo() && strcmp(regCliente.getDni(), regPago.getDni()) == 0)
+            {
+                if(regCliente.getActivo())
+                {
+                    cout << left;
+                    mostrarTitulo = false;
+                    importeTotal -= regPago.getImporte();
+                    cout << left;
+                    cout << setw(10) << "RBO";
+                    cout << setw(10) << regPago.getNumeroRecibo();
+                    cout << setw(10) << regPago.getImporte();
+                    if (regPago.getActivo())
+                    {
+                        cout << setw(15) << "Aplicado";
+                    }
+                    if (!regPago.getActivo())
+                    {
+                        cout << setw(15) << "Sin aplicar";
+                    }
+                    regPago.getFechaPago().Mostrar();
+                    cout << right;
+                    cout << setw(10) << " ";
+                    cout << setw(10) << regPago.getImporte();
+                    cout << endl;
+                    cout << "-------------------------------------------------------------------------------------------------------------------------------------------------" << endl;
+                }
+            }
+        }
+        mostrarTitulo = true;
+        if(regCliente.getSaldoDeudor() - regCliente.getSaldoAcreedor() > 0)
+        {
+            cout << setw(69) << "Saldo Deudor Actual: $" << regCliente.getSaldoDeudor() - regCliente.getSaldoAcreedor() << endl << endl;
+        }
+        if(regCliente.getSaldoDeudor() - regCliente.getSaldoAcreedor() == 0 && mostrarCliente )
+        {
+            cout << setw(69) << "Saldo Deudor Actual: $" << ( regCliente.getSaldoDeudor() - regCliente.getSaldoAcreedor()) << endl << endl;
+        }
+        if(regCliente.getSaldoDeudor() - regCliente.getSaldoAcreedor() < 0)
+        {
+            cout << setw(69) << "Saldo Acreedor Actual: $" << ( regCliente.getSaldoDeudor() - regCliente.getSaldoAcreedor()) * -1 << endl << endl;
+        }
+        mostrarCliente = false;
+
+        if(!hayVentas)
+        {
+            cout << "No existen movimientos para listar." << endl;
+        }
+    }
+    system("pause");
+}
+
 int ArchivoCliente::buscarDni(const char *d)
 {
     Cliente reg;
@@ -240,11 +606,3 @@ void ArchivoCliente::vaciar()
     }
     fclose(p);
 }
-
-
-
-
-
-
-
-
