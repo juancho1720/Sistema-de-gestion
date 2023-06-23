@@ -688,7 +688,7 @@ void MenuManager::ModuloReportes()
                             }
                             if (!regPago.getActivo())
                             {
-                                cout << setw(15) << "Sin aplicar";
+                                cout << setw(15) << "Anulado";
                             }
                             regPago.getFechaPago().Mostrar();
                             cout << right;
@@ -1110,6 +1110,8 @@ void MenuManager::ModuloPagos()
     Pago regPago;
     ArchivoCliente auxArchivoCliente("clientes.dat");
     Cliente regCliente;
+    ArchivoVenta auxArchivoVenta("ventas.dat");
+    Venta regVenta;
     int cantPagos;
     int cantClientes;
     int nR, pos;
@@ -1261,6 +1263,7 @@ void MenuManager::ModuloPagos()
             cin >> nR;
             system("cls");
             pos = auxArchivoPago.buscarRecibo(nR);
+
             if(pos < 0)
             {
                 cout<<"No existe un recibo con ese numero"<<endl;
@@ -1268,34 +1271,48 @@ void MenuManager::ModuloPagos()
             }
             else
             {
+
                 regPago = auxArchivoPago.leerRegistro(pos);
 
-                cout << "Cliente: " << buscarApellido(regPago.getDni()) << ", " << buscarNombre(regPago.getDni()) << endl << endl;
-                cout << left;
-                cout << setw(20) << "Numero de Recibo";
-                cout << setw(20) << "DNI";
-                cout << setw(10) << "Importe";
-                cout << setw(15) << "Fecha Recibo" << endl;
-                regPago.Mostrar();
-
-                cout << "El comprobante seleccionado sera anulado." << endl;
-                cout << "Confirma??? S/N" << endl;
-                cin >> confirmacion;
-
-                if (confirmacion == 's' || confirmacion == 'S')
+                if (regPago.getActivo())
                 {
-                    regPago.setActivo(false);
-                    auxArchivoPago.sobreEscribirRegistro(regPago, pos);
+                    cout << "Cliente: " << buscarApellido(regPago.getDni()) << ", " << buscarNombre(regPago.getDni()) << endl << endl;
+                    cout << left;
+                    cout << setw(20) << "Numero de Recibo";
+                    cout << setw(20) << "DNI";
+                    cout << setw(10) << "Importe";
+                    cout << setw(15) << "Fecha Recibo" << endl;
+                    regPago.Mostrar();
 
-                    sumarSaldoDeudor(regPago.getDni(), regPago.getImporte());
+                    cout << "El comprobante seleccionado sera anulado." << endl;
+                    cout << "Confirma??? S/N" << endl;
+                    cin >> confirmacion;
 
-                    cout << "Comprobante anulado exitosamente." << endl;
+                    if (confirmacion == 's' || confirmacion == 'S')
+                    {
+                        regPago.setActivo(false);
+                        auxArchivoPago.sobreEscribirRegistro(regPago, pos);
+
+                        sumarSaldoDeudor(regPago.getDni(), regPago.getImporte());
+
+                        regVenta = auxArchivoVenta.leerRegistro(auxArchivoVenta.buscarFactura(regVenta.getNumeroFactura()));
+                        regVenta.setSaldo(regVenta.getImporte());
+                        auxArchivoVenta.sobreEscribirRegistro(regVenta, auxArchivoVenta.buscarFactura(regVenta.getNumeroFactura()) );
+
+                        cout << "Comprobante anulado exitosamente." << endl;
+                    }
+                    else
+                    {
+                        system("cls");
+                        cout << "El comprobante no ha sido anulado." << endl;
+                    }
                 }
                 else
                 {
                     system("cls");
-                    cout << "El comprobante no ha sido anulado." << endl;
+                    cout << "El comprobante ya ha sido anulado anteriormente." << endl;
                 }
+
                 system("pause");
                 system("cls");
             }

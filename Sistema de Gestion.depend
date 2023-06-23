@@ -1,0 +1,129 @@
+# depslib dependency file v1.0
+1687384017 source:c:\users\sarmi\onedrive\documentos\github\sistema-de-gestion\archivoarticulo.cpp
+	<iostream>
+	<string.h>
+	<iomanip>
+	"ArchivoArticulo.h"
+
+1687299254 c:\users\sarmi\onedrive\documentos\github\sistema-de-gestion\archivoarticulo.h
+	"Articulo.h"
+
+1687131585 c:\users\sarmi\onedrive\documentos\github\sistema-de-gestion\articulo.h
+
+1687129664 source:c:\users\sarmi\onedrive\documentos\github\sistema-de-gestion\archivobackup.cpp
+	<iostream>
+	<string.h>
+	"ArchivoBackUp.h"
+
+1687131562 c:\users\sarmi\onedrive\documentos\github\sistema-de-gestion\archivobackup.h
+	"Articulo.h"
+
+1687376374 source:c:\users\sarmi\onedrive\documentos\github\sistema-de-gestion\archivocliente.cpp
+	<iostream>
+	<string.h>
+	"ArchivoCliente.h"
+
+1687299254 c:\users\sarmi\onedrive\documentos\github\sistema-de-gestion\archivocliente.h
+	"Cliente.h"
+
+1687479669 c:\users\sarmi\onedrive\documentos\github\sistema-de-gestion\cliente.h
+
+1687386011 source:c:\users\sarmi\onedrive\documentos\github\sistema-de-gestion\archivopago.cpp
+	<iostream>
+	<string.h>
+	"ArchivoPago.h"
+
+1687299254 c:\users\sarmi\onedrive\documentos\github\sistema-de-gestion\archivopago.h
+	"Pago.h"
+
+1687299254 c:\users\sarmi\onedrive\documentos\github\sistema-de-gestion\pago.h
+	"Fecha.h"
+	"Venta.h"
+
+1687213589 c:\users\sarmi\onedrive\documentos\github\sistema-de-gestion\fecha.h
+
+1687519536 c:\users\sarmi\onedrive\documentos\github\sistema-de-gestion\venta.h
+	"Cliente.h"
+	"Fecha.h"
+
+1687299254 source:c:\users\sarmi\onedrive\documentos\github\sistema-de-gestion\archivoventa.cpp
+	<iostream>
+	<string.h>
+	"ArchivoVenta.h"
+
+1687299254 c:\users\sarmi\onedrive\documentos\github\sistema-de-gestion\archivoventa.h
+	"Venta.h"
+
+1687299254 source:c:\users\sarmi\onedrive\documentos\github\sistema-de-gestion\articulo.cpp
+	<iostream>
+	<string.h>
+	<iomanip>
+	"Articulo.h"
+	"FuncionesGenerales.h"
+	"ArchivoArticulo.h"
+
+1687473641 c:\users\sarmi\onedrive\documentos\github\sistema-de-gestion\funcionesgenerales.h
+
+1687479669 source:c:\users\sarmi\onedrive\documentos\github\sistema-de-gestion\cliente.cpp
+	<iostream>
+	<string.h>
+	<iomanip>
+	"FuncionesGenerales.h"
+	"Cliente.h"
+	"ArchivoCliente.h"
+
+1687213590 source:c:\users\sarmi\onedrive\documentos\github\sistema-de-gestion\fecha.cpp
+	<iostream>
+	<string.h>
+	<iomanip>
+	"Fecha.h"
+
+1687518107 source:c:\users\sarmi\onedrive\documentos\github\sistema-de-gestion\funcionesgenerales.cpp
+	<iostream>
+	<string.h>
+	<fstream>
+	"ArchivoVenta.h"
+	"ArchivoArticulo.h"
+	"ArchivoCliente.h"
+	"ArchivoPago.h"
+
+1687477880 source:c:\users\sarmi\onedrive\documentos\github\sistema-de-gestion\main.cpp
+	<iostream>
+	"MenuManager.h"
+
+1687477455 c:\users\sarmi\onedrive\documentos\github\sistema-de-gestion\menumanager.h
+	"ArchivoArticulo.h"
+
+1687518585 source:c:\users\sarmi\onedrive\documentos\github\sistema-de-gestion\pago.cpp
+	<iostream>
+	<string.h>
+	<iomanip>
+	"Pago.h"
+	"FuncionesGenerales.h"
+	"ArchivoCliente.h"
+	"ArchivoPago.h"
+	"ArchivoVenta.h"
+
+1687519731 source:c:\users\sarmi\onedrive\documentos\github\sistema-de-gestion\venta.cpp
+	<iostream>
+	<string.h>
+	<iomanip>
+	"Venta.h"
+	"FuncionesGenerales.h"
+	"ArchivoVenta.h"
+	"ArchivoArticulo.h"
+	"ArchivoCliente.h"
+
+1687521996 source:c:\users\sarmi\onedrive\documentos\github\sistema-de-gestion\menumanager.cpp
+	<iostream>
+	<string.h>
+	<iomanip>
+	"MenuManager.h"
+	"Cliente.h"
+	"ArchivoCliente.h"
+	"FuncionesGenerales.h"
+	"ArchivoVenta.h"
+	"ArchivoArticulo.h"
+	"ArchivoPago.h"
+	<fstream>
+
