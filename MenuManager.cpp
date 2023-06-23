@@ -63,8 +63,7 @@ void MenuManager::MenuGeneral()
         cout << "3- Ventas." << endl;
         cout << "4- Pagos." << endl;
         cout << "5- Reportes." << endl;
-        cout << "6- BackUp." << endl;
-        cout << "7- Importar datos para prueba con Angel." << endl << endl;
+        cout << "6- BackUp." << endl << endl;
         cout << "0- Salir." << endl;
         cin >> opcionMenu;
         switch(opcionMenu)
@@ -92,10 +91,6 @@ void MenuManager::MenuGeneral()
         case 6:
             system("cls");
             ModuloBackUp();
-            break;
-        case 7:
-            system("cls");
-            ModuloImportaciones();
             break;
         }
     }
@@ -349,7 +344,7 @@ void MenuManager::ModuloVentas()
                             cout << setw(20) << "Numero de Factura";
                             cout << setw(10) << "Importe";
                             cout << setw(15) << "Estado";
-                            if(regVenta.getSaldo() != 0)
+                            if(regVenta.getActiva() && regVenta.getSaldo() != 0)
                             {
                                 cout << setw(10) << "Saldo";
                             }
@@ -447,33 +442,53 @@ void MenuManager::ModuloVentas()
             }
             else
             {
-                cout << "El comprobante seleccionado sera anulado." << endl;
-                cout << "Confirma??? S/N" << endl;
-                cin >> confirmacion;
-                if (confirmacion == 's' || confirmacion == 'S')
+                regVenta = auxArchivoVenta.leerRegistro(pos);
+
+                if (regVenta.getActiva())
                 {
-                    system("cls");
-                    regVenta = auxArchivoVenta.leerRegistro(pos);
-                    regVenta.setPaga(true);
-
-                    int cantArticulos = auxArchivoArticulo.contarRegistros();
-                    for (int i=0; i<cantArticulos; i++)
+                    if(regVenta.getSaldo() == regVenta.getImporte())
                     {
-                        regArticulo = auxArchivoArticulo.leerRegistro(i);
-
-                        if (regArticulo.getCodigoArticulo() == regVenta.getCodigoArticulo())
+                        cout << "El comprobante seleccionado sera anulado." << endl;
+                        cout << "Confirma??? S/N" << endl;
+                        cin >> confirmacion;
+                        if (confirmacion == 's' || confirmacion == 'S')
                         {
-                            sumarStock(regVenta.getCodigoArticulo(), regVenta.getCatidadVendida());
+                            system("cls");
+                            regVenta = auxArchivoVenta.leerRegistro(pos);
+                            regVenta.setPaga(true);
+                            regVenta.setActiva(false);
+
+                            int cantArticulos = auxArchivoArticulo.contarRegistros();
+                            for (int i=0; i<cantArticulos; i++)
+                            {
+                                regArticulo = auxArchivoArticulo.leerRegistro(i);
+
+                                if (regArticulo.getCodigoArticulo() == regVenta.getCodigoArticulo())
+                                {
+                                    sumarStock(regVenta.getCodigoArticulo(), regVenta.getCatidadVendida());
+                                }
+                            }
+                            auxArchivoVenta.sobreEscribirRegistro(regVenta, pos);
+                            cout << "Comprobante anulado exitosamente." << endl;
+                        }
+                        else
+                        {
+                            system("cls");
+                            cout << "El comprobante no ha sido anulado." << endl;
                         }
                     }
-                    auxArchivoVenta.sobreEscribirRegistro(regVenta, pos);
-                    cout << "Comprobante anulado exitosamente." << endl;
+                    else
+                    {
+                        system("cls");
+                        cout << "No se puede anular una factura con un recibo aplicado." << endl;
+                    }
                 }
                 else
                 {
                     system("cls");
-                    cout << "El comprobante no ha sido anulado." << endl;
+                    cout << "La factura ya ha sido anulada anteriormente." << endl;
                 }
+
                 system("pause");
             }
             break;
@@ -1214,47 +1229,6 @@ void MenuManager::MenuBackUp()
     while(op!=0);
 }
 
-void MenuManager::ModuloImportaciones()
-{
-    int op;
-    do
-    {
-        cout << "IMPORTAR ARCHIVOS .CSV" << endl;
-        cout << "------------------------------" << endl;
-        cout << "1- Importar clientes." << endl;
-        cout << "2- Importar articulos." << endl;
-        cout << "3- Importar  Pagos." << endl;
-        cout << "4- Importar Ventas." << endl << endl;
-        cout << "0- Volver al menu principal." << endl;
-        cin >> op;
-        switch(op)
-        {
-        case 1:
-            system("cls");
-
-            system("pause");
-            break;
-        case 2:
-            system("cls");
-
-            system("pause");
-            break;
-        case 3:
-            system("cls");
-
-            system("pause");
-            break;
-        case 4:
-            system("cls");
-
-            system("pause");
-            break;
-        }
-        system("cls");
-    }
-    while(op!=0);
-}
-
 void MenuManager::MenuRestaurarArchivo()
 {
     int op;
@@ -1405,14 +1379,17 @@ void MenuManager::exportarArticulos()
     int cantArticulos = auxArchivoArticulo.contarRegistros();
 
     ofstream archivoArticulos("articulos.csv", ios::out);
-    if(!archivoArticulos){
+    if(!archivoArticulos)
+    {
         cout << "No se pudo crear el archivo" << endl;
     }
     else
     {
-        for(int x=0;x<cantArticulos;x++){
+        for(int x=0; x<cantArticulos; x++)
+        {
             regArticulo = auxArchivoArticulo.leerRegistro(x);
-            if(x==0){
+            if(x==0)
+            {
                 archivoArticulos << "Descripcion" << ";" << "Stock" << ";" << "Precio unitario" << "Codigo" << endl;
             }
             archivoArticulos << regArticulo.getDescripcion() << ";" << regArticulo.getStock() << ";" << regArticulo.getPrecioUnitario() << ";" << regArticulo.getCodigoArticulo() << endl;
@@ -1739,9 +1716,11 @@ void MenuManager::cambiarLimiteDeuda()
     cout << "Ingresar DNI del cliente: ";
     cargarCadena(dni, 11);
 
-    for(int x=0;x<canClientes;x++){
+    for(int x=0; x<canClientes; x++)
+    {
         regCliente = auxArchivoCliente.leerRegistro(x);
-        if(!strcmp(regCliente.getDni(),dni)){
+        if(!strcmp(regCliente.getDni(),dni))
+        {
             cout << "Ingresar nuevo limite: ";
             cin >> nuevoLimite;
             while (nuevoLimite < 0)
@@ -1755,10 +1734,12 @@ void MenuManager::cambiarLimiteDeuda()
         }
         auxArchivoCliente.sobreEscribirRegistro(regCliente,x);
     }
-    if(bandera){
+    if(bandera)
+    {
         cout << "Nuevo limite modificado con exito." << endl;
     }
-    else{
+    else
+    {
         cout << "No existe cliente con ese DNI" << endl;
     }
 }

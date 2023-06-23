@@ -20,6 +20,7 @@ private:
     float importe;
     float saldo;
     bool paga;
+    bool activa;
     Cliente regCliente;
 public:
     bool Cargar();
@@ -36,7 +37,9 @@ public:
     void setSaldo(float s);
     float getSaldo();
     bool getPaga();
-    void setPaga(bool p);
+    void setPaga(bool a);
+    bool getActiva();
+    void setActiva(bool p);
     void setDescripcionArticulo(const char *dA);
     int generarNumeroFactura();
     float consultarDeudaCliente(const char *dni);

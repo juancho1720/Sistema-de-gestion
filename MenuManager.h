@@ -21,7 +21,6 @@ public:
     void exportarClientes();
     void exportarCtasCtes();
     void MenuBackUp();
-    void ModuloImportaciones();
     void MenuRestaurarArchivo();
     void hacerBackupArticulos();
     void hacerBackupClientes();

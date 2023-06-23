@@ -51,6 +51,8 @@ bool Venta::Cargar()
 
                 paga = false;
 
+                activa = true;
+
                 return true;
             }
             else
@@ -86,15 +88,26 @@ void Venta::Mostrar()
     cout << setw(10) << cantidadVendida;
     cout << setw(20) << numeroFactura;
     cout << setw(10) << importe;
-    if(paga)
+    if(activa)
     {
-        cout << setw(15) << "Paga";
+        if(paga)
+        {
+            cout << setw(15) << "Paga";
+        }
+        if(!paga)
+        {
+            cout << setw(15) << "Pendiente";
+        }
+        if (saldo != 0 )
+        {
+            cout << setw(10) << saldo;
+        }
     }
-    if(!paga)
+    else
     {
-        cout << setw(15) << "Pendiente";
+        cout << setw(15) << "Anulada";
     }
-    cout << setw(10) << saldo;
+
     fechaVenta.Mostrar();
     cout << endl;
 }
@@ -162,6 +175,16 @@ bool Venta::getPaga()
 void Venta::setPaga(bool p)
 {
     paga = p;
+}
+
+bool Venta::getActiva()
+{
+    return activa;
+}
+
+void Venta::setActiva(bool a)
+{
+    activa = a;
 }
 
 void Venta::setDescripcionArticulo(const char *dA)

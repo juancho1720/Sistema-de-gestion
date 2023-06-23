@@ -151,8 +151,6 @@ float restarSaldoDeudor(const char *dni, float importe)
         {
             regCliente.setSaldoDeudor(regCliente.getSaldoDeudor() - importe);
             auxArchivoCliente.sobreEscribirRegistro(regCliente, i);
-            cout << "Cambia saldo deudor a " << regCliente.getSaldoDeudor() << endl;
-            system("pause");
         }
     }
     return -1;

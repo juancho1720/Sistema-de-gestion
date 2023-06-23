@@ -54,7 +54,7 @@ bool Pago::Cargar()
                 activo = true;
                 return true;
             }
-            if (!cancelarFactura(dni, numFactura, importe))
+            else
             {
                 return false;
             }
