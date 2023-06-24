@@ -63,6 +63,11 @@ int Articulo::getCantidadArticulo()
     return cantidadArticulo;
 }
 
+void Articulo::setCantidadArticulo(int cA)
+{
+    cantidadArticulo = cA;
+}
+
 float Articulo::getPrecioUnitario()
 {
     return precioUnitario;
@@ -81,6 +86,11 @@ int Articulo::getStock()
 void Articulo::setStock(int s)
 {
     stock = s;
+}
+
+void Articulo::setCodigoArticulo(int c)
+{
+    codigoArticulo = c;
 }
 
 bool Articulo::getEstado()

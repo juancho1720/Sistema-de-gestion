@@ -116,7 +116,7 @@ void MenuManager::ModuloClientes()
         {
         case 1:
             system("cls");
-            auxArchivoCliente.escribirRegistro();
+                auxArchivoCliente.escribirRegistro();
             break;
         case 2:
             system("cls");
@@ -258,20 +258,9 @@ void MenuManager::ModuloPagos()
 {
     int opcionPagos;
     ArchivoPago auxArchivoPago("pagos.dat");
-    Pago regPago;
     ArchivoCliente auxArchivoCliente("clientes.dat");
-    Cliente regCliente;
     ArchivoVenta auxArchivoVenta("ventas.dat");
-    Venta regVenta;
-    int cantPagos;
-    int cantClientes;
-    int nR, pos;
-    int mes, anio;
-    bool hayVentas;
-    char confirmacion;
-    char dni[12];
-    bool mostrarTitulo = true;
-    float importeTotal = 0;
+
     do
     {
         cout << "MODULO PAGOS" << endl;
@@ -320,13 +309,16 @@ void MenuManager::ModuloReportes()
     do
     {
         cout << "MODULO REPORTES" << endl;
-        cout << "------------------------------" << endl;
+        cout << "------------------------------" << endl << endl;
+        cout << "Listados:" << endl;
         cout << "1- Listar saldos deudores por DNI." << endl;
         cout << "2- Listar todos los saldos deudores." << endl;
         cout << "3- Listar movimientos totales." << endl;
-        cout << "4- Listar movimientos totales por cliente." << endl;
+        cout << "4- Listar movimientos totales por cliente." << endl<< endl;
+        cout << "Informes:" << endl;
         cout << "5- Cantidad de ventas mensuales por producto." << endl;
-        cout << "6- Cantidad de cobranzas por formas de pago." << endl;
+        cout << "6- Cantidad de cobranzas por formas de pago." << endl << endl;
+        cout << "Reportes:" << endl;
         cout << "7- Exportar listado de clientes a Excel." << endl;
         cout << "8- Exportar cuentas corrientes a Excel." << endl;
         cout << "9- Exportar listado de articulos a Excel." << endl << endl;

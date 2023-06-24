@@ -44,20 +44,31 @@ int ArchivoVenta::contarRegistros()
 
 void ArchivoVenta::escribirRegistro()
 {
+    char op;
+
     Venta reg;
     FILE *p = fopen("ventas.dat","ab");
     if(p == NULL)
     {
         cout << "Error archivo.";
     }
-    if(reg.Cargar() == true)
+    do
     {
-        fwrite(&reg, sizeof reg, 1, p);
-        fclose(p);
-        system("cls");
-        cout << "Venta agregada exitosamente!!!" << endl;
-        system("pause");
+
+        if(reg.Cargar() == true)
+        {
+            fwrite(&reg, sizeof reg, 1, p);
+            fclose(p);
+            system("cls");
+
+            cout << "Venta agregada exitosamente!!!" << endl;
+            system("pause");
+        }
+        cout << "Desea cargar otro articulo??? " << endl;
+        cin >> op;
+
     }
+    while (op == 's' || op == 'S');
 }
 
 void ArchivoVenta::listarXCliente()

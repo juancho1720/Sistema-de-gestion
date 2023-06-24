@@ -15,7 +15,9 @@ public:
     void Mostrar();
     const char* getDescripcion();
     int getCodigoArticulo();
+    void setCodigoArticulo(int c);
     int getCantidadArticulo();
+    void setCantidadArticulo(int cA);
     float getPrecioUnitario();
     void setPrecioUnitario(float pU);
     int getStock();
