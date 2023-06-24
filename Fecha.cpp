@@ -1,6 +1,7 @@
 #include <iostream>
 #include <string.h>
 #include <iomanip>
+#include <ctime>
 
 using namespace std;
 
@@ -8,12 +9,14 @@ using namespace std;
 
 void Fecha::Cargar()
 {
-    cout << "Dia: ";
-    cin>>dia;
-    cout << "Mes: ";
-    cin>>mes;
-    cout << "Anio: ";
-    cin>>anio;
+    time_t now = time(0);
+
+    tm * time = localtime(&now);
+
+    cout << "Fecha: " << time -> tm_mday << "/" << time -> tm_mon + 1 << "/" << time -> tm_year + 1900 << endl;
+    dia = time -> tm_mday;
+    mes = time -> tm_mon +1;
+    anio = time -> tm_year +1900;
 }
 
 void Fecha::Mostrar()
