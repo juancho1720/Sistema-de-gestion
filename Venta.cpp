@@ -98,10 +98,7 @@ void Venta::Mostrar()
         {
             cout << setw(15) << "Pendiente";
         }
-        if (saldo != 0 )
-        {
-            cout << setw(10) << saldo;
-        }
+        cout << setw(10) << saldo;
     }
     else
     {

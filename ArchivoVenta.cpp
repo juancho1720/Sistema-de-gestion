@@ -52,23 +52,15 @@ void ArchivoVenta::escribirRegistro()
     {
         cout << "Error archivo.";
     }
-    do
+    if(reg.Cargar() == true)
     {
+        fwrite(&reg, sizeof reg, 1, p);
+        fclose(p);
+        system("cls");
 
-        if(reg.Cargar() == true)
-        {
-            fwrite(&reg, sizeof reg, 1, p);
-            fclose(p);
-            system("cls");
-
-            cout << "Venta agregada exitosamente!!!" << endl;
-            system("pause");
-        }
-        cout << "Desea cargar otro articulo??? " << endl;
-        cin >> op;
-
+        cout << "Venta agregada exitosamente!!!" << endl;
     }
-    while (op == 's' || op == 'S');
+    system("pause");
 }
 
 void ArchivoVenta::listarXCliente()
@@ -100,10 +92,7 @@ void ArchivoVenta::listarXCliente()
                 cout << setw(20) << "Numero de Factura";
                 cout << setw(10) << "Importe";
                 cout << setw(15) << "Estado";
-                if(regVenta.getSaldo() != 0)
-                {
-                    cout << setw(10) << "Saldo";
-                }
+                cout << setw(10) << "Saldo";
                 cout << setw(15) << "Fecha Factura" << endl;
                 cout << "-------------------------------------------------------------------------------------------------------------------------------------------------" << endl;
                 mostrarTitulo = false;
@@ -159,10 +148,7 @@ void ArchivoVenta::listarXMes()
                     cout << setw(20) << "Numero de Factura";
                     cout << setw(10) << "Importe";
                     cout << setw(15) << "Estado";
-                    if(regVenta.getActiva() && regVenta.getSaldo() != 0)
-                    {
-                        cout << setw(10) << "Saldo";
-                    }
+                    cout << setw(10) << "Saldo";
                     cout << setw(15) << "Fecha Factura" << endl;
                     cout << "-------------------------------------------------------------------------------------------------------------------------------------------------" << endl;
                     mostrarTitulo = false;

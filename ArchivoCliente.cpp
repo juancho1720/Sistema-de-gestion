@@ -360,6 +360,7 @@ void ArchivoCliente::listarMovimientos()
             }
         }
         mostrarTitulo = true;
+
         if(regCliente.getSaldoDeudor() - regCliente.getSaldoAcreedor() > 0)
         {
             cout << setw(69) << "Saldo Deudor Actual: $" << regCliente.getSaldoDeudor() - regCliente.getSaldoAcreedor() << endl << endl;
@@ -378,6 +379,7 @@ void ArchivoCliente::listarMovimientos()
     {
         cout << "No existen movimientos para listar." << endl;
     }
+
     system("pause");
 }
 
@@ -420,7 +422,7 @@ void ArchivoCliente::listarMovimientosXDni()
 
         regCliente = auxArchivoCliente.leerRegistro( auxArchivoCliente.buscarDni(dni));
 
-        regPago.imputarRecibos(regCliente.getDni(), 0);
+        //regPago.imputarRecibos(regCliente.getDni(), 0);
 
         for(int j=0; j<cantVentas; j++)
         {
