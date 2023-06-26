@@ -66,13 +66,24 @@
 1687743662 c:\users\sarmi\onedrive\documentos\github\sistema-de-gestion\detallefactura.h
 	"DetalleFactura.h"
 
-1687554648 source:c:\users\sarmi\onedrive\documentos\github\sistema-de-gestion\archivopago.cpp
+1687803902 source:c:\users\sarmi\onedrive\documentos\github\sistema-de-gestion\archivopago.cpp
 	<iostream>
 	<string.h>
 	<iomanip>
 	"ArchivoPago.h"
 	"ArchivoCliente.h"
 	"ArchivoVenta.h"
+	"FuncionesGenerales.h"
+
+1687803527 source:c:\users\sarmi\onedrive\documentos\github\sistema-de-gestion\archivoventa.cpp
+	<iostream>
+	<string.h>
+	<iomanip>
+	"ArchivoVenta.h"
+	"ArchivoCliente.h"
+	"ArchivoArticulo.h"
+	"ArchivoDetalleFactura.h"
+	"MenuManager.h"
 	"FuncionesGenerales.h"
 
 1687732657 source:c:\users\sarmi\onedrive\documentos\github\sistema-de-gestion\articulo.cpp
@@ -83,13 +94,21 @@
 	"FuncionesGenerales.h"
 	"ArchivoArticulo.h"
 
-1687524441 source:c:\users\sarmi\onedrive\documentos\github\sistema-de-gestion\cliente.cpp
+1687744462 source:c:\users\sarmi\onedrive\documentos\github\sistema-de-gestion\cliente.cpp
 	<iostream>
 	<string.h>
 	<iomanip>
 	"FuncionesGenerales.h"
 	"Cliente.h"
 	"ArchivoCliente.h"
+
+1687743672 source:c:\users\sarmi\onedrive\documentos\github\sistema-de-gestion\detallefactura.cpp
+	<iostream>
+	<string.h>
+	<iomanip>
+	"DetalleFactura.h"
+	"ArchivoDetalleFactura.h"
+	"ArchivoArticulo.h"
 
 1687568274 source:c:\users\sarmi\onedrive\documentos\github\sistema-de-gestion\fecha.cpp
 	<iostream>
@@ -124,7 +143,7 @@
 	"ArchivoPago.h"
 	<fstream>
 
-1687518585 source:c:\users\sarmi\onedrive\documentos\github\sistema-de-gestion\pago.cpp
+1687803890 source:c:\users\sarmi\onedrive\documentos\github\sistema-de-gestion\pago.cpp
 	<iostream>
 	<string.h>
 	<iomanip>
@@ -133,17 +152,6 @@
 	"ArchivoCliente.h"
 	"ArchivoPago.h"
 	"ArchivoVenta.h"
-
-1687744268 source:c:\users\sarmi\onedrive\documentos\github\sistema-de-gestion\archivoventa.cpp
-	<iostream>
-	<string.h>
-	<iomanip>
-	"ArchivoVenta.h"
-	"ArchivoCliente.h"
-	"ArchivoArticulo.h"
-	"ArchivoDetalleFactura.h"
-	"MenuManager.h"
-	"FuncionesGenerales.h"
 
 1687743594 source:c:\users\sarmi\onedrive\documentos\github\sistema-de-gestion\venta.cpp
 	<iostream>
@@ -156,12 +164,4 @@
 	"ArchivoCliente.h"
 	"DetalleFactura.h"
 	"ArchivoDetalleFactura.h"
-
-1687743672 source:c:\users\sarmi\onedrive\documentos\github\sistema-de-gestion\detallefactura.cpp
-	<iostream>
-	<string.h>
-	<iomanip>
-	"DetalleFactura.h"
-	"ArchivoDetalleFactura.h"
-	"ArchivoArticulo.h"
 

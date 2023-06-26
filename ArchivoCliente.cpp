@@ -344,9 +344,16 @@ void ArchivoCliente::listarMovimientos()
                     cout << setw(10) << regPago.getImporte();
                     if (regPago.getActivo())
                     {
-                        cout << setw(15) << "Aplicado";
+                        if (regPago.getNumFactura() == 0)
+                        {
+                            cout << setw(15) << "Anticipo";
+                        }
+                        else
+                        {
+                            cout << setw(15) << "Aplicado";
+                        }
                     }
-                    if (!regPago.getActivo())
+                    else
                     {
                         cout << setw(15) << "Anulado";
                     }
@@ -491,11 +498,18 @@ void ArchivoCliente::listarMovimientosXDni()
                     cout << setw(10) << regPago.getImporte();
                     if (regPago.getActivo())
                     {
-                        cout << setw(15) << "Aplicado";
+                        if (regPago.getNumFactura() == 0)
+                        {
+                            cout << setw(15) << "Anticipo";
+                        }
+                        else
+                        {
+                            cout << setw(15) << "Aplicado";
+                        }
                     }
-                    if (!regPago.getActivo())
+                    else
                     {
-                        cout << setw(15) << "Sin aplicar";
+                        cout << setw(15) << "Anulado";
                     }
                     regPago.getFechaPago().Mostrar();
                     cout << right;

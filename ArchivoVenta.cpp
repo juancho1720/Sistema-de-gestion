@@ -134,10 +134,7 @@ void ArchivoVenta::listarXCliente()
                         {
                             cout << setw(15) << "Anulada";
                         }
-                        if(regVenta.getSaldo() != 0)
-                        {
-                            cout << setw(10) << regVenta.getSaldo();
-                        }
+                        cout << setw(10) << regVenta.getSaldo();
                         regVenta.getFechaVenta().Mostrar();
                         primerArticulo = false;
                     }
@@ -264,7 +261,7 @@ void ArchivoVenta::listarXClienteXMes()
     bool hayVentas = false;
     bool mostrarTitulo;
     bool primerArticulo = true;
-    float importeTotal;
+    float importeTotal = 0;
 
     char dni[12];
     int mes, anio;
@@ -287,8 +284,6 @@ void ArchivoVenta::listarXClienteXMes()
     for(int i=0; i<cantVentas; i++)
     {
         regVenta = auxArchivoVenta.leerRegistro(i);
-
-        importeTotal = 0;
 
         if( strcmp(regVenta.getDni(),dni) == 0 && regVenta.getFechaVenta().getAnio() == anio && regVenta.getFechaVenta().getMes() == mes)
         {
@@ -345,14 +340,14 @@ void ArchivoVenta::listarXClienteXMes()
             }
             cout << "-------------------------------------------------------------------------------------------------------------------------------------------------" << endl;
         }
-        if (importeTotal != 0)
+    }
+            if (importeTotal != 0)
         {
             cout << "Total Facturado: $" << importeTotal;
             importeTotal = 0;
             cout << endl << endl;
         }
         mostrarTitulo = true;
-    }
     if(!hayVentas)
     {
         cout << "No existen ventas para este cliente." << endl;

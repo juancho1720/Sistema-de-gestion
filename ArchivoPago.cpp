@@ -101,7 +101,7 @@ void ArchivoPago::listarXCliente()
                         cout << setw(20) << "Numero de Recibo";
                         cout << setw(20) << "DNI";
                         cout << setw(10) << "Importe";
-                        cout << setw(15) << "Factura";
+                        cout << setw(30) << "Concepto";
                         cout << setw(15) << "Forma de Pago";
                         cout << setw(15) << "Fecha Recibo" << endl;
                         cout << "-------------------------------------------------------------------------------------------------------------------------------------------------" << endl;
@@ -175,7 +175,7 @@ void ArchivoPago::listarTodosXMes()
                     cout << setw(20) << "Numero de Recibo";
                     cout << setw(20) << "DNI";
                     cout << setw(10) << "Importe";
-                    cout << setw(20) << "Numero Factura";
+                    cout << setw(30) << "Concepto";
                     cout << setw(15) << "Forma de Pago";
                     cout << setw(15) << "Fecha Recibo" << endl;
                     cout << "-------------------------------------------------------------------------------------------------------------------------------------------------" << endl;
@@ -235,14 +235,22 @@ void ArchivoPago::imprimirPorPantalla()
 
             cout << "Cliente: " << regPago.getApellido() << ", " << regPago.getNombre() << endl << endl << endl << endl;
 
-            cout << setw(25) << "Numero de Factura";
+            cout << setw(30) << "Concepto";
             cout << setw(25) << "Forma de pago";
             cout << setw(5) << "";
             cout << setw(10) << "Importe" << endl;
 
             cout << "__________________________________________________________________" << endl << endl;
 
-            cout << setw(25) << regPago.getNumFactura();
+            if (regPago.getNumFactura() == 0)
+            {
+                cout << setw(30) << "Anticipo";
+            }
+            else
+            {
+                cout << setw(30) << "Aplicado a Factura/s";
+            }
+
             cout << setw(25) << regPago.getFormaPago();
             cout << setw(5) << "$";
             cout << setw(10) << regPago.getImporte() << endl << endl;
