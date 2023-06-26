@@ -10,6 +10,7 @@ private:
     int cantidadArticulo;
     float importe;
     int numeroFactura;
+    bool activo;
 public:
 
     bool Cargar(int codigoArticulo, float importe, int nF);
@@ -23,6 +24,8 @@ public:
     int getCantidadArticulo();
     void setCantidadArticulo(int cA);
     void setDescripcion(const char* d);
+    void setActivo(bool a);
+    bool getActivo();
     void Mostrar();
 };
 

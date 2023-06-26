@@ -44,9 +44,9 @@ void Cliente::Mostrar()
 {
     if (activo == true)
     {
-        cout << setw(15) << apellido;
-        cout << setw(20) << nombre;
         cout << setw(15) << dni;
+        cout << setw(20) << nombre;
+        cout << setw(20) << apellido;
         cout << setw(20) << montoMaximo << endl;
     }
 }

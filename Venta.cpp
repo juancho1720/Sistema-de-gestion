@@ -73,6 +73,7 @@ bool Venta::Cargar()
                     regDetalleFactura.setCantidadArticulo(cantidadVendida);
                     regDetalleFactura.setImporte(calcularImporteFactura(codigoArticulo, cantidadVendida));
                     regDetalleFactura.setNumeroFactura(numeroFactura);
+                    regDetalleFactura.setActivo(true);
 
                     auxArchivoDetalleFactura.escribirRegistro(regDetalleFactura);
 

@@ -58,6 +58,16 @@ void DetalleFactura::setCantidadArticulo(int cA)
     cantidadArticulo = cA;
 }
 
+void DetalleFactura::setActivo(bool a)
+{
+    activo = a;
+}
+
+bool DetalleFactura::getActivo()
+{
+    return activo;
+}
+
 void DetalleFactura::Mostrar()
 {
     Articulo regArticulo;
