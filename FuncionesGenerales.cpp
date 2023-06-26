@@ -131,6 +131,7 @@ float sumarSaldoDeudor(const char *dni, float importe)
         if ( strcmp(regCliente.getDni(), dni) == 0)
         {
             regCliente.setSaldoDeudor(regCliente.getSaldoDeudor() + importe);
+
             auxArchivoCliente.sobreEscribirRegistro(regCliente, i);
         }
     }
