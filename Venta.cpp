@@ -80,6 +80,7 @@ bool Venta::Cargar()
                 }
                 else
                 {
+                    restarStock( codigoArticulo, -(cantidadVendida) );
                     system("cls");
                     cout << "No hay stock suficiente para realizar esta venta." << endl;
                     system("pause");
