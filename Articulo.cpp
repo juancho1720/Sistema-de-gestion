@@ -27,6 +27,7 @@ bool Articulo::Cargar()
         cout << "Precio Unitario: ";
         cin >> precioUnitario;
         estado = true;
+
         return false;
     }
     else

@@ -46,11 +46,10 @@ bool Pago::Cargar()
         {
         case 1:
             system("cls");
-            int nF;
             cout << "Ingrese numero de factura a cancelar:" << endl;
-            cin >> nF;
-            setNumFactura(nF);
-            if (cancelarFactura(dni, nF, importe))
+            cin >> numFactura;
+            setNumFactura(numFactura);
+            if (cancelarFactura(dni, numFactura, importe))
             {
                 activo = true;
                 return true;
@@ -62,19 +61,7 @@ bool Pago::Cargar()
             break;
         case 2:
             system("cls");
-
-            ArchivoCliente auxArchivoCliente("clientes.dat");
-            Cliente regCliente = auxArchivoCliente.leerRegistro(auxArchivoCliente.buscarDni(dni));
-            regCliente.setSaldoAcreedor(regCliente.getSaldoAcreedor() + importe);
-            auxArchivoCliente.sobreEscribirRegistro(regCliente, auxArchivoCliente.buscarDni(dni) );
-
-            for (int i=0; i< cantFcImpagas(); i++)
-            {
-                numFactura = imputarRecibos(dni, importe);
-            }
-
-            imputarRecibos(dni, 0);
-
+            numFactura = imputarRecibos(dni, importe);
             activo = true;
             return true;
             break;
@@ -97,16 +84,14 @@ void Pago::Mostrar()
     cout << setw(20) << numeroRecibo;
     cout << setw(20) << dni;
     cout << setw(10) << importe;
-
-    if (numFactura != 0)
-    {
-        cout << setw(20) << numFactura;
-    }
-    else
+    if (numFactura == 0)
     {
         cout << setw(20) << "Anticipo";
     }
-
+    else
+    {
+        cout << setw(20) << numFactura;
+    }
     switch(formaPago)
     {
     case 1:
@@ -211,7 +196,7 @@ bool Pago::cancelarFactura(const char *dni, int numFactura, float importe)
                 }
                 else
                 {
-                    if (regVenta.getSaldo() == importe)
+                    if (regVenta.getImporte() == importe)
                     {
                         regVenta.setPaga(true);
                         regVenta.setSaldo(0);
@@ -219,21 +204,10 @@ bool Pago::cancelarFactura(const char *dni, int numFactura, float importe)
                         auxArchivoVenta.sobreEscribirRegistro(regVenta, i);
                         return true;
                     }
-                    if (regVenta.getSaldo() > importe)
+                    else
                     {
-                        regVenta.setSaldo(regVenta.getSaldo() - importe);
-                        restarSaldoDeudor(regVenta.getDni(), importe);
-                        auxArchivoVenta.sobreEscribirRegistro(regVenta, i);
-                        return true;
-                    }
-                    if (regVenta.getSaldo() < importe)
-                    {
-                        regVenta.setPaga(true);
-                        restarSaldoDeudor(regVenta.getDni(), regVenta.getSaldo());
-                        sumarSaldoAcreedor(regVenta.getDni(), importe - regVenta.getSaldo());
-                        regVenta.setSaldo(0);
-                        auxArchivoVenta.sobreEscribirRegistro(regVenta, i);
-                        return true;
+                        cout << "El importe ingresado no coincide con el importe de la factura." << endl;
+                        return false;
                     }
                 }
             }
@@ -244,7 +218,7 @@ bool Pago::cancelarFactura(const char *dni, int numFactura, float importe)
     return false;
 }
 
-int Pago::cantFcImpagas()
+int Pago::imputarRecibos(const char *dni, float importe)
 {
     ArchivoVenta auxArchivoVenta("ventas.dat");
     Venta regVenta;
@@ -284,65 +258,57 @@ int Pago::cantFcImpagas()
 
     }
 
-    return contadorVentasImpagas;
-}
-
-int Pago::imputarRecibos(const char *dni, float importe)
-{
-    ArchivoVenta auxArchivoVenta("ventas.dat");
-    Venta regVenta;
-    int cantVentas = auxArchivoVenta.contarRegistros();
-
-    ArchivoPago auxArchivoPago("pagos.dat");
-
-    ArchivoCliente auxArchivoCliente("clientes.dat");
-    Cliente regCliente;
-
-    regCliente = auxArchivoCliente.leerRegistro(auxArchivoCliente.buscarDni(dni));
-
-    for (int i=0; i< cantVentas; i++)
+    if ( saldoImpagoMenor <= regCliente.getSaldoAcreedor() && contadorVentasImpagas != 0)
     {
-        regVenta = auxArchivoVenta.leerRegistro(i);
-
-        if ( !regVenta.getPaga() && strcmp(regVenta.getDni(), dni) == 0)
+        while (saldoImpagoMenor <= regCliente.getSaldoAcreedor())
         {
-            if(regVenta.getSaldo() == regCliente.getSaldoAcreedor())
+
+            for (int i=0; i< cantVentas; i++)
             {
-                regCliente.setSaldoDeudor( regCliente.getSaldoDeudor() - regCliente.getSaldoAcreedor() );
-                regCliente.setSaldoAcreedor( 0 );
+                regVenta = auxArchivoVenta.leerRegistro(i);
 
-                regVenta.setPaga(true);
-                regVenta.setSaldo(0);
-                auxArchivoVenta.sobreEscribirRegistro(regVenta, i);
-                auxArchivoCliente.sobreEscribirRegistro(regCliente, auxArchivoCliente.buscarDni(dni));
+                if ( !regVenta.getPaga() && strcmp(regVenta.getDni(), dni) == 0)
+                {
+                    if(regVenta.getSaldo() == regCliente.getSaldoAcreedor())
+                    {
+                        regCliente.setSaldoDeudor( regCliente.getSaldoDeudor() - regCliente.getSaldoAcreedor() );
+                        regCliente.setSaldoAcreedor( 0 );
 
-                return regVenta.getNumeroFactura();
+                        regVenta.setPaga(true);
+                        regVenta.setSaldo(0);
+                        auxArchivoVenta.sobreEscribirRegistro(regVenta, i);
+                        auxArchivoCliente.sobreEscribirRegistro(regCliente, auxArchivoCliente.buscarDni(dni));
+
+                        return regVenta.getNumeroFactura();
+                    }
+
+                    if(regVenta.getSaldo() < regCliente.getSaldoAcreedor())
+                    {
+                        regCliente.setSaldoDeudor( regCliente.getSaldoDeudor() - regVenta.getSaldo() );
+                        regCliente.setSaldoAcreedor( regCliente.getSaldoAcreedor() - regVenta.getSaldo() );
+
+                        regVenta.setPaga(true);
+                        regVenta.setSaldo(0);
+                        auxArchivoVenta.sobreEscribirRegistro(regVenta, i);
+                        auxArchivoCliente.sobreEscribirRegistro(regCliente, auxArchivoCliente.buscarDni(dni));
+
+                        return regVenta.getNumeroFactura();
+                    }
+
+                    if(regVenta.getSaldo() > regCliente.getSaldoAcreedor())
+                    {
+                        regCliente.setSaldoDeudor( regCliente.getSaldoDeudor() - regCliente.getSaldoAcreedor() );
+                        regCliente.setSaldoAcreedor( 0 );
+                        regVenta.setSaldo( regVenta.getSaldo() - regCliente.getSaldoAcreedor());
+
+                        auxArchivoVenta.sobreEscribirRegistro(regVenta, i);
+                        auxArchivoCliente.sobreEscribirRegistro(regCliente, auxArchivoCliente.buscarDni(dni));
+
+                        return regVenta.getNumeroFactura();
+                    }
+                }
             }
 
-            if(regVenta.getSaldo() < regCliente.getSaldoAcreedor())
-            {
-                regCliente.setSaldoDeudor( regCliente.getSaldoDeudor() - regVenta.getSaldo() );
-                regCliente.setSaldoAcreedor( regCliente.getSaldoAcreedor() - regVenta.getSaldo() );
-
-                regVenta.setPaga(true);
-                regVenta.setSaldo(0);
-                auxArchivoVenta.sobreEscribirRegistro(regVenta, i);
-                auxArchivoCliente.sobreEscribirRegistro(regCliente, auxArchivoCliente.buscarDni(dni));
-
-                return regVenta.getNumeroFactura();
-            }
-
-            if(regVenta.getSaldo() > regCliente.getSaldoAcreedor())
-            {
-                regCliente.setSaldoDeudor( regCliente.getSaldoDeudor() - regCliente.getSaldoAcreedor() );
-                regCliente.setSaldoAcreedor( 0 );
-                regVenta.setSaldo( regVenta.getSaldo() - regCliente.getSaldoAcreedor());
-
-                auxArchivoVenta.sobreEscribirRegistro(regVenta, i);
-                auxArchivoCliente.sobreEscribirRegistro(regCliente, auxArchivoCliente.buscarDni(dni));
-
-                return regVenta.getNumeroFactura();
-            }
         }
     }
 

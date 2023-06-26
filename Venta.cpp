@@ -9,67 +9,107 @@ using namespace std;
 #include "ArchivoVenta.h"
 #include "ArchivoArticulo.h"
 #include "ArchivoCliente.h"
+#include "DetalleFactura.h"
+#include "ArchivoDetalleFactura.h"
 
 bool Venta::Cargar()
 {
+    char op;
+
+    bool sinNumero = true;
+
     fechaVenta.Cargar();
     cout << "DNI cliente: ";
     cargarCadena(dni,11);
+    importe = 0;
+
     if (comprobarClientesExistentes(dni) == true)
     {
-        cout << "Deuda actual del cliente: $" << consultarDeudaCliente(dni) << endl;
-        cout << "Codigo de Producto: ";
-        cin >> codigoArticulo;
-        if (comprobarArticulosExistentes(codigoArticulo) == true)
+        do
         {
-            setDescripcionArticulo(buscarDescripcion(codigoArticulo));
-            cout << "Cantidad: ";
-            cin >> cantidadVendida;
-            while (cantidadVendida <= 0)
+
+            cout << "Deuda actual del cliente: $" << consultarDeudaCliente(dni) << endl;
+            cout << "Codigo de Producto: ";
+            cin >> codigoArticulo;
+
+            if (comprobarArticulosExistentes(codigoArticulo) == true)
             {
-                cout << "La cantidad debe ser mayor a cero." <<endl;
-                system("pause");
-                system("cls");
+                setDescripcionArticulo(buscarDescripcion(codigoArticulo));
                 cout << "Cantidad: ";
                 cin >> cantidadVendida;
-            }
-            if (restarStock(codigoArticulo, cantidadVendida) >= 0)
-            {
-                strcpy(nombre, buscarNombre(dni));
-                strcpy(apellido, buscarApellido(dni));
-                numeroFactura = generarNumeroFactura();
-                importe = calcularImporteFactura(codigoArticulo, cantidadVendida);
-
-                if (!comprobarDeuda(dni, importe))
+                while (cantidadVendida <= 0)
                 {
-                    cout << "El cliente supera el monto habilitado de deuda en su cuenta corriente." << endl;
+                    cout << "La cantidad debe ser mayor a cero." <<endl;
+                    system("pause");
+                    system("cls");
+                    cout << "Cantidad: ";
+                    cin >> cantidadVendida;
+                }
+                if (restarStock(codigoArticulo, cantidadVendida) >= 0)
+                {
+
+                    importe += calcularImporteFactura(codigoArticulo, cantidadVendida);
+
+                    sumarSaldoDeudor(dni, calcularImporteFactura(codigoArticulo, cantidadVendida));
+
+                    if (!comprobarDeuda(dni, importe))
+                    {
+                        cout << "El cliente supera el monto habilitado de deuda en su cuenta corriente." << endl;
+                        system("pause");
+                        return false;
+                    }
+
+                    if (sinNumero)
+                    {
+                        numeroFactura = generarNumeroFactura();
+                        sinNumero = false;
+                    }
+
+                    ArchivoDetalleFactura auxArchivoDetalleFactura("detalleFacturas.dat");
+                    DetalleFactura regDetalleFactura;
+
+                    regDetalleFactura.setCodigoArticulo(codigoArticulo);
+                    regDetalleFactura.setDescripcion(buscarDescripcion(codigoArticulo));
+                    regDetalleFactura.setCantidadArticulo(cantidadVendida);
+                    regDetalleFactura.setImporte(calcularImporteFactura(codigoArticulo, cantidadVendida));
+                    regDetalleFactura.setNumeroFactura(numeroFactura);
+
+                    auxArchivoDetalleFactura.escribirRegistro(regDetalleFactura);
+
+                }
+                else
+                {
+                    system("cls");
+                    cout << "No hay stock suficiente para realizar esta venta." << endl;
                     system("pause");
                     return false;
                 }
-                saldo = importe;
-                sumarSaldoDeudor(dni, importe);
-
-                paga = false;
-
-                activa = true;
-
-                return true;
             }
             else
             {
                 system("cls");
-                cout << "No hay stock suficiente para realizar esta venta." << endl;
+                cout << "No existen articulos con ese codigo." << endl;
                 system("pause");
                 return false;
             }
+
+            cout << "Desea cargar otro articulo a la venta??? (S/N)" << endl;
+            cin >> op;
+
         }
-        else
-        {
-            system("cls");
-            cout << "No existen articulos con ese codigo." << endl;
-            system("pause");
-            return false;
-        }
+        while (op == 's' || op == 's');
+
+        strcpy(nombre, buscarNombre(dni));
+        strcpy(apellido, buscarApellido(dni));
+
+        saldo = importe;
+
+        paga = false;
+
+        activa = true;
+
+        return true;
+
     }
     else
     {
@@ -98,7 +138,10 @@ void Venta::Mostrar()
         {
             cout << setw(15) << "Pendiente";
         }
-        cout << setw(10) << saldo;
+        if (saldo != 0 )
+        {
+            cout << setw(10) << saldo;
+        }
     }
     else
     {

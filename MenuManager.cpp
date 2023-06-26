@@ -258,7 +258,6 @@ void MenuManager::ModuloPagos()
 {
     int opcionPagos;
     ArchivoPago auxArchivoPago("pagos.dat");
-    Pago regPago;
     ArchivoCliente auxArchivoCliente("clientes.dat");
     ArchivoVenta auxArchivoVenta("ventas.dat");
 

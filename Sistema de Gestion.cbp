@@ -40,6 +40,8 @@
 		<Unit filename="ArchivoBackUp.h" />
 		<Unit filename="ArchivoCliente.cpp" />
 		<Unit filename="ArchivoCliente.h" />
+		<Unit filename="ArchivoDetalleFactura.cpp" />
+		<Unit filename="ArchivoDetalleFactura.h" />
 		<Unit filename="ArchivoPago.cpp" />
 		<Unit filename="ArchivoPago.h" />
 		<Unit filename="ArchivoVenta.cpp" />
@@ -48,6 +50,8 @@
 		<Unit filename="Articulo.h" />
 		<Unit filename="Cliente.cpp" />
 		<Unit filename="Cliente.h" />
+		<Unit filename="DetalleFactura.cpp" />
+		<Unit filename="DetalleFactura.h" />
 		<Unit filename="Fecha.cpp" />
 		<Unit filename="Fecha.h" />
 		<Unit filename="FuncionesGenerales.cpp" />

@@ -7,6 +7,7 @@ using namespace std;
 #include "ArchivoVenta.h"
 #include "ArchivoCliente.h"
 #include "ArchivoArticulo.h"
+#include "ArchivoDetalleFactura.h"
 #include "MenuManager.h"
 #include "FuncionesGenerales.h"
 
@@ -59,17 +60,23 @@ void ArchivoVenta::escribirRegistro()
         system("cls");
 
         cout << "Venta agregada exitosamente!!!" << endl;
+        system("pause");
     }
-    system("pause");
 }
 
 void ArchivoVenta::listarXCliente()
 {
     bool hayVentas = false;
     bool mostrarTitulo;
+    bool primerArticulo = true;
     char dni[12];
     ArchivoVenta auxArchivoVenta("ventas.dat");
     Venta regVenta;
+
+    ArchivoDetalleFactura auxArchivoDetalleFactura("detalleFacturas.dat");
+    DetalleFactura regDetalleFactura;
+    int cantDetalles = auxArchivoDetalleFactura.contarRegistros();
+
     cout << "DNI: ";
     cargarCadena(dni, 11);
     system("cls");
@@ -82,6 +89,7 @@ void ArchivoVenta::listarXCliente()
         if( strcmp(regVenta.getDni(),dni) == 0)
         {
             hayVentas = true;
+            primerArticulo = true;
             if(mostrarTitulo)
             {
                 cout << "Cliente: " << regVenta.getApellido() << ", " << regVenta.getNombre() << endl << endl;
@@ -89,15 +97,44 @@ void ArchivoVenta::listarXCliente()
                 cout << setw(10) << "Codigo";
                 cout << setw(20) << "Descripcion";
                 cout << setw(10) << "Cantidad";
-                cout << setw(20) << "Numero de Factura";
                 cout << setw(10) << "Importe";
+                cout << setw(20) << "Numero de Factura";
                 cout << setw(15) << "Estado";
-                cout << setw(10) << "Saldo";
+                if(regVenta.getSaldo() != 0)
+                {
+                    cout << setw(10) << "Saldo";
+                }
                 cout << setw(15) << "Fecha Factura" << endl;
                 cout << "-------------------------------------------------------------------------------------------------------------------------------------------------" << endl;
                 mostrarTitulo = false;
             }
-            regVenta.Mostrar();
+
+            for (int i=0; i< cantDetalles; i++)
+            {
+                regDetalleFactura = auxArchivoDetalleFactura.leerRegistro(i);
+
+                if (regDetalleFactura.getNumeroFactura() == regVenta.getNumeroFactura())
+                {
+                    regDetalleFactura.Mostrar();
+
+                    if (primerArticulo)
+                    {
+                        cout << setw(20) <<  regDetalleFactura.getNumeroFactura();
+                        if (regVenta.getPaga())
+                        {
+                            cout << setw(15) << "Paga";
+                        }
+                        else
+                        {
+                            cout << setw(15) << "Pendiente";
+                        }
+                        cout << setw(10) << regVenta.getSaldo();
+                        regVenta.getFechaVenta().Mostrar();
+                        primerArticulo = false;
+                    }
+                    cout << endl;
+                }
+            }
             cout << "-------------------------------------------------------------------------------------------------------------------------------------------------" << endl;
         }
     }
@@ -148,7 +185,10 @@ void ArchivoVenta::listarXMes()
                     cout << setw(20) << "Numero de Factura";
                     cout << setw(10) << "Importe";
                     cout << setw(15) << "Estado";
-                    cout << setw(10) << "Saldo";
+                    if(regVenta.getActiva() && regVenta.getSaldo() != 0)
+                    {
+                        cout << setw(10) << "Saldo";
+                    }
                     cout << setw(15) << "Fecha Factura" << endl;
                     cout << "-------------------------------------------------------------------------------------------------------------------------------------------------" << endl;
                     mostrarTitulo = false;
@@ -249,6 +289,10 @@ void ArchivoVenta::imprimirPorPantalla()
     Venta regVenta;
     int cantVentas = auxArchivoVenta.contarRegistros();
 
+    ArchivoDetalleFactura auxArchivoDetalleFactura("detalleFacturas.dat");
+    DetalleFactura regDetalleFactura;
+    int cantDetalles = auxArchivoDetalleFactura.contarRegistros();
+
     cout << "Numero de Factura: " << endl;
     cin >> numFactura;
 
@@ -282,10 +326,19 @@ void ArchivoVenta::imprimirPorPantalla()
 
             cout << "__________________________________________________________________" << endl << endl;
 
-            cout << setw(10) << regVenta.getCodigoArticulo();
-            cout << setw(45) << regVenta.getDescripcionArticulo();
-            cout << setw(5) << "$";
-            cout << setw(10) << regVenta.getImporte() << endl << endl;
+            for (int j=0; j<cantDetalles; j++)
+            {
+
+                regDetalleFactura = auxArchivoDetalleFactura.leerRegistro(i);
+
+                if (regDetalleFactura.getNumeroFactura() == numFactura)
+                {
+                    cout << setw(10) << regDetalleFactura.getCodigoArticulo();
+                    cout << setw(45) << regDetalleFactura.getDescripcion();
+                    cout << setw(5) << "$";
+                    cout << setw(10) << regDetalleFactura.getImporte() << endl << endl;
+                }
+            }
 
             cout << "__________________________________________________________________" << endl << endl;
 

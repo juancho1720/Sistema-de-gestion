@@ -33,6 +33,5 @@ public:
     void setActivo(bool a);
     int generarNumeroRecibo();
     bool cancelarFactura(const char *dni, int numFactura, float importe);
-    int cantFcImpagas();
     int imputarRecibos(const char *dni, float importe);
 };
