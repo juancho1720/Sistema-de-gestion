@@ -74,7 +74,7 @@ bool Venta::Cargar()
                     if (!comprobarDeuda(dni, importe))
                     {
                         sumarStock(numeroFactura);
-                        restarSaldoDeudor(dni, ( calcularImporteFactura(codigoArticulo, cantidadVendida) );
+                        restarSaldoDeudor(dni, ( calcularImporteFactura(codigoArticulo, cantidadVendida) ) );
 
                         system("cls");
                         cout << "El cliente supera el monto habilitado de deuda en su cuenta corriente." << endl;
@@ -86,7 +86,7 @@ bool Venta::Cargar()
                 else
                 {
                     sumarStock(numeroFactura);
-                    restarSaldoDeudor(dni, ( calcularImporteFactura(codigoArticulo, cantidadVendida) );
+                    restarSaldoDeudor(dni, ( calcularImporteFactura(codigoArticulo, cantidadVendida) ) );
                     system("cls");
                     cout << "No hay stock suficiente para realizar esta venta." << endl;
                     system("pause");
