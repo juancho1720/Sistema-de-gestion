@@ -45,6 +45,7 @@ public:
     float consultarDeudaCliente(const char *dni);
     const char *buscarDescripcion(int codigoArticulo);
     int restarStock(int codigoArticulo, int cantidadVendida);
+    void sumarStock(int nF);
     float calcularImporteFactura(int codA, int cantV);
     bool comprobarDeuda(const char *dni, float importe);
 };

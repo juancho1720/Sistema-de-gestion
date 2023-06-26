@@ -18,6 +18,9 @@ bool Venta::Cargar()
 
     bool sinNumero = true;
 
+    ArchivoDetalleFactura auxArchivoDetalleFactura("detalleFacturas.dat");
+    DetalleFactura regDetalleFactura;
+
     fechaVenta.Cargar();
     cout << "DNI cliente: ";
     cargarCadena(dni,11);
@@ -25,10 +28,10 @@ bool Venta::Cargar()
 
     if (comprobarClientesExistentes(dni) == true)
     {
+        cout << "Deuda actual del cliente: $" << consultarDeudaCliente(dni) << endl;
+
         do
         {
-
-            cout << "Deuda actual del cliente: $" << consultarDeudaCliente(dni) << endl;
             cout << "Codigo de Producto: ";
             cin >> codigoArticulo;
 
@@ -45,6 +48,7 @@ bool Venta::Cargar()
                     cout << "Cantidad: ";
                     cin >> cantidadVendida;
                 }
+
                 if (restarStock(codigoArticulo, cantidadVendida) >= 0)
                 {
 
@@ -52,21 +56,11 @@ bool Venta::Cargar()
 
                     sumarSaldoDeudor(dni, calcularImporteFactura(codigoArticulo, cantidadVendida));
 
-                    if (!comprobarDeuda(dni, importe))
-                    {
-                        cout << "El cliente supera el monto habilitado de deuda en su cuenta corriente." << endl;
-                        system("pause");
-                        return false;
-                    }
-
                     if (sinNumero)
                     {
                         numeroFactura = generarNumeroFactura();
                         sinNumero = false;
                     }
-
-                    ArchivoDetalleFactura auxArchivoDetalleFactura("detalleFacturas.dat");
-                    DetalleFactura regDetalleFactura;
 
                     regDetalleFactura.setCodigoArticulo(codigoArticulo);
                     regDetalleFactura.setDescripcion(buscarDescripcion(codigoArticulo));
@@ -77,10 +71,22 @@ bool Venta::Cargar()
 
                     auxArchivoDetalleFactura.escribirRegistro(regDetalleFactura);
 
+                    if (!comprobarDeuda(dni, importe))
+                    {
+                        sumarStock(numeroFactura);
+                        restarSaldoDeudor(dni, ( calcularImporteFactura(codigoArticulo, cantidadVendida) );
+
+                        system("cls");
+                        cout << "El cliente supera el monto habilitado de deuda en su cuenta corriente." << endl;
+                        system("pause");
+                        return false;
+                    }
+
                 }
                 else
                 {
-                    restarStock( codigoArticulo, -(cantidadVendida) );
+                    sumarStock(numeroFactura);
+                    restarSaldoDeudor(dni, ( calcularImporteFactura(codigoArticulo, cantidadVendida) );
                     system("cls");
                     cout << "No hay stock suficiente para realizar esta venta." << endl;
                     system("pause");
@@ -89,6 +95,7 @@ bool Venta::Cargar()
             }
             else
             {
+                restarStock( codigoArticulo, -(cantidadVendida) );
                 system("cls");
                 cout << "No existen articulos con ese codigo." << endl;
                 system("pause");
@@ -306,6 +313,37 @@ int Venta::restarStock(int codigoArticulo, int cantidadVendida)
         }
     }
     return stock;
+}
+
+void Venta::sumarStock(int nF)
+{
+    ArchivoArticulo auxArchivoArticulo("articulos.dat");
+    Articulo regArticulo;
+    int cantArticulos = auxArchivoArticulo.contarRegistros();
+
+    ArchivoDetalleFactura auxAchivoDetalleFactura("detalleFacturas.dat");
+    DetalleFactura regDetalleFactura;
+    int cantDetalles = auxAchivoDetalleFactura.contarRegistros();
+
+    for (int j=0; j<cantArticulos; j++)
+    {
+        regArticulo = auxArchivoArticulo.leerRegistro(j);
+
+        for (int i=0; i< cantDetalles; i++)
+        {
+            regDetalleFactura = auxAchivoDetalleFactura.leerRegistro(i);
+
+            if ( regDetalleFactura.getNumeroFactura() == nF && regDetalleFactura.getCodigoArticulo() == regArticulo.getCodigoArticulo() )
+            {
+                regArticulo.setStock( regArticulo.getStock() + regDetalleFactura.getCantidadArticulo() );
+                auxArchivoArticulo.sobreEscribirRegistro(regArticulo, j);
+
+                regDetalleFactura.setNumeroFactura(0);
+                auxAchivoDetalleFactura.sobreEscribirRegistro(regDetalleFactura, i);
+            }
+        }
+
+    }
 }
 
 float Venta::calcularImporteFactura(int codA, int cantV)
