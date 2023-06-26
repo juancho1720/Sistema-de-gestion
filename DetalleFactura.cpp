@@ -60,9 +60,22 @@ void DetalleFactura::setCantidadArticulo(int cA)
 
 void DetalleFactura::Mostrar()
 {
+    Articulo regArticulo;
+    ArchivoArticulo auxArchivoArticulo("articulos.dat");
+    int cantArticulos = auxArchivoArticulo.contarRegistros();
+
     cout << left;
     cout << setw(10) << codigoArticulo;
     cout << setw(20) << descripcion;
     cout << setw(10) << cantidadArticulo;
+    for (int i=0; i<cantArticulos; i++)
+    {
+        regArticulo = auxArchivoArticulo.leerRegistro(i);
+
+        if (codigoArticulo == regArticulo.getCodigoArticulo())
+        {
+            cout << setw(10) << regArticulo.getPrecioUnitario();
+        }
+    }
     cout << setw(10) << importe;
 }
