@@ -737,6 +737,11 @@ void MenuManager::hacerBackupArticulos()
     ArchivoArticulo articuloBkp("articulos.bkp");
     int cantArticulos = auxArchivoArticulo.contarRegistros();
 
+    if(cantArticulos<1){
+        cout << "No hay registros para guardar." << endl;
+        return;
+    }
+
     Articulo *vec = new Articulo[cantArticulos];
     if(vec==nullptr)
     {
@@ -763,6 +768,11 @@ void MenuManager::hacerBackupClientes()
     ArchivoCliente auxArchivoCliente("clientes.dat");
     ArchivoCliente clientesBkp("clientes.bkp");
     int cantClientes = auxArchivoCliente.contarRegistros();
+
+    if(cantClientes<1){
+        cout << "No hay registros para guardar." << endl;
+        return;
+    }
 
     Cliente *vec = new Cliente[cantClientes];
     if(vec==nullptr)
@@ -791,6 +801,11 @@ void MenuManager::hacerBackupPagos()
     ArchivoPago pagosBkp("pagos.bkp");
     int cantPagos = auxArchivoPago.contarRegistros();
 
+    if(cantPagos<1){
+        cout << "No hay registros para guardar." << endl;
+        return;
+    }
+
     Pago *vec = new Pago[cantPagos];
     if(vec==nullptr)
     {
@@ -817,6 +832,11 @@ void MenuManager::hacerBackupVentas()
     ArchivoVenta auxArchivoVenta("ventas.dat");
     ArchivoVenta ventasBkp("ventas.bkp");
     int cantVentas = auxArchivoVenta.contarRegistros();
+
+    if(cantVentas<1){
+        cout << "No hay registros para guardar." << endl;
+        return;
+    }
 
     Venta *vec = new Venta[cantVentas];
     if(vec==nullptr)
@@ -845,6 +865,11 @@ void MenuManager::restaurarCopiaArticulos()
     ArchivoArticulo articuloBkp("articulos.bkp");
     int cantArticulos = articuloBkp.contarRegistros();
 
+    if(cantArticulos<1){
+        cout << "No hay archivo para restaurar." << endl;
+        return;
+    }
+
     Articulo *vec = new Articulo[cantArticulos];
     if(vec==nullptr)
     {
@@ -870,6 +895,11 @@ void MenuManager::restaurarCopiaClientes()
     ArchivoCliente auxArchivoCliente("clientes.dat");
     ArchivoCliente clienteBkp("clientes.bkp");
     int cantClientes = clienteBkp.contarRegistros();
+
+    if(cantClientes<1){
+        cout << "No hay archivo para restaurar." << endl;
+        return;
+    }
 
     Cliente *vec = new Cliente[cantClientes];
     if(vec==nullptr)
@@ -897,6 +927,11 @@ void MenuManager::restaurarCopiaPagos()
     ArchivoPago pagosBkp("pagos.bkp");
     int cantPagos = pagosBkp.contarRegistros();
 
+    if(cantPagos<1){
+        cout << "No hay archivo para restaurar." << endl;
+        return;
+    }
+
     Pago *vec = new Pago[cantPagos];
     if(vec==nullptr)
     {
@@ -922,6 +957,11 @@ void MenuManager::restaurarCopiaVentas()
     ArchivoVenta auxArchivoVenta("ventas.dat");
     ArchivoVenta ventasBkp("ventas.bkp");
     int cantVentas = ventasBkp.contarRegistros();
+
+    if(cantVentas<1){
+        cout << "No hay archivo para restaurar." << endl;
+        return;
+    }
 
     Venta *vec = new Venta[cantVentas];
     if(vec==nullptr)
