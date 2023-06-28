@@ -585,7 +585,7 @@ void MenuManager::cobrosMensualesTipo()
         {
             regPago = auxArchivoPago.leerRegistro(j);
 
-            if (regPago.getFormaPago() == i+1 && regPago.getFechaPago().getAnio() == anio &&regPago.getFechaPago().getMes() == mes)
+            if (regPago.getActivo() && regPago.getFormaPago() == i+1 && regPago.getFechaPago().getAnio() == anio &&regPago.getFechaPago().getMes() == mes)
             {
                 cant ++;
             }
