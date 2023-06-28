@@ -26,6 +26,14 @@ bool Articulo::Cargar()
         setStock(cantidadArticulo);
         cout << "Precio Unitario: ";
         cin >> precioUnitario;
+
+        while (precioUnitario <= 0)
+        {
+            cout << "El precio debe ser mayor a cero." << endl;
+            cout << "Precio Unitario: ";
+            cin >> precioUnitario;
+        }
+
         estado = true;
 
         return false;

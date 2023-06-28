@@ -1002,9 +1002,10 @@ void MenuManager::cambiarLimiteDeuda()
         {
             cout << "Ingresar nuevo limite: ";
             cin >> nuevoLimite;
-            while (nuevoLimite < 0)
+            while ( nuevoLimite < regCliente.getSaldoDeudor() )
             {
-                cout << "El limite no puede ser menor a $0.-" << endl << endl;
+                cout << "El limite no puede ser menor al saldo deudor actual" << endl;
+                cout << "Saldo deudor actual: $" << regCliente.getSaldoDeudor() << endl << endl;
                 cout << "Ingresar nuevo limite: " << endl;
                 cin >> nuevoLimite;
             }

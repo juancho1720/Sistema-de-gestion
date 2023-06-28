@@ -304,6 +304,13 @@ void ArchivoArticulo::cambiarPrecios()
                 cout << "Ingrese nuevo precio: " << endl;
                 cin >> nuevoPrecio;
 
+                while (nuevoPrecio <= 0)
+                {
+                    cout << "El precio debe ser mayor a cero." << endl;
+                    cout << "Precio Unitario: ";
+                    cin >> precioUnitario;
+                }
+
                 regArticulo.setPrecioUnitario(nuevoPrecio);
                 if (auxArchivoArticulo.sobreEscribirRegistro(regArticulo, i) != 0)
                 {
@@ -361,6 +368,13 @@ void ArchivoArticulo::aumentarPreciosPorcentual()
     cin >> nuevoPrecio;
 
     nuevoPrecio = nuevoPrecio/100+1;
+
+    while (nuevoPrecio <= 0)
+    {
+        cout << "El precio debe ser mayor a cero." << endl;
+        cout << "Precio Unitario: ";
+        cin >> precioUnitario;
+    }
 
     for (int i=0; i<cantArticulos; i++)
     {
