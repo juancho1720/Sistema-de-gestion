@@ -101,7 +101,8 @@ void ArchivoVenta::listarXCliente()
                 cout << setw(20) << "Numero de Factura";
                 cout << setw(15) << "Estado";
                 cout << setw(10) << "Saldo";
-                cout << setw(15) << "Fecha Factura" << endl;
+                cout << setw(15) << "Fecha Factura";
+                cout << setw(15) << "Recibo Aplicado" << endl;
                 cout << "-------------------------------------------------------------------------------------------------------------------------------------------------" << endl;
                 mostrarTitulo = false;
             }
@@ -136,6 +137,11 @@ void ArchivoVenta::listarXCliente()
                         }
                         cout << setw(10) << regVenta.getSaldo();
                         regVenta.getFechaVenta().Mostrar();
+                        if (regVenta.getActiva() && regVenta.getPaga())
+                        {
+                            cout << right;
+                            cout << " [" << regVenta.getNumeroRecibo() << "] ";
+                        }
                         primerArticulo = false;
                     }
                     cout << endl;
@@ -205,7 +211,8 @@ void ArchivoVenta::listarXMes()
                     cout << setw(20) << "Numero de Factura";
                     cout << setw(15) << "Estado";
                     cout << setw(10) << "Saldo";
-                    cout << setw(15) << "Fecha Factura" << endl;
+                    cout << setw(15) << "Fecha Factura";
+                    cout << setw(15) << "Recibo Aplicado" << endl;
                     cout << "-------------------------------------------------------------------------------------------------------------------------------------------------" << endl;
                     mostrarTitulo = false;
                 }
@@ -233,6 +240,11 @@ void ArchivoVenta::listarXMes()
                             }
                             cout << setw(10) << regVenta.getSaldo();
                             regVenta.getFechaVenta().Mostrar();
+                            if (regVenta.getActiva() && regVenta.getPaga())
+                            {
+                                cout << right;
+                                cout << " [" << regVenta.getNumeroRecibo() << "] ";
+                            }
                             primerArticulo = false;
                         }
                         cout << endl;
@@ -305,7 +317,8 @@ void ArchivoVenta::listarXClienteXMes()
                 cout << setw(20) << "Numero de Factura";
                 cout << setw(15) << "Estado";
                 cout << setw(10) << "Saldo";
-                cout << setw(15) << "Fecha Factura" << endl;
+                cout << setw(15) << "Fecha Factura";
+                cout << setw(15) << "Recibo Aplicado" << endl;
                 cout << "-------------------------------------------------------------------------------------------------------------------------------------------------" << endl;
                 mostrarTitulo = false;
             }
@@ -333,6 +346,11 @@ void ArchivoVenta::listarXClienteXMes()
                         }
                         cout << setw(10) << regVenta.getSaldo();
                         regVenta.getFechaVenta().Mostrar();
+                        if (regVenta.getActiva() && regVenta.getPaga())
+                        {
+                            cout << right;
+                            cout << " [" << regVenta.getNumeroRecibo() << "] ";
+                        }
                         primerArticulo = false;
                     }
                     cout << endl;
