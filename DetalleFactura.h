@@ -1,6 +1,7 @@
 #pragma once
 
 #include "DetalleFactura.h"
+#include "Fecha.h"
 
 class DetalleFactura
 {
@@ -10,6 +11,7 @@ private:
     int cantidadArticulo;
     float importe;
     int numeroFactura;
+    Fecha fechaVenta;
     bool activo;
 public:
 
@@ -24,6 +26,8 @@ public:
     int getCantidadArticulo();
     void setCantidadArticulo(int cA);
     void setDescripcion(const char* d);
+    Fecha getFechaVenta();
+    void setFechaVenta(Fecha fV);
     void setActivo(bool a);
     bool getActivo();
     void Mostrar();

@@ -58,6 +58,16 @@ void DetalleFactura::setCantidadArticulo(int cA)
     cantidadArticulo = cA;
 }
 
+Fecha DetalleFactura::getFechaVenta()
+{
+    return fechaVenta;
+}
+
+void DetalleFactura::setFechaVenta(Fecha fV)
+{
+    fechaVenta = fV;
+}
+
 void DetalleFactura::setActivo(bool a)
 {
     activo = a;

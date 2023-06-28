@@ -61,7 +61,7 @@ bool Venta::Cargar()
                         numeroRecibo = 0;
                         sinNumero = false;
                     }
-
+                    regDetalleFactura.setFechaVenta(fechaVenta);
                     regDetalleFactura.setCodigoArticulo(codigoArticulo);
                     regDetalleFactura.setDescripcion(buscarDescripcion(codigoArticulo));
                     regDetalleFactura.setCantidadArticulo(cantidadVendida);

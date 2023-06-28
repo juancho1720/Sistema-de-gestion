@@ -11,6 +11,8 @@ using namespace std;
 #include "ArchivoVenta.h"
 #include "ArchivoArticulo.h"
 #include "ArchivoPago.h"
+#include "ArchivoDetalleFactura.h"
+#include "DetalleFactura.h"
 #include <fstream>
 
 void MenuManager::MenuBienvenida()
@@ -528,12 +530,14 @@ void MenuManager::ventasMensualesProductos()
     int cantArticulo, mes, anio;
 
     ArchivoVenta auxArchivoVenta("ventas.dat");
-    Venta regVenta;
-    int cantVentas = auxArchivoVenta.contarRegistros();
 
     ArchivoArticulo auxArchivoArticulo("articulos.dat");
     Articulo regArticulo;
     int cantArticulos = auxArchivoArticulo.contarRegistros();
+
+    ArchivoDetalleFactura auxArchivoDetalleFactura("detalleFacturas.dat");
+    DetalleFactura regDetalleFactura;
+    int cantDetalles = auxArchivoDetalleFactura.contarRegistros();
 
     cout << "Mes: ";
     cin >> mes;
@@ -546,13 +550,13 @@ void MenuManager::ventasMensualesProductos()
 
         regArticulo = auxArchivoArticulo.leerRegistro(i);
 
-        for (int j=0; j<cantVentas; j++)
+        for (int j=0; j<cantDetalles; j++)
         {
-            regVenta = auxArchivoVenta.leerRegistro(j);
+            regDetalleFactura = auxArchivoDetalleFactura.leerRegistro(j);
 
-            if (regArticulo.getCodigoArticulo() == regVenta.getCodigoArticulo() && regVenta.getFechaVenta().getAnio() == anio &&regVenta.getFechaVenta().getMes() == mes)
+            if (regDetalleFactura.getNumeroFactura() != 0 && regDetalleFactura.getCodigoArticulo() == regArticulo.getCodigoArticulo() && regDetalleFactura.getFechaVenta().getAnio() == anio && regDetalleFactura.getFechaVenta().getMes() == mes)
             {
-                cantArticulo += regVenta.getCatidadVendida();
+                cantArticulo += regDetalleFactura.getCantidadArticulo();
             }
         }
 
