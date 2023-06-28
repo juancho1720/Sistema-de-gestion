@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes" ?>
+<CodeBlocks_layout_file>
+	<FileVersion major="1" minor="0" />
+	<ActiveTarget name="Debug" />
+	<File name="Venta.h" open="0" top="0" tabpos="0" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+		<Cursor>
+			<Cursor1 position="610" topLine="30" />
+		</Cursor>
+	</File>
+	<File name="ArchivoCliente.cpp" open="0" top="0" tabpos="0" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+		<Cursor>
+			<Cursor1 position="14360" topLine="428" />
+		</Cursor>
+	</File>
+	<File name="MenuManager.cpp" open="1" top="0" tabpos="1" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+		<Cursor>
+			<Cursor1 position="8553" topLine="39" />
+		</Cursor>
+		<Folding>
+			<Collapse line="16" />
+			<Collapse line="53" />
+			<Collapse line="100" />
+			<Collapse line="144" />
+			<Collapse line="207" />
+			<Collapse line="303" />
+			<Collapse line="372" />
+		</Folding>
+	</File>
+	<File name="ArchivoPago.cpp" open="1" top="1" tabpos="3" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+		<Cursor>
+			<Cursor1 position="10820" topLine="169" />
+		</Cursor>
+		<Folding>
+			<Collapse line="141" />
+			<Collapse line="206" />
+		</Folding>
+	</File>
+	<File name="Pago.h" open="0" top="0" tabpos="0" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+		<Cursor>
+			<Cursor1 position="876" topLine="15" />
+		</Cursor>
+	</File>
+	<File name="Pago.cpp" open="1" top="0" tabpos="2" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+		<Cursor>
+			<Cursor1 position="2823" topLine="46" />
+		</Cursor>
+		<Folding>
+			<Collapse line="13" />
+		</Folding>
+	</File>
+	<File name="Venta.cpp" open="0" top="0" tabpos="0" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+		<Cursor>
+			<Cursor1 position="4728" topLine="24" />
+		</Cursor>
+		<Folding>
+			<Collapse line="15" />
+		</Folding>
+	</File>
+	<File name="ArchivoVenta.cpp" open="0" top="0" tabpos="0" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+		<Cursor>
+			<Cursor1 position="3685" topLine="113" />
+		</Cursor>
+	</File>
+</CodeBlocks_layout_file>

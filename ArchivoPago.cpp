@@ -103,7 +103,8 @@ void ArchivoPago::listarXCliente()
                         cout << setw(10) << "Importe";
                         cout << setw(30) << "Concepto";
                         cout << setw(15) << "Forma de Pago";
-                        cout << setw(15) << "Fecha Recibo" << endl;
+                        cout << setw(15) << "Fecha Recibo";
+                        cout << setw(15) << "Facturas canceladas" << endl;
                         cout << "-------------------------------------------------------------------------------------------------------------------------------------------------" << endl;
                         mostrarTitulo = false;
                     }
@@ -177,7 +178,8 @@ void ArchivoPago::listarTodosXMes()
                     cout << setw(10) << "Importe";
                     cout << setw(30) << "Concepto";
                     cout << setw(15) << "Forma de Pago";
-                    cout << setw(15) << "Fecha Recibo" << endl;
+                    cout << setw(15) << "Fecha Recibo";
+                    cout << setw(15) << "Facturas canceladas" << endl;
                     cout << "-------------------------------------------------------------------------------------------------------------------------------------------------" << endl;
                     mostrarTitulo = false;
                 }
@@ -235,7 +237,7 @@ void ArchivoPago::imprimirPorPantalla()
 
             cout << "Cliente: " << regPago.getApellido() << ", " << regPago.getNombre() << endl << endl << endl << endl;
 
-            cout << setw(30) << "Concepto";
+            cout << setw(30) << "Facturas canceladas";
             cout << setw(25) << "Forma de pago";
             cout << setw(5) << "";
             cout << setw(10) << "Importe" << endl;
@@ -250,7 +252,23 @@ void ArchivoPago::imprimirPorPantalla()
                 }
                 else
                 {
-                    cout << setw(30) << "Aplicado a Factura/s";
+                    ArchivoVenta auxArchivoVenta("ventas.dat");
+                    Venta regVenta;
+                    int cantVentas = auxArchivoVenta.contarRegistros();
+
+                    if(cantVentas != 0)
+                    {
+                        for (int i=0; i<cantVentas; i++)
+                        {
+                            regVenta = auxArchivoVenta.leerRegistro(i);
+
+                            if (regVenta.getNumeroRecibo() == numRecibo)
+                            {
+                                cout << right;
+                                cout << " [" << regVenta.getNumeroFactura() << "] ";
+                            }
+                        }
+                    }
                 }
             }
             else
@@ -311,7 +329,8 @@ void ArchivoPago::anular()
             cout << setw(10) << "Importe";
             cout << setw(30) << "Concepto";
             cout << setw(15) << "Forma de Pago";
-            cout << setw(15) << "Fecha" << endl;
+            cout << setw(15) << "Fecha";
+            cout << setw(15) << "Facturas canceladas" << endl;
             regPago.Mostrar();
 
             cout << "-------------------------------------------------------------------------------------------------------------------------------------------------" << endl;

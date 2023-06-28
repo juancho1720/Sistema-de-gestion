@@ -112,6 +112,24 @@ void Pago::Mostrar()
         break;
     }
     fechaPago.Mostrar();
+
+    ArchivoVenta auxArchivoVenta("ventas.dat");
+    Venta regVenta;
+    int cantVentas = auxArchivoVenta.contarRegistros();
+
+    if(cantVentas != 0)
+    {
+        for (int i=0; i<cantVentas; i++)
+        {
+            regVenta = auxArchivoVenta.leerRegistro(i);
+
+            if (regVenta.getNumeroRecibo() == numeroRecibo)
+            {
+                cout << right;
+                cout << " [" << regVenta.getNumeroFactura() << "] ";
+            }
+        }
+    }
     cout << endl;
 }
 
