@@ -315,7 +315,7 @@ void ArchivoPago::anular()
 
                 sumarSaldoDeudor(regPago.getDni(), regPago.getImporte());
 
-                regVenta = auxArchivoVenta.leerRegistro(auxArchivoVenta.buscarFactura(regVenta.getNumeroFactura()));
+                regVenta = auxArchivoVenta.leerRegistro(auxArchivoVenta.buscarFactura(regPago.getNumFactura()));
                 regVenta.setSaldo(regVenta.getImporte());
                 auxArchivoVenta.sobreEscribirRegistro(regVenta, auxArchivoVenta.buscarFactura(regVenta.getNumeroFactura()) );
 

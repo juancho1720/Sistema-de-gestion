@@ -17,7 +17,7 @@ bool Venta::Cargar()
     char op;
 
     bool sinNumero = true;
-
+    ArchivoCliente auxArchivoCliente("clientes.dat");
     ArchivoDetalleFactura auxArchivoDetalleFactura("detalleFacturas.dat");
     DetalleFactura regDetalleFactura;
 
@@ -25,10 +25,11 @@ bool Venta::Cargar()
     cout << "DNI cliente: ";
     cargarCadena(dni,11);
     importe = 0;
+    regCliente = auxArchivoCliente.leerXDni(dni);
 
     if (comprobarClientesExistentes(dni) == true)
     {
-        cout << "Deuda actual del cliente: $" << consultarDeudaCliente(dni) << endl;
+        cout << "Deuda actual del cliente: $" << regCliente.getSaldoDeudor() - regCliente.getSaldoAcreedor() << endl;
 
         do
         {

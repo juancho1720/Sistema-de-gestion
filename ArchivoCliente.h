@@ -9,6 +9,7 @@ private:
 public:
     ArchivoCliente(const char *n);
     Cliente leerRegistro(int pos);
+    Cliente leerXDni(char *doc);
     int contarRegistros();
     void escribirRegistro();
     void listarTodos();

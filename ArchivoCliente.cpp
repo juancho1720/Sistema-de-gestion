@@ -91,6 +91,24 @@ void ArchivoCliente::listarTodos()
     system("pause");
 }
 
+Cliente ArchivoCliente::leerXDni(char *doc)
+{
+    Cliente regCliente;
+    ArchivoCliente auxArchivoCliente("clientes.dat");
+
+    int cant = auxArchivoCliente.contarRegistros();
+
+    for(int x=0;x<cant;x++){
+        regCliente = auxArchivoCliente.leerRegistro(x);
+        if(!strcmp(regCliente.getDni(),doc)){
+            return regCliente;
+        }
+    }
+
+    cout << "No existe un cliente con ese DNI" << endl;
+    return regCliente;
+}
+
 void ArchivoCliente::mostrarXDni()
 {
     char dni[12];
@@ -192,16 +210,17 @@ void ArchivoCliente::listarDeudoresXDni()
     else
     {
         regCliente = auxArchivoCliente.leerRegistro(pos);
-        if(regCliente.getActivo() == true && regMenu.consultarDeudaCliente(regCliente.getDni()) != 0)
+        //if(regCliente.getActivo() == true && regMenu.consultarDeudaCliente(regCliente.getDni()) != 0)
+        if(regCliente.getActivo() == true && regCliente.getSaldoAcreedor()-regCliente.getSaldoDeudor()<0)
         {
             cout << left;
-            cout << setw(15) << "DNI";
+            cout << setw(15) << "Apellido";
             cout << setw(20) << "Nombre";
-            cout << setw(20) << "Apellido";
+            cout << setw(20) << "DNI";
             cout << setw(20) << "Monto Maximo" << endl;
             cout << "---------------------------------------------------------------" << endl;
             regCliente.Mostrar();
-            cout << endl << "Saldo Deudor: $" << regMenu.consultarDeudaCliente(regCliente.getDni()) << endl << endl;
+            cout << endl << "Saldo Deudor: $" << regCliente.getSaldoDeudor() - regCliente.getSaldoAcreedor()<< endl << endl;
             system("pause");
         }
         else
@@ -224,7 +243,7 @@ void ArchivoCliente::listarDeudores()
     {
         regCliente = auxArchivoCliente.leerRegistro(i);
 
-        if(regMenu.consultarDeudaCliente(regCliente.getDni()) != 0)
+        if(regCliente.getSaldoAcreedor()-regCliente.getSaldoDeudor()<0)
         {
             cout << left;
             cout << setw(15) << "DNI";
@@ -233,7 +252,7 @@ void ArchivoCliente::listarDeudores()
             cout << setw(20) << "Monto Maximo" << endl;
             cout << "---------------------------------------------------------------" << endl;
             regCliente.Mostrar();
-            cout << endl << "Saldo Deudor: $" << regMenu.consultarDeudaCliente(regCliente.getDni()) << endl;
+            cout << endl << "Saldo Deudor: $" << regCliente.getSaldoDeudor() - regCliente.getSaldoAcreedor() << endl;
             cout << "---------------------------------------------------------------" << endl << endl << endl;
             noHayDeudores = false;
         }
