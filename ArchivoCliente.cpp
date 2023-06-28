@@ -210,7 +210,6 @@ void ArchivoCliente::listarDeudoresXDni()
     else
     {
         regCliente = auxArchivoCliente.leerRegistro(pos);
-        //if(regCliente.getActivo() == true && regMenu.consultarDeudaCliente(regCliente.getDni()) != 0)
         if(regCliente.getActivo() == true && regCliente.getSaldoAcreedor()-regCliente.getSaldoDeudor()<0)
         {
             cout << left;
@@ -284,7 +283,8 @@ void ArchivoCliente::listarMovimientos()
     int importeTotal;
 
     bool mostrarCliente;
-    bool mostrarTitulo;
+
+    bool mostrarTitulo = true;
 
     for(int i=0; i<cantClientes; i++)
     {
@@ -298,7 +298,7 @@ void ArchivoCliente::listarMovimientos()
         {
             regVenta = auxArchivoVenta.leerRegistro(j);
 
-            if(regCliente.getActivo() && strcmp(regCliente.getDni(), regVenta.getDni()) == 0)
+            if(regCliente.getActivo() && strcmp(regCliente.getDni(), regVenta.getDni()) == 0 && regVenta.getActiva())
             {
                 hayVentas = true;
                 if(mostrarTitulo)
@@ -350,7 +350,7 @@ void ArchivoCliente::listarMovimientos()
         {
             regPago = auxArchivoPago.leerRegistro(z);
 
-            if(regCliente.getActivo() && strcmp(regCliente.getDni(), regPago.getDni()) == 0)
+            if(regCliente.getActivo() && strcmp(regCliente.getDni(), regPago.getDni()) == 0 && regPago.getActivo())
             {
                 if(regCliente.getActivo())
                 {
@@ -420,7 +420,7 @@ void ArchivoCliente::listarMovimientosXDni()
 
     int importeTotal;
 
-    bool mostrarTitulo;
+    bool mostrarTitulo = true;
 
     char dni[12];
 
@@ -452,7 +452,7 @@ void ArchivoCliente::listarMovimientosXDni()
         {
             regVenta = auxArchivoVenta.leerRegistro(j);
 
-            if(regCliente.getActivo() && strcmp(regCliente.getDni(), regVenta.getDni()) == 0)
+            if(regCliente.getActivo() && strcmp(regCliente.getDni(), regVenta.getDni()) == 0 && regVenta.getActiva())
             {
                 hayVentas = true;
                 if(mostrarTitulo)
@@ -504,7 +504,7 @@ void ArchivoCliente::listarMovimientosXDni()
         {
             regPago = auxArchivoPago.leerRegistro(z);
 
-            if(regCliente.getActivo() && strcmp(regCliente.getDni(), regPago.getDni()) == 0)
+            if(regCliente.getActivo() && strcmp(regCliente.getDni(), regPago.getDni()) == 0 && regPago.getActivo())
             {
                 if(regCliente.getActivo())
                 {

@@ -92,7 +92,7 @@ void ArchivoPago::listarXCliente()
                 {
                     regPago = auxArchivoPago.leerRegistro(j);
 
-                    if(mostrarTitulo && strcmp(regPago.getDni(), dni) == 0)
+                    if(mostrarTitulo && strcmp(regPago.getDni(), dni) == 0 && regPago.getActivo())
                     {
                         hayVentas = true;
 
@@ -107,7 +107,7 @@ void ArchivoPago::listarXCliente()
                         cout << "-------------------------------------------------------------------------------------------------------------------------------------------------" << endl;
                         mostrarTitulo = false;
                     }
-                    if(strcmp(regPago.getDni(), dni) == 0)
+                    if(strcmp(regPago.getDni(), dni) == 0 && regPago.getActivo())
                     {
                         importeTotal += regPago.getImporte();
                         regPago.Mostrar();
@@ -165,7 +165,7 @@ void ArchivoPago::listarTodosXMes()
         {
             regPago = auxArchivoPago.leerRegistro(j);
 
-            if(strcmp(regPago.getDni(), regCliente.getDni()) == 0 && regPago.getFechaPago().getAnio() == anio && regPago.getFechaPago().getMes() == mes)
+            if(strcmp(regPago.getDni(), regCliente.getDni()) == 0 && regPago.getFechaPago().getAnio() == anio && regPago.getFechaPago().getMes() == mes && regPago.getActivo())
             {
                 hayVentas = true;
                 if(mostrarTitulo)
@@ -242,13 +242,20 @@ void ArchivoPago::imprimirPorPantalla()
 
             cout << "__________________________________________________________________" << endl << endl;
 
-            if (regPago.getNumFactura() == 0)
+            if (regPago.getActivo())
             {
-                cout << setw(30) << "Anticipo";
+                if (regPago.getNumFactura() == 0)
+                {
+                    cout << setw(30) << "Anticipo";
+                }
+                else
+                {
+                    cout << setw(30) << "Aplicado a Factura/s";
+                }
             }
             else
             {
-                cout << setw(30) << "Aplicado a Factura/s";
+                cout << setw(30) << "Anulado";
             }
 
             cout << setw(25) << regPago.getFormaPago();
@@ -296,13 +303,17 @@ void ArchivoPago::anular()
 
         if (regPago.getActivo())
         {
-            cout << "Cliente: " << buscarApellido(regPago.getDni()) << ", " << buscarNombre(regPago.getDni()) << endl << endl;
+            cout << "Cliente: " << regPago.getApellido() << ", " << regPago.getNombre() << endl << endl;
             cout << left;
             cout << setw(20) << "Numero de Recibo";
             cout << setw(20) << "DNI";
             cout << setw(10) << "Importe";
-            cout << setw(15) << "Fecha Recibo" << endl;
+            cout << setw(30) << "Concepto";
+            cout << setw(15) << "Forma de Pago";
+            cout << setw(15) << "Fecha" << endl;
             regPago.Mostrar();
+
+            cout << "-------------------------------------------------------------------------------------------------------------------------------------------------" << endl;
 
             cout << "El comprobante seleccionado sera anulado." << endl;
             cout << "Confirma??? S/N" << endl;
@@ -317,6 +328,7 @@ void ArchivoPago::anular()
 
                 regVenta = auxArchivoVenta.leerRegistro(auxArchivoVenta.buscarFactura(regPago.getNumFactura()));
                 regVenta.setSaldo(regVenta.getImporte());
+                regVenta.setPaga(false);
                 auxArchivoVenta.sobreEscribirRegistro(regVenta, auxArchivoVenta.buscarFactura(regVenta.getNumeroFactura()) );
 
                 cout << "Comprobante anulado exitosamente." << endl;
