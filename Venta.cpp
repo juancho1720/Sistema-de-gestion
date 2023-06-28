@@ -58,6 +58,7 @@ bool Venta::Cargar()
                     if (sinNumero)
                     {
                         numeroFactura = generarNumeroFactura();
+                        numeroRecibo = 0;
                         sinNumero = false;
                     }
 
@@ -162,6 +163,7 @@ void Venta::Mostrar()
     }
 
     fechaVenta.Mostrar();
+
     cout << endl;
 }
 
@@ -188,6 +190,16 @@ const char *Venta::getNombre()
 int Venta::getNumeroFactura()
 {
     return numeroFactura;
+}
+
+int Venta::getNumeroRecibo()
+{
+    return numeroRecibo;
+}
+
+void Venta::setNumeroRecibo(int nR)
+{
+    numeroRecibo = nR;
 }
 
 int Venta::getCodigoArticulo()

@@ -286,6 +286,7 @@ void ArchivoPago::anular()
     Pago regPago;
     ArchivoVenta auxArchivoVenta("ventas.dat");
     Venta regVenta;
+    int cantVentas = auxArchivoVenta.contarRegistros();
     cout << "Numero de Recibo: ";
     cin >> nR;
     system("cls");
@@ -321,15 +322,22 @@ void ArchivoPago::anular()
 
             if (confirmacion == 's' || confirmacion == 'S')
             {
+                for (int i=0; i<cantVentas; i++)
+                {
+                    regVenta = auxArchivoVenta.leerRegistro(i);
+
+                    if (regVenta.getNumeroRecibo() == nR)
+                    {
+                        regVenta.setPaga(false);
+                        regVenta.setSaldo(regVenta.getImporte());
+                        auxArchivoVenta.sobreEscribirRegistro(regVenta, i);
+                        regVenta = auxArchivoVenta.leerRegistro(auxArchivoVenta.buscarFactura(regPago.getNumFactura()));
+                    }
+                }
+
                 regPago.setActivo(false);
                 auxArchivoPago.sobreEscribirRegistro(regPago, pos);
-
                 sumarSaldoDeudor(regPago.getDni(), regPago.getImporte());
-
-                regVenta = auxArchivoVenta.leerRegistro(auxArchivoVenta.buscarFactura(regPago.getNumFactura()));
-                regVenta.setSaldo(regVenta.getImporte());
-                regVenta.setPaga(false);
-                auxArchivoVenta.sobreEscribirRegistro(regVenta, auxArchivoVenta.buscarFactura(regVenta.getNumeroFactura()) );
 
                 cout << "Comprobante anulado exitosamente." << endl;
             }

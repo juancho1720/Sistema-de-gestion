@@ -292,7 +292,7 @@ void ArchivoCliente::listarMovimientos()
 
         regCliente = auxArchivoCliente.leerRegistro(i);
 
-        regPago.imputarRecibos(regCliente.getDni(), 0);
+        regPago.imputarRecibos(regCliente.getDni(), 0, 0);
 
         for(int j=0; j<cantVentas; j++)
         {
@@ -446,7 +446,7 @@ void ArchivoCliente::listarMovimientosXDni()
 
         regCliente = auxArchivoCliente.leerRegistro( auxArchivoCliente.buscarDni(dni));
 
-        regPago.imputarRecibos(regCliente.getDni(), 0);
+        regPago.imputarRecibos(regCliente.getDni(), 0, 0);
 
         for(int j=0; j<cantVentas; j++)
         {

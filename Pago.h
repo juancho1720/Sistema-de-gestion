@@ -32,6 +32,6 @@ public:
     bool getActivo();
     void setActivo(bool a);
     int generarNumeroRecibo();
-    bool cancelarFactura(const char *dni, int numFactura, float importe);
-    int imputarRecibos(const char *dni, float importe);
+    bool cancelarFactura(const char *dni, int numFactura, float importe, int numeroRecibo);
+    int imputarRecibos(const char *dni, float importe, int numeroRecibo);
 };

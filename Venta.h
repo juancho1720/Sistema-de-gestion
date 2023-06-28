@@ -17,6 +17,7 @@ private:
     char descripcionArticulo[30];
     int cantidadVendida;
     int numeroFactura;
+    int numeroRecibo;
     float importe;
     float saldo;
     bool paga;
@@ -30,6 +31,8 @@ public:
     const char *getApellido();
     const char *getNombre();
     int getNumeroFactura();
+    int getNumeroRecibo();
+    void setNumeroRecibo(int nR);
     int getCodigoArticulo();
     const char *getDescripcionArticulo();
     int getCatidadVendida();

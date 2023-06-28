@@ -49,7 +49,7 @@ bool Pago::Cargar()
             cout << "Ingrese numero de factura a cancelar:" << endl;
             cin >> numFactura;
             setNumFactura(numFactura);
-            if (cancelarFactura(dni, numFactura, importe))
+            if (cancelarFactura(dni, numFactura, importe, numeroRecibo))
             {
                 activo = true;
                 return true;
@@ -61,7 +61,7 @@ bool Pago::Cargar()
             break;
         case 2:
             system("cls");
-            numFactura = imputarRecibos(dni, importe);
+            numFactura = imputarRecibos(dni, importe, numeroRecibo);
             activo = true;
             return true;
             break;
@@ -182,7 +182,7 @@ int Pago::generarNumeroRecibo()
     return cantPagos+1;
 }
 
-bool Pago::cancelarFactura(const char *dni, int numFactura, float importe)
+bool Pago::cancelarFactura(const char *dni, int numFactura, float importe, int nR)
 {
     ArchivoVenta auxArchivoVenta("ventas.dat");
     Venta regVenta;
@@ -207,6 +207,7 @@ bool Pago::cancelarFactura(const char *dni, int numFactura, float importe)
                     {
                         regVenta.setPaga(true);
                         regVenta.setSaldo(0);
+                        regVenta.setNumeroRecibo(nR);
                         restarSaldoDeudor(regVenta.getDni(), importe);
                         auxArchivoVenta.sobreEscribirRegistro(regVenta, i);
                         return true;
@@ -225,7 +226,7 @@ bool Pago::cancelarFactura(const char *dni, int numFactura, float importe)
     return false;
 }
 
-int Pago::imputarRecibos(const char *dni, float importe)
+int Pago::imputarRecibos(const char *dni, float importe, int nR)
 {
     ArchivoVenta auxArchivoVenta("ventas.dat");
     Venta regVenta;
@@ -281,6 +282,10 @@ int Pago::imputarRecibos(const char *dni, float importe)
                         regCliente.setSaldoDeudor( regCliente.getSaldoDeudor() - regCliente.getSaldoAcreedor() );
                         regCliente.setSaldoAcreedor( 0 );
 
+                        if (nR != 0)
+                        {
+                            regVenta.setNumeroRecibo(nR);
+                        }
                         regVenta.setPaga(true);
                         regVenta.setSaldo(0);
                         auxArchivoVenta.sobreEscribirRegistro(regVenta, i);
@@ -292,6 +297,10 @@ int Pago::imputarRecibos(const char *dni, float importe)
                         regCliente.setSaldoDeudor( regCliente.getSaldoDeudor() - regVenta.getSaldo() );
                         regCliente.setSaldoAcreedor( regCliente.getSaldoAcreedor() - regVenta.getSaldo() );
 
+                        if (nR != 0)
+                        {
+                            regVenta.setNumeroRecibo(nR);
+                        }
                         regVenta.setPaga(true);
                         regVenta.setSaldo(0);
                         auxArchivoVenta.sobreEscribirRegistro(regVenta, i);
@@ -300,6 +309,10 @@ int Pago::imputarRecibos(const char *dni, float importe)
 
                     if(regVenta.getSaldo() > regCliente.getSaldoAcreedor())
                     {
+                        if (nR != 0)
+                        {
+                            regVenta.setNumeroRecibo(nR);
+                        }
                         regCliente.setSaldoDeudor( regCliente.getSaldoDeudor() - regCliente.getSaldoAcreedor() );
                         regVenta.setSaldo( regVenta.getSaldo() - regCliente.getSaldoAcreedor());
                         regCliente.setSaldoAcreedor( 0 );
@@ -323,6 +336,10 @@ int Pago::imputarRecibos(const char *dni, float importe)
                 {
                     if(regVenta.getSaldo() > regCliente.getSaldoAcreedor())
                     {
+                        if (nR != 0)
+                        {
+                            regVenta.setNumeroRecibo(nR);
+                        }
                         regCliente.setSaldoDeudor( regCliente.getSaldoDeudor() - regCliente.getSaldoAcreedor() );
                         regVenta.setSaldo( regVenta.getSaldo() - regCliente.getSaldoAcreedor());
                         regCliente.setSaldoAcreedor( 0 );
@@ -347,6 +364,10 @@ int Pago::imputarRecibos(const char *dni, float importe)
 
         if ( !regVenta.getPaga() && regVenta.getSaldo() == 0)
         {
+            if (nR != 0)
+            {
+                regVenta.setNumeroRecibo(nR);
+            }
             regVenta.setPaga(true);
             regVenta.setSaldo(0);
             auxArchivoVenta.sobreEscribirRegistro(regVenta, i);
