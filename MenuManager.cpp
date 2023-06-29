@@ -105,7 +105,7 @@ void MenuManager::ModuloClientes()
     ArchivoCliente auxArchivoCliente("clientes.dat");
     do
     {
-        cout << "MODULO CLIENTE" << endl;
+        cout << "MODULO CLIENTES" << endl;
         cout << "------------------------------" << endl;
         cout << "1- Cargar nuevo." << endl;
         cout << "2- Listar todos." << endl;
@@ -529,6 +529,8 @@ void MenuManager::ventasMensualesProductos()
 {
     int cantArticulo, mes, anio;
 
+    bool mostrarTitulo = true;
+
     ArchivoVenta auxArchivoVenta("ventas.dat");
 
     ArchivoArticulo auxArchivoArticulo("articulos.dat");
@@ -543,6 +545,8 @@ void MenuManager::ventasMensualesProductos()
     cin >> mes;
     cout << "Anio: ";
     cin >> anio;
+
+    cout << endl;
 
     for (int i=0; i<cantArticulos; i++)
     {
@@ -559,9 +563,20 @@ void MenuManager::ventasMensualesProductos()
                 cantArticulo += regDetalleFactura.getCantidadArticulo();
             }
         }
-
-        cout << "Articulo: " << regArticulo.getDescripcion() << ". Unidades vendidas: " << cantArticulo << "." << endl;
+        if(mostrarTitulo)
+        {
+            cout << left;
+            cout << endl;
+            cout << setw(25) << "Articulo";
+            cout << setw(25) << "Unidades vendidas" << endl;
+            cout << "---------------------------------------------" << endl;
+        }
+        cout << setw(25) << regArticulo.getDescripcion();
+        cout << setw(25) << cantArticulo << endl;
+        cout << "---------------------------------------------" << endl;
+        mostrarTitulo = false;
     }
+    cout << endl << endl;
     system("pause");
 }
 
@@ -569,6 +584,8 @@ void MenuManager::cobrosMensualesTipo()
 {
     int cant = 0;
     int mes, anio;
+
+    bool mostrarTitulo = true;
 
     ArchivoPago auxArchivoPago("pagos.dat");
     Pago regPago;
@@ -590,19 +607,34 @@ void MenuManager::cobrosMensualesTipo()
                 cant ++;
             }
         }
+
+        if(mostrarTitulo)
+        {
+            cout << left;
+            cout << endl;
+            cout << setw(25) << "Forma de Pago";
+            cout << setw(25) << "Cantidad" << endl;
+            cout << "---------------------------------------------" << endl;
+        }
+
         switch(i)
         {
         case 0:
-            cout << "Efvo - "<< "Cantidad de Cobros: " << cant << "." << endl;
+            cout << setw(25) << "Efectivo";
+            cout << setw(25) << cant << endl;
             break;
         case 1:
-            cout << "Tarjeta - "<< "Cantidad de Cobros: " << cant << "." << endl;
+            cout << setw(25) << "Tarjeta";
+            cout << setw(25) << cant << endl;
             break;
         case 2:
-            cout << "Banco - "<< "Cantidad de Cobros: " << cant << "." << endl;
+            cout << setw(25) << "Banco";
+            cout << setw(25) << cant << endl;
             break;
         }
         cant = 0;
+        cout << "---------------------------------------------" << endl;
+        mostrarTitulo = false;
     }
     system("pause");
 }
@@ -694,7 +726,7 @@ void MenuManager::exportarCtasCtes()
                 archivoctasctes << "Fecha" << ";" << "Nombre" << ";" << "Apellido" <<  ";" << "Tipo Comprobante" <<  ";" << "Numero" <<  ";" << "Importe" <<
                                 ";" << "Estado" << endl;
             }
-            archivoctasctes << regVenta.getFechaVenta().getAnio() << "/" << regVenta.getFechaVenta().getMes() << "/" << regVenta.getFechaVenta().getDia() << ";" << regVenta.getNombre() << ";" << regVenta.getApellido() << ";" << "F" << ";" << regVenta.getNumeroFactura() << ";" <<
+            archivoctasctes << regVenta.getFechaVenta().getAnio() << "/" << regVenta.getFechaVenta().getMes() << "/" << regVenta.getFechaVenta().getDia() << ";" << regVenta.getNombre() << ";" << regVenta.getApellido() << ";" << "FACTURA" << ";" << regVenta.getNumeroFactura() << ";" <<
                             regVenta.getImporte() << ";";
             if (regVenta.getActiva())
             {
@@ -719,7 +751,7 @@ void MenuManager::exportarCtasCtes()
             regPago = auxArchivoPago.leerRegistro(i);
             strcpy(dni, regPago.getDni());
             archivoctasctes << regPago.getFechaPago().getAnio() << "/" << regPago.getFechaPago().getMes() << "/" << regPago.getFechaPago().getDia() << ";" << regPago.getNombre() << ";" << regPago.getApellido()
-                            << ";" << "RBO" << ";" << regPago.getNumeroRecibo() << ";" << regPago.getImporte() << ";";
+                            << ";" << "RECIBO" << ";" << regPago.getNumeroRecibo() << ";" << regPago.getImporte() << ";";
             if (regPago.getActivo())
             {
                 archivoctasctes << "IMPUTADO" << endl;

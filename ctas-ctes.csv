@@ -1,0 +1,5 @@
+Fecha;Nombre;Apellido;Tipo Comprobante;Numero;Importe;Estado
+2023/6/28;Angel;Simon;FACTURA;1;20000;PENDIENTE
+2023/6/28;Juan;Romero;FACTURA;2;50000;PENDIENTE
+2023/6/28;Juan;Sarmiento;FACTURA;3;90000;PENDIENTE
+2023/6/28;Juan;Romero;FACTURA;4;15000;PENDIENTE
