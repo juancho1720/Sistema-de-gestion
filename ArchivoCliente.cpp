@@ -245,9 +245,9 @@ void ArchivoCliente::listarDeudores()
         if(regCliente.getSaldoAcreedor()-regCliente.getSaldoDeudor()<0)
         {
             cout << left;
-            cout << setw(15) << "DNI";
+            cout << setw(15) << "Apellido";
             cout << setw(20) << "Nombre";
-            cout << setw(20) << "Apellido";
+            cout << setw(20) << "DNI";
             cout << setw(20) << "Monto Maximo" << endl;
             cout << "---------------------------------------------------------------" << endl;
             regCliente.Mostrar();
